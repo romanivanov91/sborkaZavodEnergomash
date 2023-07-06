@@ -1,0 +1,7 @@
+.searchPanel {
+    width: 50vw;
+    margin: 10px auto;
+    background-color: rgb(0,168,255);
+    padding: 10px;
+    border-radius: 10px;
+}
