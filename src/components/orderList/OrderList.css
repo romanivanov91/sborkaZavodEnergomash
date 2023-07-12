@@ -1,0 +1,60 @@
+.orderList {
+    width: 75vw;
+    margin: 10px auto;
+    background-color: rgb(0,168,255);
+    padding: 10px;
+    border-radius: 10px;
+}
+.table_orders_heading, .table_orders_string {
+    display: grid;
+    grid-template-columns: 1fr 1fr 7fr 1fr 1fr 1fr;
+    align-items:stretch;
+}
+.table_orders_heading_cell:first-child {
+    border: 2px solid black;
+}
+.table_orders_heading_cell:not(:first-child) {
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+.table_orders_string_cell:first-child {
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.table_orders_string_cell:not(:first-child) {
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.table_orders_heading_prod {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+.table_orders_heading_prod_heading {
+    display: grid;
+    grid-template-columns: 28% 8% 14% 14% 14% 8% 14%;;
+}
+.table_orders_heading_prod_heading div:not(:last-child) {
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+}
+.table_orders_heading_prod_heading div:last-child {
+    border-top: 2px solid black;
+}
+
+.table_orders_heading_prod_string {
+    display: grid;
+    grid-template-columns: 28% 8% 14% 14% 14% 8% 14%;
+}
+
+.table_orders_heading_prod_string:not(:last-child) {
+    border-bottom: 1px solid black;
+}
+.table_orders_heading_prod_string div:not(:last-child) {
+    border-right: 1px solid black;
+}

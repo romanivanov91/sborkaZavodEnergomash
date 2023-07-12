@@ -1,45 +1,59 @@
 const initialState = {
     orders: [
-        {
-            "year": 2016,
-            "id": 1,
-            "customer": "Старко",
-            "cabinet": [
+        {   "ID":1,
+            "year":2020,
+            "№": 20,
+            "customer": "ЭПК",
+            "products": [
                 {
-                    "name": "Шкаф ВРУ-1-11-10",
-                    "manager": "Иванов Андрей",
-                    "engineer": "Иванов Роман",
-                    "supply": "Иванов Александр",
+                "ID": 1,
+                "ID_Order": 1,
+                "name": "Корпус А100.ШК.06.04.025.УШ",
+                "quantity": 1,
+                "ingener": "Насейкин П.",
+                "supplier": "Иванов А",
+                "installationOfCabinets": "собрано",
+                "brigade": 4,
+                "shipment": "отгружено"
                 },
                 {
-                    "name": "Шкаф ВРУ-1-48-02",
-                    "manager": "Иванов Андрей",
-                    "engineer": "Иванов Роман",
-                    "supply": "Иванов Александр",
-                }
-            ],
-            "dateOfShipment": "2016-03-25"
-        },
-        {
-            "year": 2016,
-            "id": 2,
-            "customer": "ЭТМ",
-            "cabinet": [
-                {
-                    "name": "ГРЩ",
-                    "manager": "Петрова Татьяна",
-                    "engineer": "Павлов Сергей",
-                    "supply": "Иванов Александр",
+                "ID": 2,
+                "ID_Order": 1,
+                "name": "Корпус А100.ШК.10.06.025.УМ",
+                "quantity": 1,
+                "ingener": "Насейкин П.",
+                "supplier": "Иванов А",
+                "installationOfCabinets": "собрано",
+                "brigade": 4,
+                "shipment": "отгружено"
                 },
                 {
-                    "name": "ЩР",
-                    "manager": "Петрова Татьяна",
-                    "engineer": "Павлов Сергей",
-                    "supply": "Иванов Александр",
-                }
+                "ID": 3,
+                "ID_Order": 1,
+                "name": "Корпус А100.ШК.08.06.02.УШ",
+                "quantity": 4,
+                "ingener": "Насейкин П.",
+                "supplier": "Иванов А",
+                "installationOfCabinets": "собрано",
+                "brigade": 4,
+                "shipment": "отгружено"
+                },
+                {
+                "ID": 4,
+                "ID_Order": 1,
+                "name": "Корпус БЭЗ А102.ШК.02.025.01",
+                "quantity": 28,
+                "ingener": "Насейкин П.",
+                "supplier": "Иванов А",
+                "installationOfCabinets": "собрано",
+                "brigade": 4,
+                "shipment": "отгружено"
+                },
             ],
-            "dateOfShipment": "2016-03-25"
-        },
+            "launchDate": "2023-07-05",
+            "dateOfShipment": "2023-07-05",
+            "responsibleManager": "Иванов А.Н."
+        }
     ],
     ordersLoadingStatus: 'idle',
     filters: [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, "all"],
