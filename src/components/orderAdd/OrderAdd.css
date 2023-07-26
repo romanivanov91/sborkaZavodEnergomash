@@ -5,3 +5,21 @@
     padding: 10px;
     border-radius: 10px;
 }
+.orderAdd_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 75%;
+    margin: 0px auto;
+}
+.orderAdd_form_order {
+    display: grid;
+    grid-template-columns: 1fr 1fr 7fr 1fr 1fr 1fr;
+    align-items:stretch;
+    margin: 0px auto;
+}
+.orderAdd_form_order div {
+    margin: 10px;
+}
+
+
