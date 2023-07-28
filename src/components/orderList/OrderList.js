@@ -23,11 +23,16 @@ const OrderList = () => {
                                     <div>{el['installationOfCabinets']}</div>
                                     <div>{el['brigade']}</div>
                                     <div>{el['shipment']}</div>
+                                    <div>
+                                        <input type="button" value={'Редактировать'}/>
+                                    </div>
                                 </div>
-                                
                                 )
                         })
                     }
+                        <div>
+                            <input type="button" value={'Добавить'}/>
+                        </div>
                     </div>
                     <div className="table_orders_string_cell">{item['launchDate']}</div>
                     <div className="table_orders_string_cell">{item['dateOfShipment']}</div>
@@ -54,6 +59,7 @@ const OrderList = () => {
                         <div>Монтаж шкафов</div>
                         <div>Бригада</div>
                         <div>Отгрузка</div>
+                        <div></div>
                     </div>
                 </div>
                 <div className="table_orders_heading_cell">Дата запуска</div>

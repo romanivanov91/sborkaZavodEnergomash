@@ -1,0 +1,2 @@
+//Данная команда будет возвращать отчетные года созданные в базе данных
+SELECT REPLACE( TABLE_NAME, 'sborka', '') FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'sborkazavodenergomash' AND TABLE_NAME LIKE '%sborka%';

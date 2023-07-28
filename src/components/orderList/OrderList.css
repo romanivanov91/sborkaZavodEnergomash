@@ -37,7 +37,7 @@
 }
 .table_orders_heading_prod_heading {
     display: grid;
-    grid-template-columns: 28% 8% 14% 14% 14% 8% 14%;;
+    grid-template-columns: 24% 8% 12% 12% 12% 8% 12% 12%;;
 }
 .table_orders_heading_prod_heading div:not(:last-child) {
     border-top: 2px solid black;
@@ -49,7 +49,7 @@
 
 .table_orders_heading_prod_string {
     display: grid;
-    grid-template-columns: 28% 8% 14% 14% 14% 8% 14%;
+    grid-template-columns: 24% 8% 12% 12% 12% 8% 12% 12%;
 }
 
 .table_orders_heading_prod_string:not(:last-child) {
@@ -57,4 +57,10 @@
 }
 .table_orders_heading_prod_string div:not(:last-child) {
     border-right: 1px solid black;
+}
+.table_orders_string_cell input {
+    width: 100%;
+    height: 100%;
+    background-color:rgb(135, 133, 139);
+    font-size: 12px;
 }
