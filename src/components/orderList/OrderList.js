@@ -1,10 +1,25 @@
-import { useSelector } from "react-redux";
+import {useHttp} from '../../hooks/http.hook';
+import { useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ordersFetched } from '../../actions';
 
 import './OrderList.css';
 
 const OrderList = () => {
 
     const {orders} = useSelector(state=>state);
+    const dispatch = useDispatch();
+    const {request} = useHttp();
+
+    useEffect(() => {
+        request("http://localhost:3001/orders")
+        .then((data) => {
+            dispatch(ordersFetched(data));
+        }).catch((error) => {
+            console.log(error); // вывести ошибку
+         });
+        // eslint-disable-next-line
+    }, []);
 
     const renderOrders = (orders) => {
         return orders.map((item, i) => {

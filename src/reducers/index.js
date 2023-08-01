@@ -1,59 +1,5 @@
 const initialState = {
     orders: [
-        {   "ID":1,
-            "year":2020,
-            "№": 20,
-            "customer": "ЭПК",
-            "products": [
-                {
-                "ID": 1,
-                "ID_Order": 1,
-                "name": "Корпус А100.ШК.06.04.025.УШ",
-                "quantity": 1,
-                "ingener": "Насейкин П.",
-                "supplier": "Иванов А",
-                "installationOfCabinets": "собрано",
-                "brigade": 4,
-                "shipment": "отгружено"
-                },
-                {
-                "ID": 2,
-                "ID_Order": 1,
-                "name": "Корпус А100.ШК.10.06.025.УМ",
-                "quantity": 1,
-                "ingener": "Насейкин П.",
-                "supplier": "Иванов А",
-                "installationOfCabinets": "собрано",
-                "brigade": 4,
-                "shipment": "отгружено"
-                },
-                {
-                "ID": 3,
-                "ID_Order": 1,
-                "name": "Корпус А100.ШК.08.06.02.УШ",
-                "quantity": 4,
-                "ingener": "Насейкин П.",
-                "supplier": "Иванов А",
-                "installationOfCabinets": "собрано",
-                "brigade": 4,
-                "shipment": "отгружено"
-                },
-                {
-                "ID": 4,
-                "ID_Order": 1,
-                "name": "Корпус БЭЗ А102.ШК.02.025.01",
-                "quantity": 28,
-                "ingener": "Насейкин П.",
-                "supplier": "Иванов А",
-                "installationOfCabinets": "собрано",
-                "brigade": 4,
-                "shipment": "отгружено"
-                },
-            ],
-            "launchDate": "2023-07-05",
-            "dateOfShipment": "2023-07-05",
-            "responsibleManager": "Иванов А.Н."
-        }
     ],
     ordersLoadingStatus: 'idle',
     filters: [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, "all"],
@@ -72,11 +18,12 @@ const reducer = (state = initialState, action) => {
         case 'ORDERS_FETCHED':
             return {
                 ...state,
-                orders: action.payload,
-                filteredOrders: state.activeFilterName === 'all' ? 
-                                action.payload :
-                                action.payload.filter(item => item.year === state.activeFilterName),
-                ordersLoadingStatus: 'idle'
+                orders: action.payload
+                // ,
+                // filteredOrders: state.activeFilterName === 'all' ? 
+                //                 action.payload :
+                //                 action.payload.filter(item => item.year === state.activeFilterName),
+                // ordersLoadingStatus: 'idle'
             }
         case 'ORDERS_FETCHING_ERROR':
             return {

@@ -1,0 +1,89 @@
+{
+  "orders": [
+    {
+      "ID": 1,
+      "year": 2020,
+      "№": 20,
+      "customer": "ЭПК",
+      "products": [
+        {
+          "ID": 1,
+          "ID_Order": 1,
+          "name": "Корпус А100.ШК.06.04.025.УШ",
+          "quantity": 1,
+          "ingener": "Насейкин П.",
+          "supplier": "Иванов А",
+          "installationOfCabinets": "собрано",
+          "brigade": 4,
+          "shipment": "отгружено"
+        },
+        {
+          "ID": 2,
+          "ID_Order": 1,
+          "name": "Корпус А100.ШК.10.06.025.УМ",
+          "quantity": 1,
+          "ingener": "Насейкин П.",
+          "supplier": "Иванов А",
+          "installationOfCabinets": "собрано",
+          "brigade": 4,
+          "shipment": "отгружено"
+        },
+        {
+          "ID": 3,
+          "ID_Order": 1,
+          "name": "Корпус А100.ШК.08.06.02.УШ",
+          "quantity": 4,
+          "ingener": "Насейкин П.",
+          "supplier": "Иванов А",
+          "installationOfCabinets": "собрано",
+          "brigade": 4,
+          "shipment": "отгружено"
+        },
+        {
+          "ID": 4,
+          "ID_Order": 1,
+          "name": "Корпус БЭЗ А102.ШК.02.025.01",
+          "quantity": 28,
+          "ingener": "Насейкин П.",
+          "supplier": "Иванов А",
+          "installationOfCabinets": "собрано",
+          "brigade": 4,
+          "shipment": "отгружено"
+        }
+      ],
+      "launchDate": "2023-07-05",
+      "dateOfShipment": "2023-07-05",
+      "responsibleManager": "Иванов А.Н."
+    },
+    {
+      "id": "8ef12c4b-2cdb-47ff-929b-90a8a8d19bfc",
+      "year": "2023",
+      "№": 21,
+      "customer": "gbretbh",
+      "products": [],
+      "launchDate": "75373",
+      "dateOfShipment": "tykyu",
+      "responsibleManager": "yklyky"
+    },
+    {
+      "id": "324ea538-8cfd-4485-8a25-0e6026800541",
+      "year": "fdgnbfg",
+      "№": 22,
+      "customer": "fnhfn",
+      "products": [],
+      "launchDate": "nnfrn",
+      "dateOfShipment": "nttntn",
+      "responsibleManager": "tyntyn"
+    },
+    {
+      "id": "efd886bf-5ea4-44bf-a3bf-afb6732406f9",
+      "year": "rthrthrth",
+      "№": 23,
+      "customer": "rhthrthrh",
+      "products": [],
+      "launchDate": "rthrthrthhrt",
+      "dateOfShipment": "hrthrt",
+      "responsibleManager": "rthrthrh"
+    }
+  ]
+}
