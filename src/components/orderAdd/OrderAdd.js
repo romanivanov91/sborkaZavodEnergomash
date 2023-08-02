@@ -83,7 +83,7 @@ const OrderAdd = () => {
                         <label>Дата запуска</label>
                         <input
                             required
-                            type="text"
+                            type="date"
                             value={launchDate}
                             onChange={(e) => setLaunchDate(e.target.value)}
                         />
@@ -92,7 +92,7 @@ const OrderAdd = () => {
                         <label>Дата отгрузки</label>
                         <input
                             required
-                            type="text"
+                            type="date"
                             value={dateOfShipment}
                             onChange={(e) => setDateOfShipment(e.target.value)}
                         ></input>

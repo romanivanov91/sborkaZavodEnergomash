@@ -1,0 +1,9 @@
+.prodAddModal {
+    position:fixed;
+    top:25%;
+    left:25%;
+    width:50vw;
+    height:50vh;
+    background-color: beige;
+    overflow: hidden
+}

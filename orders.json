@@ -84,6 +84,16 @@
       "launchDate": "rthrthrthhrt",
       "dateOfShipment": "hrthrt",
       "responsibleManager": "rthrthrh"
+    },
+    {
+      "id": "5c235dd3-82ae-425b-aa8b-9adc50b8c338",
+      "year": "2023",
+      "№": 24,
+      "customer": "gegege",
+      "products": [],
+      "launchDate": "2023-08-07",
+      "dateOfShipment": "2023-08-13",
+      "responsibleManager": "gergergegee"
     }
   ]
 }

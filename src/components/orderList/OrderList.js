@@ -21,6 +21,8 @@ const OrderList = () => {
         // eslint-disable-next-line
     }, []);
 
+    
+
     const renderOrders = (orders) => {
         return orders.map((item, i) => {
             return (
@@ -46,7 +48,10 @@ const OrderList = () => {
                         })
                     }
                         <div>
-                            <input type="button" value={'Добавить'}/>
+                            <input 
+                                type="submit" 
+                                value={'Добавить'}
+                            />
                         </div>
                     </div>
                     <div className="table_orders_string_cell">{item['launchDate']}</div>

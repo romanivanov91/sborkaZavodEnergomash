@@ -2,7 +2,7 @@ const initialState = {
     orders: [
     ],
     ordersLoadingStatus: 'idle',
-    filters: [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, "all"],
+    filters: [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023],
     filtersLoadingStatus: 'idle',
     filteredOrders: [],
     activeFilterName: 'all',
