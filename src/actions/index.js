@@ -24,6 +24,26 @@ export const orderFormAdd = (order) => {
     }
 }
 
+export const showModal = () => {
+    return {
+        type: 'SHOW_MODAL',
+    }
+}
+
+export const activeOrder = (number) => {
+    return {
+        type: 'ACTIVE_ORDER',
+        payload: number
+    }
+}
+
+export const productFormAdd = (product) => {
+    return {
+        type: 'PRODUCT_FORM_ADD',
+        payload: product
+    }
+}
+
 export const filtersFetching = () => {
     return {
         type: 'FILTERS_FETCHING'

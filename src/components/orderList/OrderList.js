@@ -1,7 +1,7 @@
 import {useHttp} from '../../hooks/http.hook';
-import { useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ordersFetched } from '../../actions';
+import { ordersFetched, showModal, activeOrder } from '../../actions';
 
 import './OrderList.css';
 
@@ -20,8 +20,6 @@ const OrderList = () => {
          });
         // eslint-disable-next-line
     }, []);
-
-    
 
     const renderOrders = (orders) => {
         return orders.map((item, i) => {
@@ -51,6 +49,7 @@ const OrderList = () => {
                             <input 
                                 type="submit" 
                                 value={'Добавить'}
+                                onClick={() => {dispatch(showModal()); dispatch(activeOrder(item['№']));}}
                             />
                         </div>
                     </div>

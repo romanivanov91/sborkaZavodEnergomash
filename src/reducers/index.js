@@ -1,3 +1,5 @@
+import { showModal } from "../actions"
+
 const initialState = {
     orders: [
     ],
@@ -6,6 +8,8 @@ const initialState = {
     filtersLoadingStatus: 'idle',
     filteredOrders: [],
     activeFilterName: 'all',
+    showModal: false,
+    activeOrder: 0
 }
 
 const reducer = (state = initialState, action) => {
@@ -30,8 +34,27 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 ordersLoadingStatus: 'error'
             }
+        case 'SHOW_MODAL':
+            return {
+                ...state,
+                showModal: !state.showModal
+            }
+        case 'ACTIVE_ORDER':
+            console.log(action.payload);
+            return {
+                ...state,
+                activeOrder: action.payload
+            }
         case 'ORDER_FORM_ADD':
             const newOrderListAdd = [...state.orders, action.payload]
+            return {
+                ...state,
+                orders: newOrderListAdd,
+                filteredHeroes: state.activeFilterName === 'all' ? 
+                    newOrderListAdd :
+                    newOrderListAdd.filter(item => item.year === state.activeFilterName)
+            }
+        case 'PRODUCT_FORM_ADD':
             return {
                 ...state,
                 orders: newOrderListAdd,
