@@ -49,7 +49,7 @@ const OrderList = () => {
                             <input 
                                 type="submit" 
                                 value={'Добавить'}
-                                onClick={() => {dispatch(showModal()); dispatch(activeOrder(item['№']));}}
+                                onClick={() => {dispatch(showModal()); dispatch(activeOrder(item['id']));}}
                             />
                         </div>
                     </div>

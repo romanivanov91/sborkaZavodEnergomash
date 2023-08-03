@@ -40,7 +40,7 @@ const ProdAddModal = () => {
             brigade: brigade,
             shipment: shipment
         }
-        request(`http://localhost:3001/orders/${activeOrder}/products`, 'PATCH', JSON.stringify(objectProduct))
+        request(`http://localhost:3001/orders/${activeOrder}`, 'PATCH', JSON.stringify(objectProduct))
         .then(res => console.log(res, 'Отправка успешна'))
         //.then(dispatch(heroCreated(objectHero)))
         .catch(error => console.log(error));
@@ -63,7 +63,8 @@ const ProdAddModal = () => {
                 <div>
                     <h3>Заказ №{activeOrder}</h3>
                 </div>
-                <form>
+                <form
+                    onSubmit={addProduct}>
                     <div>
                         <label>Наименование</label>
                         <input type='text'></input>
@@ -104,7 +105,6 @@ const ProdAddModal = () => {
                     type='button' 
                     value='Закрыть'
                     onClick={()=>dispatch(showModal())}>
-
                     </input>
            </div>
         </div>

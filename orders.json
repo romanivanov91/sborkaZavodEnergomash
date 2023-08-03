@@ -1,14 +1,14 @@
 {
   "orders": [
     {
-      "ID": 1,
+      "id": 1,
       "year": 2020,
       "№": 20,
       "customer": "ЭПК",
       "products": [
         {
-          "ID": 1,
-          "ID_Order": 1,
+          "id": 1,
+          "id_Order": 1,
           "name": "Корпус А100.ШК.06.04.025.УШ",
           "quantity": 1,
           "ingener": "Насейкин П.",
@@ -18,8 +18,8 @@
           "shipment": "отгружено"
         },
         {
-          "ID": 2,
-          "ID_Order": 1,
+          "id": 2,
+          "id_Order": 1,
           "name": "Корпус А100.ШК.10.06.025.УМ",
           "quantity": 1,
           "ingener": "Насейкин П.",
@@ -29,8 +29,8 @@
           "shipment": "отгружено"
         },
         {
-          "ID": 3,
-          "ID_Order": 1,
+          "id": 3,
+          "id_Order": 1,
           "name": "Корпус А100.ШК.08.06.02.УШ",
           "quantity": 4,
           "ingener": "Насейкин П.",
@@ -40,8 +40,8 @@
           "shipment": "отгружено"
         },
         {
-          "ID": 4,
-          "ID_Order": 1,
+          "id": 4,
+          "id_Order": 1,
           "name": "Корпус БЭЗ А102.ШК.02.025.01",
           "quantity": 28,
           "ingener": "Насейкин П.",
