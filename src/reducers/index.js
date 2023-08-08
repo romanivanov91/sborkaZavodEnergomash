@@ -45,13 +45,11 @@ const reducer = (state = initialState, action) => {
                 showModal: !state.showModal
             }
         case 'ACTIVE_ORDER':
-            console.log(action.payload);
             return {
                 ...state,
                 activeOrder: action.payload
             }
         case 'ACTIVE_PRODUCT':
-            console.log(action.payload);
             return {
                 ...state,
                 activeProduct: action.payload

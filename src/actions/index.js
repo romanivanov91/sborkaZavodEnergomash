@@ -42,7 +42,7 @@ export const activeOrder = (id, number) => {
 
 export const activeProduct = (product) => {
     return {
-        type: 'ACTIVE_ORDER',
+        type: 'ACTIVE_PRODUCT',
         payload: product
     }
 }

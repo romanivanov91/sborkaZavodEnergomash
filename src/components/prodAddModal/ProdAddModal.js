@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { showModal, productFormAdd } from '../../actions';
+import { showModal, productFormAdd, activeProduct as ap } from '../../actions';
 import {useHttp} from '../../hooks/http.hook';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -20,20 +20,27 @@ const ProdAddModal = () => {
     const [brigade, setBrigade] = useState('');
     const [shipment, setShipment] = useState('');
 
-    if (Object.entries(activeProduct).length !== 0) {
-        setName(activeProduct.name);
-        setQuantity(activeProduct.quantity);
-        setIngener(activeProduct.ingener);
-        setSupplier(activeProduct.supplier);
-        setInstallationOfCabinets(activeProduct.installationOfCabinets);
-        setBrigade(activeProduct.brigade);
-        setShipment(activeProduct.shipment);  
-    }
+    useEffect(() => {
+
+        if (Object.entries(activeProduct).length !== 0) {
+            console.log(activeProduct);
+            setName(activeProduct.name);
+            setQuantity(activeProduct.quantity);
+            setIngener(activeProduct.ingener);
+            setSupplier(activeProduct.supplier);
+            setInstallationOfCabinets(activeProduct.installationOfCabinets);
+            setBrigade(activeProduct.brigade);
+            setShipment(activeProduct.shipment);  
+        }
+        
+        // eslint-disable-next-line
+    }, [activeProduct]);
 
 
     const clickOutsideForm = (e) => {
         if (e.target.className === 'prodAddModal') {
-            dispatch(showModal())
+            dispatch(showModal());
+            dispatch(ap({}));
         }
     }
 
@@ -138,7 +145,7 @@ const ProdAddModal = () => {
                     className='close_modal' 
                     type='button' 
                     value='Закрыть'
-                    onClick={()=>dispatch(showModal())}>
+                    onClick={()=> {dispatch(showModal()); dispatch(ap({}));}}>
                     </input>
            </div>
         </div>
