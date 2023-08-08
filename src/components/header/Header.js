@@ -7,8 +7,6 @@ const Header = () => {
     const {filters} = useSelector(state=>state);
     //const dispatch = useDispatch();
 
-    console.log(filters);
-
 
     const yearsli = (years) => {
         return years.map((item, i) => {
@@ -18,8 +16,6 @@ const Header = () => {
     }
 
     const renderyearsli = yearsli(filters)
-
-    console.log(renderyearsli);
 
     return (
         <div className='header'>

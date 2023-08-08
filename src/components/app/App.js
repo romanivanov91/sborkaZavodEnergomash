@@ -13,7 +13,6 @@ function App() {
 
   const modal = (arg) => {
     if (arg) {
-      console.log('Сработал');
       return <ProdAddModal/>
     }
   }

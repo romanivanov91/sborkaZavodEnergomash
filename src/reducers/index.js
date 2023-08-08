@@ -1,4 +1,4 @@
-import { showModal } from "../actions"
+import { activeOrder, showModal } from "../actions"
 
 const initialState = {
     orders: [
@@ -9,7 +9,10 @@ const initialState = {
     filteredOrders: [],
     activeFilterName: 'all',
     showModal: false,
-    activeOrder: 0
+    activeOrder: {
+        'id': 0,
+        '№': 0
+        }
 }
 
 const reducer = (state = initialState, action) => {
@@ -55,12 +58,21 @@ const reducer = (state = initialState, action) => {
                     newOrderListAdd.filter(item => item.year === state.activeFilterName)
             }
         case 'PRODUCT_FORM_ADD':
+            const newProductAdd = state.orders.map(item => {
+                if ( action.payload['id_Order'] === item['id']) {
+                    item['products'].push(action.payload);
+                    return item;
+                } else {
+                    return item;
+                } 
+            })
             return {
                 ...state,
-                orders: newOrderListAdd,
-                filteredHeroes: state.activeFilterName === 'all' ? 
-                    newOrderListAdd :
-                    newOrderListAdd.filter(item => item.year === state.activeFilterName)
+                orders: newProductAdd
+                // ,
+                // filteredHeroes: state.activeFilterName === 'all' ? 
+                //     newOrderListAdd :
+                //     newOrderListAdd.filter(item => item.year === state.activeFilterName)
             }
         case 'FILTERS_FETCHING':
             return {

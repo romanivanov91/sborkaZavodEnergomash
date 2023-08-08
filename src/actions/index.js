@@ -30,10 +30,13 @@ export const showModal = () => {
     }
 }
 
-export const activeOrder = (number) => {
+export const activeOrder = (id, number) => {
     return {
         type: 'ACTIVE_ORDER',
-        payload: number
+        payload: {
+            'id': id,
+            '№': number
+            }
     }
 }
 
