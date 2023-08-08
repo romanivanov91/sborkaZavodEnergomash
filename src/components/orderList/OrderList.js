@@ -1,7 +1,7 @@
 import {useHttp} from '../../hooks/http.hook';
 import { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ordersFetched, showModal, activeOrder } from '../../actions';
+import { ordersFetched, showModal, activeOrder, activeProduct } from '../../actions';
 
 import './OrderList.css';
 
@@ -39,7 +39,11 @@ const OrderList = () => {
                                     <div>{el['brigade']}</div>
                                     <div>{el['shipment']}</div>
                                     <div>
-                                        <input type="button" value={'Редактировать'}/>
+                                        <input 
+                                            type="button" 
+                                            value={'Редактировать'}
+                                            onClick={() => {dispatch(showModal()); dispatch(activeOrder(item['id'], item['№'])); dispatch(activeProduct(el))}}
+                                            />
                                     </div>
                                 </div>
                                 )

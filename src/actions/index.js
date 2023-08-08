@@ -40,6 +40,13 @@ export const activeOrder = (id, number) => {
     }
 }
 
+export const activeProduct = (product) => {
+    return {
+        type: 'ACTIVE_ORDER',
+        payload: product
+    }
+}
+
 export const productFormAdd = (product) => {
     return {
         type: 'PRODUCT_FORM_ADD',

@@ -12,7 +12,9 @@ const initialState = {
     activeOrder: {
         'id': 0,
         '№': 0
-        }
+        },
+    activeProduct : {
+    }
 }
 
 const reducer = (state = initialState, action) => {
@@ -48,6 +50,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 activeOrder: action.payload
             }
+        case 'ACTIVE_PRODUCT':
+            console.log(action.payload);
+            return {
+                ...state,
+                activeProduct: action.payload
+            }
         case 'ORDER_FORM_ADD':
             const newOrderListAdd = [...state.orders, action.payload]
             return {
@@ -74,40 +82,40 @@ const reducer = (state = initialState, action) => {
                 //     newOrderListAdd :
                 //     newOrderListAdd.filter(item => item.year === state.activeFilterName)
             }
-        case 'FILTERS_FETCHING':
-            return {
-                ...state,
-                filtersLoadingStatus: 'loading'
-            }
-        case 'FILTERS_FETCHED':
-            return {
-                ...state,
-                filters: action.payload,
-                filtersLoadingStatus: 'idle'
-            }
-        case 'FILTERS_FETCHED_ERROR':
-            return {
-                ...state,
-                filtersLoadingStatus: 'error'
-            }
-        case 'ACTIVE_FILTER_CHANGED':
-            return {
-                ...state,
-                activeFilterName: action.payload,
-                filteredOrders: action.payload === 'all' ? 
-                                state.orders :
-                                state.orders.filter(item => item.year === action.payload)
-            }
-        case 'ORDER_DELETED':
-            const newOrderListDel = state.orders.filter(item => item.id !== action.payload);
-            console.log(newOrderListDel);
-            return {
-                ...state,
-                orders: newOrderListAdd,
-                filteredOrders: state.activeFilterName === 'all' ? 
-                    newOrderListDel :
-                    newOrderListDel.filter(item => item.year === state.activeFilterName)
-            }
+        // case 'FILTERS_FETCHING':
+        //     return {
+        //         ...state,
+        //         filtersLoadingStatus: 'loading'
+        //     }
+        // case 'FILTERS_FETCHED':
+        //     return {
+        //         ...state,
+        //         filters: action.payload,
+        //         filtersLoadingStatus: 'idle'
+        //     }
+        // case 'FILTERS_FETCHED_ERROR':
+        //     return {
+        //         ...state,
+        //         filtersLoadingStatus: 'error'
+        //     }
+        // case 'ACTIVE_FILTER_CHANGED':
+        //     return {
+        //         ...state,
+        //         activeFilterName: action.payload,
+        //         filteredOrders: action.payload === 'all' ? 
+        //                         state.orders :
+        //                         state.orders.filter(item => item.year === action.payload)
+        //     }
+        // case 'ORDER_DELETED':
+        //     const newOrderListDel = state.orders.filter(item => item.id !== action.payload);
+        //     console.log(newOrderListDel);
+        //     return {
+        //         ...state,
+        //         orders: newOrderListAdd,
+        //         filteredOrders: state.activeFilterName === 'all' ? 
+        //             newOrderListDel :
+        //             newOrderListDel.filter(item => item.year === state.activeFilterName)
+        //     }
         default: return state
     }
 }

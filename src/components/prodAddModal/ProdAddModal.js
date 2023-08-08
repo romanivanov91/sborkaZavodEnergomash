@@ -8,6 +8,10 @@ import './ProdAddModal.css';
 
 const ProdAddModal = () => {
 
+    const {activeOrder, activeProduct} = useSelector(state => state);
+    const dispatch = useDispatch();
+    const {request} = useHttp();
+
     const [name, setName] = useState('');
     const [quantity, setQuantity] = useState('');
     const [ingener, setIngener] = useState('');
@@ -16,9 +20,16 @@ const ProdAddModal = () => {
     const [brigade, setBrigade] = useState('');
     const [shipment, setShipment] = useState('');
 
-    const {activeOrder} = useSelector(state => state);
-    const dispatch = useDispatch();
-    const {request} = useHttp();
+    if (Object.entries(activeProduct).length !== 0) {
+        setName(activeProduct.name);
+        setQuantity(activeProduct.quantity);
+        setIngener(activeProduct.ingener);
+        setSupplier(activeProduct.supplier);
+        setInstallationOfCabinets(activeProduct.installationOfCabinets);
+        setBrigade(activeProduct.brigade);
+        setShipment(activeProduct.shipment);  
+    }
+
 
     const clickOutsideForm = (e) => {
         if (e.target.className === 'prodAddModal') {
@@ -29,7 +40,7 @@ const ProdAddModal = () => {
     const addProduct = (e) => {
         e.preventDefault();
         const objectProduct = {
-            id: uuidv4(),
+            id: Object.entries(activeProduct).length !== 0 ? activeProduct.id : uuidv4(),
             id_Order: activeOrder['id'],
             name: name,
             quantity: quantity,
