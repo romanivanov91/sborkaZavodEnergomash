@@ -1,13 +1,25 @@
 .header {
-    width: 75vw;
-    margin: 10px auto;
-    background-color: rgb(0,168,255);
-    padding: 10px;
-    border-radius: 10px;
+    width: 100vw;
+    height: 65px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0693e3;
 }
 
-.header ul {
+.logo img{
+    width: 250px;
+    margin-left: 5vw;
+}
+
+.nav ul {
     display: flex;
-    justify-content: space-around;
+    margin-right: 3vw;
+}
+
+.nav ul li {
+    color: white;
+    margin-right: 2vw;
     list-style-type: none;
+    cursor: grab;
 }

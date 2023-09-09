@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { showModal, productFormAdd, activeProduct as ap } from '../../actions';
-import {useHttp} from '../../hooks/http.hook';
+import { showModal, productFormAdd, activeProduct as ap, productFormUpdate } from '../../../actions';
+import {useHttp} from '../../../hooks/http.hook';
 import { v4 as uuidv4 } from 'uuid';
 
 import './ProdAddModal.css';
@@ -20,8 +20,9 @@ const ProdAddModal = () => {
     const [brigade, setBrigade] = useState('');
     const [shipment, setShipment] = useState('');
 
-    useEffect(() => {
+    const [btnText, setBtnText] = useState('Добавить продукцию');
 
+    useEffect(() => {
         if (Object.entries(activeProduct).length !== 0) {
             console.log(activeProduct);
             setName(activeProduct.name);
@@ -31,8 +32,8 @@ const ProdAddModal = () => {
             setInstallationOfCabinets(activeProduct.installationOfCabinets);
             setBrigade(activeProduct.brigade);
             setShipment(activeProduct.shipment);  
+            setBtnText('Сохранить');
         }
-        
         // eslint-disable-next-line
     }, [activeProduct]);
 
@@ -58,7 +59,12 @@ const ProdAddModal = () => {
             shipment: shipment
         }
 
-        dispatch(productFormAdd(objectProduct));
+        if (Object.entries(activeProduct).length !== 0) {
+            dispatch(productFormUpdate(objectProduct));
+        } else {
+            dispatch(productFormAdd(objectProduct));
+        }
+
         // request(`http://localhost:3001/orders/${activeOrder}`, 'PATCH', JSON.stringify(objectProduct))
         // .then(res => console.log(res, 'Отправка успешна'))
         // //.then(dispatch(heroCreated(objectHero)))
@@ -137,7 +143,7 @@ const ProdAddModal = () => {
                     <div>
                         <input 
                             type='submit'
-                            value='Добавить продукцию'>
+                            value={btnText}>
                         </input>
                     </div>
                 </form>

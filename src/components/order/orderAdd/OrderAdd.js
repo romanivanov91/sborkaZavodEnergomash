@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import {useHttp} from '../../hooks/http.hook';
+import {useHttp} from '../../../hooks/http.hook';
 import { useDispatch, useSelector } from 'react-redux';
-import { orderFormAdd } from '../../actions';
+import { orderFormAdd } from '../../../actions';
 
 import './OrderAdd.css';
 
@@ -86,7 +86,7 @@ const OrderAdd = () => {
                             type="date"
                             value={launchDate}
                             onChange={(e) => setLaunchDate(e.target.value)}
-                        />
+                        ></input>
                     </div>
                     <div>
                         <label>Дата отгрузки</label>

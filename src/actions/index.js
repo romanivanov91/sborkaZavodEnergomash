@@ -54,35 +54,49 @@ export const productFormAdd = (product) => {
     }
 }
 
-export const filtersFetching = () => {
+export const productFormUpdate = (product) => {
     return {
-        type: 'FILTERS_FETCHING'
+        type: 'PRODUCT_FORM_UPDATE',
+        payload: product
     }
 }
 
-export const filtersFetched = (filters) => {
+export const autorisationUser = (user) => {
     return {
-        type: 'FILTERS_FETCHED',
-        payload: filters
+        type: 'AUTORISATION_USER',
+        payload: user
     }
 }
 
-export const filtersFetchedError = () => {
-    return {
-        type: 'FILTERS_FETCHING_ERROR'
-    }
-}
+// export const filtersFetching = () => {
+//     return {
+//         type: 'FILTERS_FETCHING'
+//     }
+// }
 
-export const activeFilterChanged = (filter) => {
-    return {
-        type: 'ACTIVE_FILTER_CHANGED',
-        payload: filter
-    }
-}
+// export const filtersFetched = (filters) => {
+//     return {
+//         type: 'FILTERS_FETCHED',
+//         payload: filters
+//     }
+// }
 
-export const orderDeleted = (id) => {
-    return {
-        type: 'ORDER_DELETED',
-        payload: id
-    }
-}
+// export const filtersFetchedError = () => {
+//     return {
+//         type: 'FILTERS_FETCHING_ERROR'
+//     }
+// }
+
+// export const activeFilterChanged = (filter) => {
+//     return {
+//         type: 'ACTIVE_FILTER_CHANGED',
+//         payload: filter
+//     }
+// }
+
+// export const orderDeleted = (id) => {
+//     return {
+//         type: 'ORDER_DELETED',
+//         payload: id
+//     }
+// }

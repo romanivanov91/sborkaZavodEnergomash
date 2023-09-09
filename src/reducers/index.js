@@ -14,6 +14,8 @@ const initialState = {
         '№': 0
         },
     activeProduct : {
+    },
+    user: {
     }
 }
 
@@ -80,6 +82,37 @@ const reducer = (state = initialState, action) => {
                 //     newOrderListAdd :
                 //     newOrderListAdd.filter(item => item.year === state.activeFilterName)
             }
+        case 'PRODUCT_FORM_UPDATE':
+            const updateProduct = state.orders.map((item, i) => {
+                if ( action.payload['id_Order'] === item['id']) {
+                    const updateProducts = item['products'].map((el, n) => {
+                        if (el['id'] === action.payload['id']) {
+                            return el = action.payload;
+                        } else {
+                            return el;
+                        }
+                    })
+                    item['products'] = updateProducts;
+                    return item;
+                } else {
+                    return item;
+                } 
+            })
+            console.log(updateProduct);
+            return {
+                ...state,
+                orders: updateProduct
+            }
+        case 'СREATE_USER':
+                return {
+                    ...state,
+                    user: action.payload
+                }
+        case 'AUTORISATION_USER_USER':
+                return {
+                    ...state,
+                    user: action.payload
+                }
         // case 'FILTERS_FETCHING':
         //     return {
         //         ...state,

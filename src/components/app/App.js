@@ -1,8 +1,10 @@
+import HeaderOrder from '../order/headerOrder/HeaderOrder';
+import OrderAdd from '../order/orderAdd/OrderAdd';
+import SearchPanel from '../order/searchPanel/SearchPanel';
+import OrderList from '../order/orderList/OrderList';
+import ProdAddModal from '../order/prodAddModal/ProdAddModal';
+import UserRegAuth from '../userRegAuth/UserRegAuth';
 import Header from '../header/Header';
-import OrderAdd from '../orderAdd/OrderAdd';
-import SearchPanel from '../searchPanel/SearchPanel';
-import OrderList from '../orderList/OrderList';
-import ProdAddModal from '../prodAddModal/ProdAddModal';
 import { useSelector } from 'react-redux';
 
 import './App.css';
@@ -20,11 +22,13 @@ function App() {
 
   return (
     <div className="App">
-      {modal(showModal)}
       <Header />
+      <UserRegAuth />
+      {/* {modal(showModal)}
+      <HeaderOrder />
       <OrderAdd />
       <SearchPanel />
-      <OrderList />
+      <OrderList /> */}
     </div>
   );
 }

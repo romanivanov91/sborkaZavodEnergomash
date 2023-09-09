@@ -1,7 +1,7 @@
-import {useHttp} from '../../hooks/http.hook';
+import {useHttp} from '../../../hooks/http.hook';
 import { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ordersFetched, showModal, activeOrder, activeProduct } from '../../actions';
+import { ordersFetched, showModal, activeOrder, activeProduct } from '../../../actions';
 
 import './OrderList.css';
 
@@ -12,7 +12,7 @@ const OrderList = () => {
     const {request} = useHttp();
 
     useEffect(() => {
-        request("http://localhost:3001/orders")
+        request("http://127.0.0.1/sborkaZavodEnergomash/php/readOrder.php")
         .then((data) => {
             dispatch(ordersFetched(data));
         }).catch((error) => {
