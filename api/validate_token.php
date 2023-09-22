@@ -20,6 +20,8 @@ use \Firebase\JWT\Key;
 // Получаем значение веб-токена JSON
 $data = json_decode(file_get_contents("php://input"));
 
+//echo json_encode ($data);
+
 // Получаем JWT
 $jwt = isset($data->jwt) ? $data->jwt : "";
 

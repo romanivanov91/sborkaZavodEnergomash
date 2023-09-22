@@ -14,8 +14,6 @@ const Autorisation = () => {
 
     const dispatch = useDispatch();
 
-    console.log(user);
-
     const authUser = (e) => {
         console.log('форма сработала');
         e.preventDefault();
@@ -30,8 +28,23 @@ const Autorisation = () => {
             return res;
         })
         .then(res => {
-            dispatch(autorisationUser(res));
+            document.cookie = `jwt=${res.jwt}`;
+            //localStorage.setItem('jwt', res.jwt);
+            // localStorage.setItem('lastname', res.lastname);
+            // localStorage.setItem('firstname', res.firstname);
+            // localStorage.setItem('patronymic', res.patronymic);
+            // localStorage.setItem('position', res.position);
+            // localStorage.setItem('id', res.id);
+            const user = {
+                id: res.id,
+                lastname: res.lastname,
+                firstname: res.firstname,
+                patronymic: res.patronymic,
+                position: res.position
+            }
+            dispatch(autorisationUser(user));
         })
+        .then(console.log(user))
         .catch(error => console.log(error));
         //Очищаем форму после отправки
         setEmail('');

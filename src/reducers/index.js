@@ -108,7 +108,7 @@ const reducer = (state = initialState, action) => {
                     ...state,
                     user: action.payload
                 }
-        case 'AUTORISATION_USER_USER':
+        case 'AUTORISATION_USER':
                 return {
                     ...state,
                     user: action.payload
