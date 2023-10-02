@@ -138,14 +138,14 @@ public function update() {
     $this->lastname=htmlspecialchars(strip_tags($this->lastname));
     $this->patronymic=htmlspecialchars(strip_tags($this->patronymic));
     $this->position=htmlspecialchars(strip_tags($this->position));
-    $this->email=htmlspecialchars(strip_tags($this->email));
+    //$this->email=htmlspecialchars(strip_tags($this->email));
  
     // Привязываем значения с HTML формы
     $stmt->bindParam(":firstname", $this->firstname);
     $stmt->bindParam(":lastname", $this->lastname);
     $stmt->bindParam(":patronymic", $this->patronymic);
     $stmt->bindParam(":position", $this->position);
-    $stmt->bindParam(":email", $this->email);
+    //$stmt->bindParam(":email", $this->email);
  
     // Метод password_hash () для защиты пароля пользователя в базе данных
     if(!empty($this->password)){

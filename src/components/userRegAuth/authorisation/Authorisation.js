@@ -7,6 +7,7 @@ const Autorisation = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
 
     const {request} = useHttp();
 
@@ -28,7 +29,9 @@ const Autorisation = () => {
             return res;
         })
         .then(res => {
-            document.cookie = `jwt=${res.jwt}`;
+            if (rememberMe) {
+                document.cookie = `jwt=${res.jwt}`;
+            }
             //localStorage.setItem('jwt', res.jwt);
             // localStorage.setItem('lastname', res.lastname);
             // localStorage.setItem('firstname', res.firstname);
@@ -40,7 +43,8 @@ const Autorisation = () => {
                 lastname: res.lastname,
                 firstname: res.firstname,
                 patronymic: res.patronymic,
-                position: res.position
+                position: res.position,
+                email: res.email
             }
             dispatch(autorisationUser(user));
         })
@@ -72,7 +76,10 @@ const Autorisation = () => {
                         onChange={(e) => setPassword(e.target.value)}/>
             </div>
             <div className="form_check">
-                    <input type="checkbox" placeholder="Запомнить меня"/>
+                    <input 
+                        type="checkbox" 
+                        placeholder="Запомнить меня"
+                        onChange={() => setRememberMe(!rememberMe)}/>
                     <p>Запомнить меня</p>
             </div>
                 <input 

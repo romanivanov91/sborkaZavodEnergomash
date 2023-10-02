@@ -20,10 +20,10 @@ function App() {
 
   const {request} = useHttp();
 
+  const jwtCookie = document.cookie.match(/jwt=(.+?)(;|$)/);
+
   useEffect(() => {
     if (document.cookie.match(/jwt=(.+?)(;|$)/)) {
-
-      const jwtCookie = document.cookie.match(/jwt=(.+?)(;|$)/);
 
       const jwt = {
         jwt: jwtCookie[1]
@@ -50,11 +50,11 @@ function App() {
     <div className="App">
       <Header />
       <UserRegAuth />
-      {/* {modal(showModal)}
+      {modal(showModal)}
       <HeaderOrder />
       <OrderAdd />
       <SearchPanel />
-      <OrderList /> */}
+      <OrderList />
     </div>
   );
 }

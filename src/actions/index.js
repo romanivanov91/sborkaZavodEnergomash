@@ -68,6 +68,12 @@ export const autorisationUser = (user) => {
     }
 }
 
+export const updateUser = () => {
+    return {
+        type: 'UPDATE_USER'
+    }
+}
+
 // export const filtersFetching = () => {
 //     return {
 //         type: 'FILTERS_FETCHING'

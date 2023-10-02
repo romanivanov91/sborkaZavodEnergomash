@@ -47,6 +47,8 @@ if ($jwt) {
         // Нам нужно установить отправленные данные (через форму HTML) в свойствах объекта пользователя
         $user->firstname = $data->firstname;
         $user->lastname = $data->lastname;
+        $user->patronymic = $data->patronymic;
+        $user->position = $data->position;
         $user->email = $data->email;
         $user->password = $data->password;
         $user->id = $decoded->data->id;
@@ -63,6 +65,8 @@ if ($jwt) {
                     "id" => $user->id,
                     "firstname" => $user->firstname,
                     "lastname" => $user->lastname,
+                    "patronymic" => $user->patronymic,
+                    "position" => $user->position,
                     "email" => $user->email
                 )
             );
@@ -76,7 +80,8 @@ if ($jwt) {
             echo json_encode(
                 array(
                     "message" => "Пользователь был обновлён",
-                    "jwt" => $jwt
+                    "jwt" => $jwt,
+                    "data" => $token["data"]
                 )
             );
         }

@@ -1,4 +1,4 @@
-import { activeOrder, showModal } from "../actions"
+import { activeOrder, showModal } from "../actions";
 
 const initialState = {
     orders: [
@@ -16,7 +16,8 @@ const initialState = {
     activeProduct : {
     },
     user: {
-    }
+    },
+    updateUserFormState: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -112,6 +113,11 @@ const reducer = (state = initialState, action) => {
                 return {
                     ...state,
                     user: action.payload
+                }
+        case 'UPDATE_USER':
+                return {
+                    ...state,
+                    updateUserFormState: !state.updateUserFormState
                 }
         // case 'FILTERS_FETCHING':
         //     return {
