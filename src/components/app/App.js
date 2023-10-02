@@ -14,8 +14,9 @@ import './App.css';
 
 function App() {
 
-  const showModal = useSelector(state => state.showModal);
+  const {showModal} = useSelector(state => state);
   const user = useSelector(state=>state.user);
+  console.log(showModal);
 
   const dispatch = useDispatch();
 
@@ -56,20 +57,15 @@ function App() {
         <OrderAdd />
         <SearchPanel />
         <OrderList /> 
-        {modal(showModal)}
       </>
     }
   }, [user])
 
   return (
     <div className="App">
+      {modal(showModal)}
       <Header />
-      {/* <ViewGlobal /> */}
-      <HeaderOrder />
-        <OrderAdd />
-        <SearchPanel />
-        <OrderList /> 
-        {modal(showModal)}
+      <ViewGlobal />
     </div>
   );
 }

@@ -4,6 +4,7 @@
     background-color: rgb(0,168,255);
     padding: 10px;
     border-radius: 10px;
+    text-align: center;
 }
 .table_orders_heading, .table_orders_string {
     display: grid;
