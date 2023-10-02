@@ -43,32 +43,33 @@ const UserRegAuth = () => {
             )
     }
 
-    const Userauthorisation = () => {
-        return (
-            <>
-                <p>{user.lastname}</p>
-                <p>{user.firstname}</p>
-                <p>{user.patronymic}</p>
-                <p>{user.position}</p>
-                <button onClick={() => dispatch(updateUser())}>Редактировать профиль</button>
-                <button onClick={exit}>Выйти</button>
-            </>
-            )
-    }
+    // const Userauthorisation = () => {
+    //     return (
+    //         <>
+    //             <p>{user.lastname}</p>
+    //             <p>{user.firstname}</p>
+    //             <p>{user.patronymic}</p>
+    //             <p>{user.position}</p>
+    //             <button onClick={() => dispatch(updateUser())}>Редактировать профиль</button>
+    //             <button onClick={exit}>Выйти</button>
+    //         </>
+    //         )
+    // }
 
-    const UpdateUser = () => {
-        console.log(updateUserFormState);
-        if (updateUserFormState) {
-            return <UpdateUserForm
-                    {...user}/>
-        } else {
-            return <Userauthorisation/>
-        }
-    }
+    // const UpdateUser = () => {
+    //     console.log(updateUserFormState);
+    //     if (updateUserFormState) {
+    //         return <UpdateUserForm
+    //                 {...user}/>
+    //     } else {
+    //         return <Userauthorisation/>
+    //     }
+    // }
 
     return (
         <div className='userRegAuth_body'>
-            {Object.entries(user).length === 0 ? <Regauth/> : <UpdateUser/>}
+            <Regauth/>
+            {/* {Object.entries(user).length === 0 ? <Regauth/> : <Userauthorisation/>} */}
         </div>
         )
 }
