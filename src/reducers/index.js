@@ -15,6 +15,7 @@ const initialState = {
         },
     activeProduct : {
     },
+    userAutorisation: false,
     user: {
     },
     updateUserFormState: false
@@ -110,9 +111,17 @@ const reducer = (state = initialState, action) => {
                     user: action.payload
                 }
         case 'AUTORISATION_USER':
+                const userAutorisationBool = () => {
+                    if (Object.entries(action.payload).length === 0) {
+                        return false
+                    } else {
+                        return true
+                    }
+                }
                 return {
                     ...state,
-                    user: action.payload
+                    user: action.payload,
+                    userAutorisation: userAutorisationBool()
                 }
         case 'UPDATE_USER':
                 return {

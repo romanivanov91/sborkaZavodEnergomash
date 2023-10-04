@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { autorisationUser, updateUser } from "../../actions/index";
 import Autorisation from './authorisation/Authorisation';
 import Registration from './registration/Registration';
-import UpdateUserForm from './updateUser/UpdateUser';
 import { CookiesDelete } from '../../function/CookiesDelete';
 
 import './UserRegAuth.css';
@@ -43,18 +42,7 @@ const UserRegAuth = () => {
             )
     }
 
-    // const Userauthorisation = () => {
-    //     return (
-    //         <>
-    //             <p>{user.lastname}</p>
-    //             <p>{user.firstname}</p>
-    //             <p>{user.patronymic}</p>
-    //             <p>{user.position}</p>
-    //             <button onClick={() => dispatch(updateUser())}>Редактировать профиль</button>
-    //             <button onClick={exit}>Выйти</button>
-    //         </>
-    //         )
-    // }
+
 
     // const UpdateUser = () => {
     //     console.log(updateUserFormState);

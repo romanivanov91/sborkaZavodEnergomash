@@ -1,10 +1,8 @@
-import HeaderOrder from '../order/headerOrder/HeaderOrder';
-import OrderAdd from '../order/orderAdd/OrderAdd';
-import SearchPanel from '../order/searchPanel/SearchPanel';
-import OrderList from '../order/orderList/OrderList';
-import ProdAddModal from '../order/prodAddModal/ProdAddModal';
+import ProdAddModal from '../prodAddModal/ProdAddModal';
 import UserRegAuth from '../userRegAuth/UserRegAuth';
 import Header from '../header/Header';
+import Orders from '../order/Orders';
+import UserAuthorisation from '../userauthorisation/Userauthorisation';
 import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { autorisationUser } from "../../actions/index";
@@ -16,7 +14,7 @@ function App() {
 
   const {showModal} = useSelector(state => state);
   const user = useSelector(state=>state.user);
-  console.log(showModal);
+  const userAutorisation = useSelector(state=>state.userAutorisation);
 
   const dispatch = useDispatch();
 
@@ -48,24 +46,19 @@ function App() {
     }
   }
 
-  const ViewGlobal = useCallback (() => {
-    if (Object.entries(user).length === 0) {
-        return <UserRegAuth />
-    } else {
-      return <>
-        <HeaderOrder />
-        <OrderAdd />
-        <SearchPanel />
-        <OrderList /> 
-      </>
+  const Profile = () => {
+    if (userAutorisation) {
+      return <UserAuthorisation/>
     }
-  }, [user])
+    return <UserRegAuth/>
+  }
 
   return (
     <div className="App">
       {modal(showModal)}
       <Header />
-      <ViewGlobal />
+      <Profile/>
+      <Orders/>
     </div>
   );
 }

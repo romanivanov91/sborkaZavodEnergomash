@@ -1,7 +1,25 @@
+
+import { useSelector, useDispatch } from 'react-redux';
+
 import './Header.css';
 import logo from '../../resources/img/Logo.png'
 
 const Header = () => {
+
+    const user = useSelector(state=>state.user);
+    const userAutorisation = useSelector(state=>state.userAutorisation);
+
+    const profile = () => {
+        if (userAutorisation) {
+            return (
+                <p>{user.firstname} {user.lastname} {user.patronymic}</p>
+                )
+        } else {
+            return (
+                <p>Войти/Зарегестрироваться</p>
+                )
+        }
+    }
 
     return (
         <div className = 'header'>
@@ -14,6 +32,9 @@ const Header = () => {
                     <li>Металлообработка</li>
                     <li>КТП</li>
                 </ul>
+            </div>
+            <div className = 'userName'>
+                {profile()}
             </div>
         </div>
         )

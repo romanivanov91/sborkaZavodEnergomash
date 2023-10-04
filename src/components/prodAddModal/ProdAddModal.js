@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { showModal, productFormAdd, activeProduct as ap, productFormUpdate } from '../../../actions';
-import {useHttp} from '../../../hooks/http.hook';
+import { showModal, productFormAdd, activeProduct as ap, productFormUpdate } from '../../actions';
+import {useHttp} from '../../hooks/http.hook';
 import { v4 as uuidv4 } from 'uuid';
 
 import './ProdAddModal.css';
