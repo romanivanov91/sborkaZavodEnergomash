@@ -25,12 +25,34 @@ import './Userauthorisation.css';
         } else {
             return (
                 <>
-                    <p>{user.lastname}</p>
-                    <p>{user.firstname}</p>
-                    <p>{user.patronymic}</p>
-                    <p>{user.position}</p>
-                    <button onClick={() => dispatch(updateUser())}>Редактировать профиль</button>
-                    <button onClick={exit}>Выйти</button>
+                    <div className='profile'>
+                        <div className="profile_el">
+                            <p>Имя: {user.lastname}</p>
+                        </div>
+                        <div className="profile_el">
+                            <p>Фамилия: {user.firstname}</p>
+                        </div>
+                        <div className="profile_el">
+                            <p>Отчество: {user.patronomic}</p>
+                        </div>
+                        <div className="profile_el">
+                            <p>Ваша должность: {user.position}</p>
+                        </div>
+                        <div className="profile_el">
+                            <p>Адрес электронной почты: {user.email}</p>
+                        </div>    
+                        <div className='profile_btn'>
+                            <button
+                                onClick={() => dispatch(updateUser())}>
+                                    Редактировать профиль
+                            </button>
+                            <button
+                                onClick={exit}>
+                                    Выйти
+                            </button>   
+                        </div>               
+                    </div>
+                    
                 </>
             )
         }
