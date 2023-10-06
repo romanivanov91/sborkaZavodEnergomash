@@ -14,6 +14,7 @@ const OrderList = () => {
     useEffect(() => {
         request("http://127.0.0.1/sborkaZavodEnergomash/api/readOrder.php")
         .then((data) => {
+            console.log(data);
             dispatch(ordersFetched(data));
         }).catch((error) => {
             console.log(error); // вывести ошибку
