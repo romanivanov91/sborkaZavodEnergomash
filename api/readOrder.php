@@ -3,15 +3,21 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
-$db_host='localhost'; // ваш хост
-$db_name='sborkazavodenergomash'; // ваша бд
-$db_user='root'; // пользователь бд
-$db_pass=''; // пароль к бд
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);// включаем сообщения об ошибках
-$mysqli = new mysqli($db_host, $db_user, $db_pass, $db_name); // коннект с сервером бд
-$mysqli->set_charset("utf8mb4"); // задаем кодировку
+include_once "./Config/Database.php";
 
-if (!$mysqli)
+// Получаем соединение с базой данных
+$database = new Database();
+$db = $database->getConnection();
+
+// $db_host='localhost'; // ваш хост
+// $db_name='sborkazavodenergomash'; // ваша бд
+// $db_user='root'; // пользователь бд
+// $db_pass=''; // пароль к бд
+// mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);// включаем сообщения об ошибках
+// $mysqli = new mysqli($db_host, $db_user, $db_pass, $db_name); // коннект с сервером бд
+// $mysqli->set_charset("utf8mb4"); // задаем кодировку
+
+if (!$$db)
 {
     echo json_encode (mysqli_connect_error());
 };

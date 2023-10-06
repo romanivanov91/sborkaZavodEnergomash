@@ -12,7 +12,7 @@ const OrderList = () => {
     const {request} = useHttp();
 
     useEffect(() => {
-        request("http://127.0.0.1/sborkaZavodEnergomash/php/readOrder.php")
+        request("http://127.0.0.1/sborkaZavodEnergomash/api/readOrder.php")
         .then((data) => {
             dispatch(ordersFetched(data));
         }).catch((error) => {
