@@ -57,7 +57,7 @@ const Autorisation = () => {
 
     return (
         <form 
-            className='freg_auth_form'
+            className='reg_auth_form'
             onSubmit={authUser}>
             <div className="form_input">
                     <p>Адрес электронной почты: </p>
