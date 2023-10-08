@@ -18,6 +18,9 @@ import './Userauthorisation.css';
         dispatch(autorisationUser({}));
     }
 
+
+    console.log(user);
+
     const ViewUserProfile = () => {
         if (updateUserFormState) {
             return <UpdateUserForm
@@ -33,7 +36,7 @@ import './Userauthorisation.css';
                             <p>Фамилия: {user.firstname}</p>
                         </div>
                         <div className="profile_el">
-                            <p>Отчество: {user.patronomic}</p>
+                            <p>Отчество: {user.patronymic}</p>
                         </div>
                         <div className="profile_el">
                             <p>Ваша должность: {user.position}</p>

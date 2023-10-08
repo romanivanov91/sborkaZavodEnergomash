@@ -50,7 +50,7 @@ const UpdateUserForm = (user) => {
 
     return (
         <form 
-            className='reg_auth_form'
+            className='update_form'
             onSubmit={updateUserForm}>
             <div className="form_input">
                 <p>Имя: </p>
@@ -101,12 +101,14 @@ const UpdateUserForm = (user) => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}/>
             </div>
-            <input className='form_submit' type="submit" value='Внести изменения'/>
-            <input 
-                className='form_submit' 
-                type="button" 
-                value='Отмена'
-                onClick={() => dispatch(updateUser())}/>
+            <div className="form_update_btn">
+                <input className='form_update_input' type="submit" value='Внести изменения'/>
+                <input 
+                    className='form_update_input' 
+                    type="button" 
+                    value='Отмена'
+                    onClick={() => dispatch(updateUser())}/>
+            </div>
         </form>
         )
 };
