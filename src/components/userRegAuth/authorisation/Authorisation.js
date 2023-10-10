@@ -1,5 +1,6 @@
 import { useHttp } from "../../../hooks/http.hook";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import BarLoader from "react-spinners/BarLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { autorisationUser } from "../../../actions/index"
 
@@ -8,12 +9,16 @@ const Autorisation = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
+    const [spinner, setSpinner] = useState(false);
+    const [errorAuth, setErrorAuth] = useState(false);
 
     const {request} = useHttp();
 
     const user = useSelector(state => state.user);
 
     const dispatch = useDispatch();
+
+    const ref = useRef(null);
 
     const authUser = (e) => {
         console.log('форма сработала');
@@ -22,6 +27,8 @@ const Autorisation = () => {
             email: email,
             password: password
         };
+
+        setSpinner(true);
 
         request('http://localhost:8000/sborkaZavodEnergomash/api/login.php', 'POST', JSON.stringify(objectUser))
         .then(res => {
@@ -47,12 +54,65 @@ const Autorisation = () => {
                 email: res.email
             }
             dispatch(autorisationUser(user));
+            setSpinner(false);
         })
-        .then(console.log(user))
-        .catch(error => console.log(error));
+        .catch(error => {
+            console.log(error);
+            setSpinner(false);
+            setErrorAuth(true);
+        });
         //Очищаем форму после отправки
         setEmail('');
         setPassword('');
+    }
+
+    const clickOutsideError = (e) => {
+        const withinBoundaries = e.composedPath().includes(ref);
+ 
+	    if ( ! withinBoundaries ) {
+                setErrorAuth(false);
+	    }
+
+        
+        // if (e.target.className !== 'errorMessage') {
+        //     setErrorAuth(false);
+        //     console.log(e.target);
+        // }
+    }
+
+    const errorMessage = () => {
+        return (
+            <div className="errorMessage" ref={ref}>
+                <div onClick={(e) => clickOutsideError(e)}>
+                    <p>Пользователь не найден или неверный пароль</p>
+                    {/* <button onClick={() => setErrorAuth(false)}>Х</button> */}
+                </div>
+            </div>
+            )
+    }
+
+    const submitBtn = () => {
+        if (spinner) {
+            return (
+                <div className='form_auth_spinner'>
+                    <BarLoader
+                        color="#36d7b7"
+                        cssOverride={{}}
+                        speedMultiplier={1}
+                    />
+        </div>
+                )
+        } else {
+            return (
+                <div className="submitBtn">
+                    {errorAuth ? errorMessage(): null}
+                    <input 
+                    className='form_submit' 
+                    type="submit" 
+                    value='Войти'/>
+                </div>
+                )
+        }
     }
 
     return (
@@ -82,8 +142,7 @@ const Autorisation = () => {
                         onChange={() => setRememberMe(!rememberMe)}/>
                     <p>Запомнить меня</p>
             </div>
-                <input 
-                    className='form_submit' type="submit" value='Войти'/>
+                {submitBtn()}   
         </form>
     )
 }
