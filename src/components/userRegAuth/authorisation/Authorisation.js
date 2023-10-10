@@ -1,5 +1,5 @@
 import { useHttp } from "../../../hooks/http.hook";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import BarLoader from "react-spinners/BarLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { autorisationUser } from "../../../actions/index"
@@ -18,7 +18,9 @@ const Autorisation = () => {
 
     const dispatch = useDispatch();
 
-    const ref = useRef(null);
+    const refError = useRef(null);
+
+    useOutsideAlerter(refError, setErrorAuth);
 
     const authUser = (e) => {
         console.log('форма сработала');
@@ -66,24 +68,10 @@ const Autorisation = () => {
         setPassword('');
     }
 
-    const clickOutsideError = (e) => {
-        const withinBoundaries = e.composedPath().includes(ref);
- 
-	    if ( ! withinBoundaries ) {
-                setErrorAuth(false);
-	    }
-
-        
-        // if (e.target.className !== 'errorMessage') {
-        //     setErrorAuth(false);
-        //     console.log(e.target);
-        // }
-    }
-
     const errorMessage = () => {
         return (
-            <div className="errorMessage" ref={ref}>
-                <div onClick={(e) => clickOutsideError(e)}>
+            <div className="errorMessage" ref={refError}>
+                <div>
                     <p>Пользователь не найден или неверный пароль</p>
                     {/* <button onClick={() => setErrorAuth(false)}>Х</button> */}
                 </div>
@@ -148,3 +136,19 @@ const Autorisation = () => {
 }
 
 export default Autorisation;
+
+function useOutsideAlerter(ref, setErrorAuth) {
+    useEffect(() => {
+   
+      // Function for click event
+      function handleOutsideClick(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+            setErrorAuth(false);
+        }
+      }
+   
+      // Adding click event listener
+      document.addEventListener("click", handleOutsideClick);
+      return () => document.removeEventListener("click", handleOutsideClick);
+    }, [ref]);
+  }
