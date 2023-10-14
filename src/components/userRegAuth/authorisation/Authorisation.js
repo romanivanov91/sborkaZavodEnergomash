@@ -20,7 +20,18 @@ const Autorisation = () => {
 
     const refError = useRef(null);
 
-    useOutsideAlerter(refError, setErrorAuth);
+    //Эффект для фиксации клика вне сообщения об ошибке, для удаления этой ошибки
+    useEffect(() => {
+        // Функция удаления сообщения об ошибке, если клик был вне ее
+        const handleOutsideClick = (e) => {
+          if (refError.current && !refError.current.contains(e.target)) {
+              setErrorAuth(false);
+          }
+        }
+        // Обрабочик событмя на весь DOM
+        document.addEventListener("click", handleOutsideClick);
+        return () => document.removeEventListener("click", handleOutsideClick);
+      }, [refError]);
 
     const authUser = (e) => {
         console.log('форма сработала');
@@ -41,12 +52,6 @@ const Autorisation = () => {
             if (rememberMe) {
                 document.cookie = `jwt=${res.jwt}`;
             }
-            //localStorage.setItem('jwt', res.jwt);
-            // localStorage.setItem('lastname', res.lastname);
-            // localStorage.setItem('firstname', res.firstname);
-            // localStorage.setItem('patronymic', res.patronymic);
-            // localStorage.setItem('position', res.position);
-            // localStorage.setItem('id', res.id);
             const user = {
                 id: res.id,
                 lastname: res.lastname,
@@ -63,9 +68,6 @@ const Autorisation = () => {
             setSpinner(false);
             setErrorAuth(true);
         });
-        //Очищаем форму после отправки
-        setEmail('');
-        setPassword('');
     }
 
     const errorMessage = () => {
@@ -93,11 +95,11 @@ const Autorisation = () => {
         } else {
             return (
                 <div className="submitBtn">
-                    {errorAuth ? errorMessage(): null}
                     <input 
                     className='form_submit' 
                     type="submit" 
                     value='Войти'/>
+                    {errorAuth ? errorMessage(): null}
                 </div>
                 )
         }
@@ -136,19 +138,3 @@ const Autorisation = () => {
 }
 
 export default Autorisation;
-
-function useOutsideAlerter(ref, setErrorAuth) {
-    useEffect(() => {
-   
-      // Function for click event
-      function handleOutsideClick(event) {
-        if (ref.current && !ref.current.contains(event.target)) {
-            setErrorAuth(false);
-        }
-      }
-   
-      // Adding click event listener
-      document.addEventListener("click", handleOutsideClick);
-      return () => document.removeEventListener("click", handleOutsideClick);
-    }, [ref]);
-  }
