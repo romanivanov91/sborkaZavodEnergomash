@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { autorisationUser, updateUser } from "../../actions/index";
 import Autorisation from './authorisation/Authorisation';
-import Registration from './registration/Registration';
+import Registration from './registration/Registration copy';
 import { CookiesDelete } from '../../function/CookiesDelete';
 
 import './UserRegAuth.css';
@@ -25,7 +25,7 @@ const UserRegAuth = () => {
     const Regauth = () => {
         return (
             <>
-            <div className='userRegAuth_body_choiceRegAuth'>
+            <div className='reg_auth_form'>
                 <h2 
                     className = {stateRegAuth === 'reg' ? 'active_choiceRegAuth' : ''}
                     onClick = {() => setStateRegAuth('reg')}>
