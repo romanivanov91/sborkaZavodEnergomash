@@ -58,7 +58,7 @@ const Registration = () => {
             email: Yup.string()
                     .email('Неправильный email адрес!')
                     .required('Обязательное поле!'),
-            password: Yup.yup.string('Введите пароль!')
+            password: Yup.string('Введите пароль!')
                     .required()
                     .min(7)
                     .max(255),
@@ -76,21 +76,82 @@ const Registration = () => {
             <Form className='reg_auth_form'>
 
                 <div className="form_input">
-                    <p>Имя: </p>
                     <MyTextInput
-                    label='Ваше имя'
+                    label='Имя'
                     id="name"
                     name="name"
                     type="text"
                     />
                 </div>
 
-                <h2>Отправить пожертвование</h2>
+                <div className="form_input">
+                    <MyTextInput
+                    label='Фамилия'
+                    id="firstName"
+                    name="firstName"
+                    type="text"
+                    />
+                </div>
+
+                <div className="form_input">
+                    <MyTextInput
+                    label='Отчество'
+                    id="patronymic"
+                    name="patronymic"
+                    type="text"
+                    />
+                </div>
+
+                <div className="form_input">
+                    <MyTextInput
+                    label='Должность'
+                    id="position"
+                    name="position"
+                    type="text"
+                    />
+                </div>
+
+                <div className="form_input">
+                    <MyTextInput
+                        className='form_input'
+                        label='Ваша почта'
+                        id="email"
+                        name="email"
+                        type="email"
+                    />
+                </div>
+
+                <div className="form_input">
+                    <MyTextInput
+                    label='Пароль'
+                    id="password"
+                    name="password"
+                    type="password"
+                    onChange={Formik.handleChange}
+                    onBlur={Formik.handleBlur}
+                    />
+                </div>
+
+                <div className="form_input">
+                    <MyTextInput
+                    label='Повторите пароль'
+                    id="repeatPassword"
+                    name="repeatPassword"
+                    type="password"
+                    onChange={Formik.handleChange}
+                    onBlur={Formik.handleBlur}
+                    />
+                </div>
+                <input className='form_submit' type="submit" value='Зарегистрироваться'/>
+
+                
+
+                {/* <h2>Отправить пожертвование</h2>
                 <MyTextInput
                     className='reg_auth_form'
-                    label='Ваше имя'
-                    id="name"
-                    name="name"
+                    label='Имя'
+                    id="patronymic"
+                    name="patronymic"
                     type="text"
                 />
                 <MyTextInput
@@ -125,7 +186,7 @@ const Registration = () => {
                     as="textarea"
                 />
                 <ErrorMessage className="error" name="text" component="div"/>
-                <button type="submit">Отправить</button>
+                <button type="submit">Отправить</button> */}
             </Form>
         </Formik>
     )

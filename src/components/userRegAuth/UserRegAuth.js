@@ -25,7 +25,7 @@ const UserRegAuth = () => {
     const Regauth = () => {
         return (
             <>
-            <div className='reg_auth_form'>
+            <div className='userRegAuth_body_choiceRegAuth'>
                 <h2 
                     className = {stateRegAuth === 'reg' ? 'active_choiceRegAuth' : ''}
                     onClick = {() => setStateRegAuth('reg')}>
