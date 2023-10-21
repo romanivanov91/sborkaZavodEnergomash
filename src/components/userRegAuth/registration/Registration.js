@@ -43,6 +43,8 @@ const Registration = () => {
         }
     }
 
+    
+
     return (
             <form 
                 className='reg_auth_form'

@@ -1,7 +1,9 @@
 
-import { Formik, Form, Field, ErrorMessage, useField } from 'formik';
+import { useState, useRef, useEffect } from "react";
+import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import { useHttp } from "../../../hooks/http.hook";
+import BarLoader from "react-spinners/BarLoader";
 
 const MyTextInput = ({label, ...props}) => {
     const [field, meta] = useField(props);
@@ -16,26 +18,71 @@ const MyTextInput = ({label, ...props}) => {
     )
 }
 
-
-
 const Registration = () => {
+
+    const [spinner, setSpinner] = useState(false);
+    const [errorReg, setErrorReg] = useState(false);
 
     const {request} = useHttp();
 
-    const addUser = (e, values) => {
+    const addUser = (values) => {
         console.log('форма сработала');
-        e.preventDefault();
 
+        delete values.repeatPassword;
+        console.log(values);
+        //e.preventDefault();
+        setSpinner(true);
         request('http://localhost:8000/sborkaZavodEnergomash/api/create_user.php', 'POST', JSON.stringify(values, null, 2))
-        .then(res => console.log(res, 'Отправка успешна'))
-        .catch(error => console.log(error));
+        .then(res => {
+            console.log(res, 'Отправка успешна');
+            setSpinner(false);
+        })
+        .catch(error => {
+            console.log(error);
+            setSpinner(false);
+            setErrorReg(true);
+        });
+    }
+
+    const errorMessage = () => {
+        return (
+            <div className="errorMessage">
+                <div>
+                    <p>Ошибка регистрации</p>
+                </div>
+            </div>
+            )
+    }
+
+    const submitBtn = () => {
+        if (spinner) {
+            return (
+                <div className='form_reg_auth_spinner'>
+                    <BarLoader
+                        color="#36d7b7"
+                        cssOverride={{}}
+                        speedMultiplier={1}
+                    />
+        </div>
+                )
+        } else {
+            return (
+                <div className="submitBtn">
+                    <input 
+                    className='form_submit' 
+                    type="submit" 
+                    value='Зарегистрироваться'/>
+                    {errorReg ? errorMessage(): null}
+                </div>
+                )
+        }
     }
 
     return (
         <Formik
         initialValues = {{
-            name: '',
-            firstName: '',
+            lastname: '',
+            firstname: '',
             patronymic: '',
             position: '',
             email: '',
@@ -43,10 +90,10 @@ const Registration = () => {
             repeatPassword: ''
         }}
         validationSchema = {Yup.object({
-            name: Yup.string()
+            lastname: Yup.string()
                     .min(2, 'Минимум 2 символа!')
                     .required('Обязательное поле!'),
-            firstName: Yup.string()
+            firstname: Yup.string()
                     .min(2, 'Минимум 2 символа!')
                     .required('Обязательное поле!'),
             patronymic: Yup.string()
@@ -59,27 +106,22 @@ const Registration = () => {
                     .email('Неправильный email адрес!')
                     .required('Обязательное поле!'),
             password: Yup.string('Введите пароль!')
-                    .required()
-                    .min(7)
-                    .max(255),
+                    .required('Введите пароль')
+                    .min(7, 'Минимум 7 символов')
+                    .max(255, 'Превышение максимального колличества символов 255'),
             repeatPassword: Yup.string()
                     .required('Введите пароль повторно!')
-                    .when('password', (password, schema) => {
-                        return schema.test({
-                            test: (passwordRepeat) => password === passwordRepeat,
-                            message: 'Пароли не совпадают',
-                        });
-                    }),
+                    .oneOf([Yup.ref('password')], 'Пароли не совпадают!')
         })}
-        onSubmit = {(e,values) => addUser(e, values)}
+        onSubmit = {(values) => addUser(values)}
         >
             <Form className='reg_auth_form'>
 
                 <div className="form_input">
                     <MyTextInput
                     label='Имя'
-                    id="name"
-                    name="name"
+                    id="lastname"
+                    name="lastname"
                     type="text"
                     />
                 </div>
@@ -87,8 +129,8 @@ const Registration = () => {
                 <div className="form_input">
                     <MyTextInput
                     label='Фамилия'
-                    id="firstName"
-                    name="firstName"
+                    id="firstname"
+                    name="firstname"
                     type="text"
                     />
                 </div>
@@ -127,8 +169,6 @@ const Registration = () => {
                     id="password"
                     name="password"
                     type="password"
-                    onChange={Formik.handleChange}
-                    onBlur={Formik.handleBlur}
                     />
                 </div>
 
@@ -138,11 +178,9 @@ const Registration = () => {
                     id="repeatPassword"
                     name="repeatPassword"
                     type="password"
-                    onChange={Formik.handleChange}
-                    onBlur={Formik.handleBlur}
                     />
                 </div>
-                <input className='form_submit' type="submit" value='Зарегистрироваться'/>
+                {submitBtn()} 
 
                 
 

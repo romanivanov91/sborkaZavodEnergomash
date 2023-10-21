@@ -84,7 +84,7 @@ const Autorisation = () => {
     const submitBtn = () => {
         if (spinner) {
             return (
-                <div className='form_auth_spinner'>
+                <div className='form_reg_auth_spinner'>
                     <BarLoader
                         color="#36d7b7"
                         cssOverride={{}}
