@@ -22,13 +22,13 @@ const Registration = () => {
 
     const [spinner, setSpinner] = useState(false);
     const [errorReg, setErrorReg] = useState(false);
+    const [succesRegMesageState, setSuccesRegMesageState] = useState(false);
 
     const {request} = useHttp();
 
     const addUser = (values) => {
         console.log('форма сработала');
-
-        delete values.repeatPassword;
+        //delete values.repeatPassword;
         console.log(values);
         //e.preventDefault();
         setSpinner(true);
@@ -36,6 +36,10 @@ const Registration = () => {
         .then(res => {
             console.log(res, 'Отправка успешна');
             setSpinner(false);
+            setSuccesRegMesageState(true);
+            setTimeout(() => {
+                setSuccesRegMesageState(false)
+            }, 10000);
         })
         .catch(error => {
             console.log(error);
@@ -44,14 +48,27 @@ const Registration = () => {
         });
     }
 
-    const errorMessage = () => {
+    const errorMessage = () => { 
         return (
             <div className="errorMessage">
                 <div>
                     <p>Ошибка регистрации</p>
                 </div>
             </div>
+        )
+    }
+
+    const succesRegMes = () => {
+        if (succesRegMesageState) {
+        return (
+            <div className="succesRegMes">
+                <div>
+                    <p>Вы успешно зарегистрированы!</p>
+                    <p>Войдите через форму авторизации.</p>
+                </div>
+            </div>
             )
+        }
     }
 
     const submitBtn = () => {
@@ -180,7 +197,8 @@ const Registration = () => {
                     type="password"
                     />
                 </div>
-                {submitBtn()} 
+                {submitBtn()}
+                {succesRegMes()}
 
                 
 
