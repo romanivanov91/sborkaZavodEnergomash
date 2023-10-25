@@ -1,111 +1,210 @@
+
+import { useState, useRef, useEffect } from "react";
+import { Formik, Form, useField } from 'formik';
+import * as Yup from 'yup';
 import { useHttp } from "../../../hooks/http.hook";
-import { useState } from "react";
+import BarLoader from "react-spinners/BarLoader";
+
+const MyTextInput = ({label, ...props}) => {
+    const [field, meta] = useField(props);
+    return (
+        <>
+            <label htmlFor='{props.name}'>{label}</label>
+            <input {...props} {...field}/>
+            {meta.touched && meta.error ? (
+                <div className='error'>{meta.error}</div>
+            ) : null}
+        </>
+    )
+}
 
 const Registration = () => {
 
-    const [lastName, setLastName] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [patronymic, setPatronymic] = useState('');
-    const [position, setPosition] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [repeatPassword, setRepeatPassword] = useState('');
+    const [spinner, setSpinner] = useState(false);
+    const [errorReg, setErrorReg] = useState(false);
+    const [succesRegMesageState, setSuccesRegMesageState] = useState(false);
 
     const {request} = useHttp();
 
-    const addUser = (e) => {
+    const addUser = (values) => {
         console.log('форма сработала');
-        e.preventDefault();
+        //delete values.repeatPassword;
+        console.log(values);
+        //e.preventDefault();
+        setSpinner(true);
+        request('http://localhost:8000/sborkaZavodEnergomash/api/create_user.php', 'POST', JSON.stringify(values, null, 2))
+        .then(res => {
+            console.log(res, 'Отправка успешна');
+            setSpinner(false);
+            setSuccesRegMesageState(true);
+            setTimeout(() => {
+                setSuccesRegMesageState(false)
+            }, 10000);
+        })
+        .catch(error => {
+            console.log(error);
+            setSpinner(false);
+            setErrorReg(true);
+        });
+    }
 
-        if (password === repeatPassword) {
-            const objectUser = {
-                lastname: lastName,
-                firstname: firstName,
-                patronymic: patronymic,
-                position: position,
-                email: email,
-                password: password
-            };
+    const errorMessage = () => { 
+        return (
+            <div className="errorMessage">
+                <div>
+                    <p>Ошибка регистрации</p>
+                </div>
+            </div>
+        )
+    }
 
-            request('http://localhost:8000/sborkaZavodEnergomash/api/create_user.php', 'POST', JSON.stringify(objectUser))
-            .then(res => console.log(res, 'Отправка успешна'))
-            .catch(error => console.log(error));
-            //Очищаем форму после отправки
-            setLastName('');
-            setFirstName('');
-            setPatronymic('');
-            setPosition('');
-            setEmail('');
-            setPassword('');
-            setRepeatPassword('');
-        } else {
-            console.log('Пароли не совпадают');
+    const succesRegMes = () => {
+        if (succesRegMesageState) {
+        return (
+            <div className="succesRegMes">
+                <div>
+                    <p>Вы успешно зарегистрированы!</p>
+                    <p>Войдите через форму авторизации.</p>
+                </div>
+            </div>
+            )
         }
     }
 
-    
+    const submitBtn = () => {
+        if (spinner) {
+            return (
+                <div className='form_reg_auth_spinner'>
+                    <BarLoader
+                        color="#36d7b7"
+                        cssOverride={{}}
+                        speedMultiplier={1}
+                    />
+        </div>
+                )
+        } else {
+            return (
+                <div className="submitBtn">
+                    <input 
+                    className='form_submit' 
+                    type="submit" 
+                    value='Зарегистрироваться'/>
+                    {errorReg ? errorMessage(): null}
+                </div>
+                )
+        }
+    }
 
     return (
-            <form 
-                className='reg_auth_form'
-                onSubmit={addUser}>
+        <Formik
+        initialValues = {{
+            lastname: '',
+            firstname: '',
+            patronymic: '',
+            position: '',
+            email: '',
+            password: '',
+            repeatPassword: ''
+        }}
+        validationSchema = {Yup.object({
+            lastname: Yup.string()
+                    .min(2, 'Минимум 2 символа!')
+                    .required('Обязательное поле!'),
+            firstname: Yup.string()
+                    .min(2, 'Минимум 2 символа!')
+                    .required('Обязательное поле!'),
+            patronymic: Yup.string()
+                    .min(2, 'Минимум 2 символа!')
+                    .required('Обязательное поле!'),
+            position: Yup.string()
+                    .min(2, 'Минимум 2 символа!')
+                    .required('Обязательное поле!'),
+            email: Yup.string()
+                    .email('Неправильный email адрес!')
+                    .required('Обязательное поле!'),
+            password: Yup.string('Введите пароль!')
+                    .required('Введите пароль')
+                    .min(7, 'Минимум 7 символов')
+                    .max(255, 'Превышение максимального колличества символов 255'),
+            repeatPassword: Yup.string()
+                    .required('Введите пароль повторно!')
+                    .oneOf([Yup.ref('password')], 'Пароли не совпадают!')
+        })}
+        onSubmit = {(values, {resetForm} ) => {
+            addUser(values);
+            resetForm();
+        }}
+        >
+            <Form className='reg_auth_form'>
+
                 <div className="form_input">
-                    <p>Имя: </p>
-                    <input 
-                        type="text" 
-                        placeholder="Введите имя"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}/> 
+                    <MyTextInput
+                    label='Имя'
+                    id="lastname"
+                    name="lastname"
+                    type="text"
+                    />
                 </div>
+
                 <div className="form_input">
-                    <p>Фамилия: </p>
-                    <input 
-                        type="text" 
-                        placeholder="Введите фамилию"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                        /> 
+                    <MyTextInput
+                    label='Фамилия'
+                    id="firstname"
+                    name="firstname"
+                    type="text"
+                    />
                 </div>
+
                 <div className="form_input">
-                    <p>Отчество: </p>
-                    <input 
-                        type="text" 
-                        placeholder="Введите отчество"
-                        value={patronymic}
-                        onChange={(e) => setPatronymic(e.target.value)}/> 
+                    <MyTextInput
+                    label='Отчество'
+                    id="patronymic"
+                    name="patronymic"
+                    type="text"
+                    />
                 </div>
+
                 <div className="form_input">
-                    <p>Ваша должность: </p>
-                    <input 
-                    type="text" 
-                    placeholder="Введите должность"
-                    value={position}
-                    onChange={(e) => setPosition(e.target.value)}/> 
+                    <MyTextInput
+                    label='Должность'
+                    id="position"
+                    name="position"
+                    type="text"
+                    />
                 </div>
+
                 <div className="form_input">
-                    <p>Адрес электронной почты: </p>
-                    <input 
-                        type="email" 
-                        placeholder="Введите email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}/> 
+                    <MyTextInput
+                        className='form_input'
+                        label='Ваша почта'
+                        id="email"
+                        name="email"
+                        type="email"
+                    />
                 </div>
-                <div className="form_input"> 
-                    <p>Пароль: </p>
-                    <input 
-                        type="password" 
-                        placeholder="Введите пароль"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}/>
-                    <input 
-                        type="password" 
-                        placeholder="Повторите пароль"
-                        value={repeatPassword}
-                        onChange={(e) => setRepeatPassword(e.target.value)}/>
+
+                <div className="form_input">
+                    <MyTextInput
+                    label='Пароль'
+                    id="password"
+                    name="password"
+                    type="password"
+                    />
                 </div>
-                <input className='form_submit' type="submit" value='Зарегистрироваться'/>
-            </form>
-        )
+
+                <div className="form_input">
+                    <MyTextInput
+                    label='Повторите пароль'
+                    id="repeatPassword"
+                    name="repeatPassword"
+                    type="password"
+                    />
+                </div>
+                {submitBtn()}
+                {succesRegMes()}
+            </Form>
+        </Formik>
+    )
 }
 
 export default Registration;

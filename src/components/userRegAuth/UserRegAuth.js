@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { autorisationUser, updateUser } from "../../actions/index";
 import Autorisation from './authorisation/Authorisation';
-import Registration from './registration/Registration copy';
+import Registration from './registration/Registration';
 import { CookiesDelete } from '../../function/CookiesDelete';
 
 import './UserRegAuth.css';
