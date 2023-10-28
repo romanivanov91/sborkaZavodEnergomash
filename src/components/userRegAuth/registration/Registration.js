@@ -1,5 +1,5 @@
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import { useHttp } from "../../../hooks/http.hook";
@@ -27,10 +27,6 @@ const Registration = () => {
     const {request} = useHttp();
 
     const addUser = (values) => {
-        console.log('форма сработала');
-        //delete values.repeatPassword;
-        console.log(values);
-        //e.preventDefault();
         setSpinner(true);
         request('http://localhost:8000/sborkaZavodEnergomash/api/create_user.php', 'POST', JSON.stringify(values, null, 2))
         .then(res => {
@@ -61,7 +57,7 @@ const Registration = () => {
     const succesRegMes = () => {
         if (succesRegMesageState) {
         return (
-            <div className="succesRegMes">
+            <div className="succesMes">
                 <div>
                     <p>Вы успешно зарегистрированы!</p>
                     <p>Войдите через форму авторизации.</p>

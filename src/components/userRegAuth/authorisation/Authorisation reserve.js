@@ -1,28 +1,16 @@
 import { useHttp } from "../../../hooks/http.hook";
 import { useState, useRef, useEffect } from "react";
-import { Formik, Form, useField } from 'formik';
-import * as Yup from 'yup';
 import BarLoader from "react-spinners/BarLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { autorisationUser } from "../../../actions/index"
 
 const Autorisation = () => {
 
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
     const [spinner, setSpinner] = useState(false);
     const [errorAuth, setErrorAuth] = useState(false);
-
-    const MyTextInput = ({label, ...props}) => {
-        const [field, meta] = useField(props);
-        return (
-            <>
-                <label htmlFor='{props.name}'>{label}</label>
-                <input {...props} {...field}/>
-                {meta.touched && meta.error ? (
-                    <div className='error'>{meta.error}</div>
-                ) : null}
-            </>
-        )
-    }
 
     const {request} = useHttp();
 
@@ -45,15 +33,23 @@ const Autorisation = () => {
         return () => document.removeEventListener("click", handleOutsideClick);
       }, [refError]);
 
-    const authUser = (values) => {
+    const authUser = (e) => {
+        console.log('форма сработала');
+        e.preventDefault();
+        const objectUser = {
+            email: email,
+            password: password
+        };
+
         setSpinner(true);
-        request('http://localhost:8000/sborkaZavodEnergomash/api/login.php', 'POST', JSON.stringify(values, null, 2))
+
+        request('http://localhost:8000/sborkaZavodEnergomash/api/login.php', 'POST', JSON.stringify(objectUser))
         .then(res => {
             console.log(res, 'Отправка успешна');
             return res;
         })
         .then(res => {
-            if (values.toggle) {
+            if (rememberMe) {
                 document.cookie = `jwt=${res.jwt}`;
             }
             const user = {
@@ -110,52 +106,34 @@ const Autorisation = () => {
     }
 
     return (
-        <Formik
-        initialValues = {{
-            email: '',
-            password: '',
-            toggle: false
-        }}
-        validationSchema = {Yup.object({
-            email: Yup.string()
-                    .email('Неправильный email адрес!')
-                    .required('Обязательное поле!'),
-            password: Yup.string('Введите пароль!')
-                    .required('Введите пароль')
-        })}
-        onSubmit = {values => {
-            authUser(values);
-        }}
-        >
-            <Form className='reg_auth_form'>
-                <div className="form_input">
-                    <MyTextInput
-                        className='form_input'
-                        label='Ваша почта'
-                        id="email"
-                        name="email"
-                        type="email"
-                    />
+        <form 
+            className='reg_auth_form'
+            onSubmit={authUser}>
+            <div className="form_input">
+                    <p>Адрес электронной почты: </p>
+                    <input 
+                        type="email" 
+                        placeholder="Введите email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}/> 
                 </div>
-                <div className="form_input">
-                    <MyTextInput
-                    label='Пароль'
-                    id="password"
-                    name="password"
-                    type="password"
-                    />
-                </div>
-                <div>
-                <MyTextInput
-                    label='Запомнить меня'
-                    id="password"
-                    name="toggle"
-                    type="checkbox" 
-                    />
-                </div>
-                {submitBtn()}
-            </Form>
-        </Formik>
+            <div className="form_input"> 
+                    <p>Пароль: </p>
+                    <input 
+                        type="password" 
+                        placeholder="Введите пароль"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}/>
+            </div>
+            <div className="form_check">
+                    <input 
+                        type="checkbox" 
+                        placeholder="Запомнить меня"
+                        onChange={() => setRememberMe(!rememberMe)}/>
+                    <p>Запомнить меня</p>
+            </div>
+                {submitBtn()}   
+        </form>
     )
 }
 
