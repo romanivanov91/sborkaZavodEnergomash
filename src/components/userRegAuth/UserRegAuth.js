@@ -14,6 +14,7 @@ const UserRegAuth = () => {
 
     const user = useSelector(state=>state.user);
     const updateUserFormState = useSelector(state=>state.updateUserFormState);
+    const errorUserPass = useSelector(state => state.errorUserPass);
 
     const dispatch = useDispatch();
 

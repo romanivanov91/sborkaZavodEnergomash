@@ -74,6 +74,13 @@ export const updateUser = () => {
     }
 }
 
+export const errorUserPass = (bool) => {
+    return {
+        type: 'ERROR_USER_PASS',
+        payload: bool
+    }
+}
+
 // export const filtersFetching = () => {
 //     return {
 //         type: 'FILTERS_FETCHING'

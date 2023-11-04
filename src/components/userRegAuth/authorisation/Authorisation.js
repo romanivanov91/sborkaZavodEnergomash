@@ -4,7 +4,7 @@ import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import BarLoader from "react-spinners/BarLoader";
 import { useDispatch, useSelector } from "react-redux";
-import { autorisationUser } from "../../../actions/index"
+import { autorisationUser, errorUserPass } from "../../../actions/index"
 
 const Autorisation = () => {
 
@@ -79,7 +79,6 @@ const Autorisation = () => {
             <div className="errorMessage" ref={refError}>
                 <div>
                     <p>Пользователь не найден или неверный пароль</p>
-                    {/* <button onClick={() => setErrorAuth(false)}>Х</button> */}
                 </div>
             </div>
             )
@@ -154,6 +153,11 @@ const Autorisation = () => {
                     />
                 </div>
                 {submitBtn()}
+                <p
+                    className="recPassBtn"
+                    onClick={() => dispatch(errorUserPass(true))}>
+                    Забыли пароль?
+                </p>
             </Form>
         </Formik>
     )

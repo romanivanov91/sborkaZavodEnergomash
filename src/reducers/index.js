@@ -18,7 +18,8 @@ const initialState = {
     userAutorisation: false,
     user: {
     },
-    updateUserFormState: false
+    updateUserFormState: false,
+    errorUserPass: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -127,6 +128,11 @@ const reducer = (state = initialState, action) => {
                 return {
                     ...state,
                     updateUserFormState: !state.updateUserFormState
+                }
+        case 'ERROR_USER_PASS':
+                return {
+                    ...state,
+                    errorUserPass: action.payload
                 }
         // case 'FILTERS_FETCHING':
         //     return {
