@@ -59,7 +59,7 @@ const UserRegAuth = () => {
 
     return (
         <div className='userRegAuth_body'>
-            <Regauth/>
+            {errorUserPass ? <RecPass/> : <Regauth/>}
         </div>
         )
 }

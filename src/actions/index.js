@@ -74,9 +74,9 @@ export const updateUser = () => {
     }
 }
 
-export const errorUserPass = (bool) => {
+export const recUserPass = (bool) => {
     return {
-        type: 'ERROR_USER_PASS',
+        type: 'REC_USER_PASS',
         payload: bool
     }
 }

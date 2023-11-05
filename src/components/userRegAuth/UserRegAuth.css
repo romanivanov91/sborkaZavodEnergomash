@@ -1,5 +1,6 @@
 .userRegAuth_body {
     width: 25vw;
+    height: 80%;
     margin: 10px auto;
     background-color: white;
     text-align: center;
@@ -96,7 +97,11 @@
     color: red;
     margin: 0px auto;
 }
-.error p {
+.errorMessage p {
+    width: 100%;
+    text-align: center;
+}
+.error, .error p {
     color: #e53e3e;
     /* margin-top: 8px; */
 }
@@ -104,7 +109,7 @@
     color: green;
     transition: opacity 1s;
 }
-.recPassBtn {
+.recPassBtn, .regAutBtn {
     color: rgb(49, 0, 128);
     padding-bottom: 30px;
     cursor: grab;

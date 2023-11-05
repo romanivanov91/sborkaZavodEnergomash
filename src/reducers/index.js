@@ -129,7 +129,7 @@ const reducer = (state = initialState, action) => {
                     ...state,
                     updateUserFormState: !state.updateUserFormState
                 }
-        case 'ERROR_USER_PASS':
+        case 'REC_USER_PASS':
                 return {
                     ...state,
                     errorUserPass: action.payload

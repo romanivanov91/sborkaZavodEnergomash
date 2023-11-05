@@ -4,12 +4,15 @@ import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import BarLoader from "react-spinners/BarLoader";
 import { useDispatch, useSelector } from "react-redux";
+import { recUserPass } from "../../../actions/index"
 
 const PasswordRecovery = () => {
 
     const [spinner, setSpinner] = useState(false);
     const [errorUser, setErrorUser] = useState(false);
     const [succesRegMesageState, setSuccesRegMesageState] = useState(false);
+
+    const dispatch = useDispatch();
 
     const refError = useRef(null);
 
@@ -36,10 +39,12 @@ const PasswordRecovery = () => {
             console.log(res, 'Отправка успешна');
             setSpinner(false);
             setSuccesRegMesageState(true);
+            setErrorUser(false);
         })
         .catch(error => {
             console.log(error);
             setSpinner(false);
+            setSuccesRegMesageState(false);
             setErrorUser(true);
         });
     }
@@ -116,6 +121,11 @@ const PasswordRecovery = () => {
                     />
                 </div>
                 {submitBtn()}
+                <p
+                    className="regAutBtn"
+                    onClick={() => dispatch(recUserPass(false))}>
+                    Перейти в форму регистации/авторизации.
+                </p>
             </Form>
         </Formik>
         )
