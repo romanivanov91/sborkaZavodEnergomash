@@ -17,6 +17,7 @@ const UpdateUserForm = (user) => {
     const dispatch = useDispatch();
 
     const jwtCookie = document.cookie.match(/jwt=(.+?)(;|$)/);
+    console.log(jwtCookie);
 
     console.log(user.email);
 
