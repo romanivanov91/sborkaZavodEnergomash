@@ -61,7 +61,7 @@ if ($email_exists) {
 
     //Меняем пароль в базе данных
     $user->password = $new_pass;
-    $user->update();
+    $user->update(1);
 
     //От кого отправляем письмо
     $from = array("Завод Энергомаш ", // Имя отправителя

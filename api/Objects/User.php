@@ -33,7 +33,8 @@ class User
                     patronymic = :patronymic,
                     position = :position,
                     email = :email,
-                    password = :password";
+                    password = :password,
+                    TempPass = b'0'";
 
         // Подготовка запроса
         $stmt = $this->conn->prepare($query);
@@ -115,20 +116,33 @@ function emailExists() {
 }
  
 // Обновить запись пользователя
-public function update() {
+public function update($tempPass) {
  
     // Если в HTML-форме был введен пароль (необходимо обновить пароль)
     $password_set=!empty($this->password) ? ", password = :password" : "";
- 
     // Если не введен пароль - не обновлять пароль
-    $query = "UPDATE " . $this->table_name . "
-            SET
-                firstname = :firstname,
-                lastname = :lastname,
-                patronymic = :patronymic,
-                position = :position
-                {$password_set}
-            WHERE id = :id";
+
+    if ($tempPass) {
+        $query = "UPDATE " . $this->table_name . "
+        SET
+            firstname = :firstname,
+            lastname = :lastname,
+            patronymic = :patronymic,
+            position = :position,
+            TempPass = b'1'
+            {$password_set}
+        WHERE id = :id";
+    } else {
+        $query = "UPDATE " . $this->table_name . "
+        SET
+            firstname = :firstname,
+            lastname = :lastname,
+            patronymic = :patronymic,
+            position = :position
+            {$password_set}
+        WHERE id = :id";
+    }
+    
  
     // Подготовка запроса
     $stmt = $this->conn->prepare($query);

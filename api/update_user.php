@@ -54,7 +54,7 @@ if ($jwt) {
         $user->id = $decoded->data->id;
 
         // Создание пользователя
-        if ($user->update()) {
+        if ($user->update(0)) {
             // Нам нужно заново сгенерировать JWT, потому что данные пользователя могут отличаться
             $token = array(
                 "iss" => $iss,

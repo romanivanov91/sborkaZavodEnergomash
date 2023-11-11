@@ -62,7 +62,8 @@ const Autorisation = () => {
                 firstname: res.firstname,
                 patronymic: res.patronymic,
                 position: res.position,
-                email: res.email
+                email: res.email,
+                jwt: res.jwt
             }
             dispatch(autorisationUser(user));
             setSpinner(false);

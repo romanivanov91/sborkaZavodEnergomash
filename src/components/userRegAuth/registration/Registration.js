@@ -40,6 +40,7 @@ const Registration = () => {
         .catch(error => {
             console.log(error);
             setSpinner(false);
+            setSuccesRegMesageState(false)
             setErrorReg(true);
         });
     }
