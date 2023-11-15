@@ -14,6 +14,7 @@ class User
     public $position;
     public $email;
     public $password;
+    public $TempPass;
 
     // Конструктор класса User
     public function __construct($db)
@@ -46,6 +47,7 @@ class User
         $this->position = htmlspecialchars(strip_tags($this->position));
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->password = htmlspecialchars(strip_tags($this->password));
+        $this->TempPass = htmlspecialchars(strip_tags($this->TempPass));
 
         // Привязываем значения
         $stmt->bindParam(":firstname", $this->firstname);
@@ -53,6 +55,7 @@ class User
         $stmt->bindParam(":patronymic", $this->patronymic);
         $stmt->bindParam(":position", $this->position);
         $stmt->bindParam(":email", $this->email);
+        $stmt->bindParam(":TempPass", $this->TempPass);
 
         // Для защиты пароля
         // Хешируем пароль перед сохранением в базу данных
@@ -72,7 +75,7 @@ class User
 function emailExists() {
  
     // Запрос, чтобы проверить, существует ли электронная почта
-    $query = "SELECT id, firstname, lastname, patronymic, position, password
+    $query = "SELECT id, firstname, lastname, patronymic, position, password, TempPass
             FROM " . $this->table_name . "
             WHERE email = ?
             LIMIT 0,1";
@@ -106,6 +109,7 @@ function emailExists() {
         $this->patronymic = $row["patronymic"];
         $this->position = $row["position"];
         $this->password = $row["password"];
+        $this->TempPass = $row["TempPass"];
  
         // Вернём "true", потому что в базе данных существует электронная почта
         return true;
@@ -138,7 +142,8 @@ public function update($tempPass) {
             firstname = :firstname,
             lastname = :lastname,
             patronymic = :patronymic,
-            position = :position
+            position = :position,
+            TempPass = b'0'
             {$password_set}
         WHERE id = :id";
     }

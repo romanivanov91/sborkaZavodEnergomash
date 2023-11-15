@@ -9,6 +9,7 @@ import './Userauthorisation.css';
 
     const user = useSelector(state=>state.user);
     const updateUserFormState = useSelector(state=>state.updateUserFormState);
+    console.log(user);
 
     const dispatch = useDispatch();
 

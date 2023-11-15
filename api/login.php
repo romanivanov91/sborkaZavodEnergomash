@@ -48,7 +48,8 @@ if ($email_exists && password_verify($data->password, $user->password)) {
            "lastname" => $user->lastname,
            "patronymic" => $user->patronymic,
            "position" => $user->position,
-           "email" => $user->email
+           "email" => $user->email,
+           "TempPass" => $user->TempPass
        )
     );
  
@@ -66,7 +67,8 @@ if ($email_exists && password_verify($data->password, $user->password)) {
             "lastname" => $user->lastname,
             "patronymic" => $user->patronymic,
             "position" => $user->position,
-            "email" => $user->email
+            "email" => $user->email,
+            "TempPass" => $user->TempPass
         )
     );
 }

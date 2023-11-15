@@ -26,7 +26,7 @@ const Autorisation = () => {
 
     const {request} = useHttp();
 
-    const user = useSelector(state => state.user);
+    const userState = useSelector(state => state.user);
 
     const dispatch = useDispatch();
 
@@ -63,9 +63,11 @@ const Autorisation = () => {
                 patronymic: res.patronymic,
                 position: res.position,
                 email: res.email,
-                jwt: res.jwt
+                jwt: res.jwt,
+                TempPass: res.TempPass
             }
             dispatch(autorisationUser(user));
+            console.log(userState);
             setSpinner(false);
         })
         .catch(error => {
