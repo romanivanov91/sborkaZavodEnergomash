@@ -20,27 +20,27 @@ const MyTextInput = ({label, ...props}) => {
 const UpdatePassword = () => {
 
     const [spinner, setSpinner] = useState(false);
-    const [errorUpdatePassword, setErrorReg] = useState(false);
-    const [succesRegMesageState, setSuccesRegMesageState] = useState(false);
+    const [errorUpdatePassword, setErrorUpdatePassword] = useState(false);
+    const [succesUpdatePasswordMesageState, setSuccesUpdatePasswordMesageState] = useState(false);
 
     const {request} = useHttp();
 
-    const addUser = (values) => {
+    const updatePassword = (values) => {
         setSpinner(true);
-        request('http://localhost:8000/sborkaZavodEnergomash/api/create_user.php', 'POST', JSON.stringify(values, null, 2))
+        request('http://localhost:8000/sborkaZavodEnergomash/api/update_user.php', 'POST', JSON.stringify(values, null, 2))
         .then(res => {
             console.log(res, 'Отправка успешна');
             setSpinner(false);
-            setSuccesRegMesageState(true);
+            setSuccesUpdatePasswordMesageState(true);
             setTimeout(() => {
-                setSuccesRegMesageState(false)
+                setSuccesUpdatePasswordMesageState(false)
             }, 10000);
         })
         .catch(error => {
             console.log(error);
             setSpinner(false);
-            setSuccesRegMesageState(false)
-            setErrorReg(true);
+            setSuccesUpdatePasswordMesageState(false)
+            setErrorUpdatePassword(true);
         });
     }
 
@@ -48,19 +48,18 @@ const UpdatePassword = () => {
         return (
             <div className="errorMessage">
                 <div>
-                    <p>Ошибка регистрации</p>
+                    <p>Ошибка изменения пароля</p>
                 </div>
             </div>
         )
     }
 
     const succesRegMes = () => {
-        if (succesRegMesageState) {
+        if (succesUpdatePasswordMesageState) {
         return (
             <div className="succesMes">
                 <div>
-                    <p>Вы успешно зарегистрированы!</p>
-                    <p>Войдите через форму авторизации.</p>
+                    <p>Пароль успешно изменен!</p>
                 </div>
             </div>
             )
@@ -85,7 +84,7 @@ const UpdatePassword = () => {
                     className='form_submit' 
                     type="submit" 
                     value='Зарегистрироваться'/>
-                    {errorReg ? errorMessage(): null}
+                    {errorUpdatePassword ? errorMessage(): null}
                 </div>
                 )
         }
@@ -94,30 +93,10 @@ const UpdatePassword = () => {
     return (
         <Formik
         initialValues = {{
-            lastname: '',
-            firstname: '',
-            patronymic: '',
-            position: '',
-            email: '',
             password: '',
             repeatPassword: ''
         }}
         validationSchema = {Yup.object({
-            lastname: Yup.string()
-                    .min(2, 'Минимум 2 символа!')
-                    .required('Обязательное поле!'),
-            firstname: Yup.string()
-                    .min(2, 'Минимум 2 символа!')
-                    .required('Обязательное поле!'),
-            patronymic: Yup.string()
-                    .min(2, 'Минимум 2 символа!')
-                    .required('Обязательное поле!'),
-            position: Yup.string()
-                    .min(2, 'Минимум 2 символа!')
-                    .required('Обязательное поле!'),
-            email: Yup.string()
-                    .email('Неправильный email адрес!')
-                    .required('Обязательное поле!'),
             password: Yup.string('Введите пароль!')
                     .required('Введите пароль')
                     .min(7, 'Минимум 7 символов')
@@ -132,53 +111,6 @@ const UpdatePassword = () => {
         }}
         >
             <Form className='reg_auth_form'>
-
-                <div className="form_input">
-                    <MyTextInput
-                    label='Имя'
-                    id="lastname"
-                    name="lastname"
-                    type="text"
-                    />
-                </div>
-
-                <div className="form_input">
-                    <MyTextInput
-                    label='Фамилия'
-                    id="firstname"
-                    name="firstname"
-                    type="text"
-                    />
-                </div>
-
-                <div className="form_input">
-                    <MyTextInput
-                    label='Отчество'
-                    id="patronymic"
-                    name="patronymic"
-                    type="text"
-                    />
-                </div>
-
-                <div className="form_input">
-                    <MyTextInput
-                    label='Должность'
-                    id="position"
-                    name="position"
-                    type="text"
-                    />
-                </div>
-
-                <div className="form_input">
-                    <MyTextInput
-                        className='form_input'
-                        label='Ваша почта'
-                        id="email"
-                        name="email"
-                        type="email"
-                    />
-                </div>
-
                 <div className="form_input">
                     <MyTextInput
                     label='Пароль'
