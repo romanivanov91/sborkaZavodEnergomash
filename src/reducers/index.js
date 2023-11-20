@@ -19,7 +19,8 @@ const initialState = {
     user: {
     },
     updateUserFormState: false,
-    errorUserPass: false
+    errorUserPass: false,
+    updateUserPassFormState: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -133,6 +134,11 @@ const reducer = (state = initialState, action) => {
                 return {
                     ...state,
                     errorUserPass: action.payload
+                }
+        case 'UPDATE_USER_PASS':
+                return {
+                    ...state,
+                    updateUserPassFormState: action.payload
                 }
         // case 'FILTERS_FETCHING':
         //     return {

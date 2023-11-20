@@ -81,6 +81,13 @@ export const recUserPass = (bool) => {
     }
 }
 
+export const updateUserPass = (bool) => {
+    return {
+        type: 'UPDATE_USER_PASS',
+        payload: bool
+    }
+}
+
 // export const filtersFetching = () => {
 //     return {
 //         type: 'FILTERS_FETCHING'

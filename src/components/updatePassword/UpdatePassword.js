@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
-import { useHttp } from "../../../hooks/http.hook";
+import { useHttp } from "../../hooks/http.hook";
 import BarLoader from "react-spinners/BarLoader";
 
 const MyTextInput = ({label, ...props}) => {
@@ -106,7 +106,7 @@ const UpdatePassword = () => {
                     .oneOf([Yup.ref('password')], 'Пароли не совпадают!')
         })}
         onSubmit = {(values, {resetForm} ) => {
-            addUser(values);
+            updatePassword(values);
             resetForm();
         }}
         >

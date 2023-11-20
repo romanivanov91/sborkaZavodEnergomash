@@ -3,9 +3,10 @@ import UserRegAuth from '../userRegAuth/UserRegAuth';
 import Header from '../header/Header';
 import Orders from '../order/Orders';
 import UserAuthorisation from '../userauthorisation/Userauthorisation';
+import UpdatePassword from '../updatePassword/UpdatePassword';
 import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { autorisationUser } from "../../actions/index";
+import { autorisationUser, updateUserPass } from "../../actions/index";
 import { useHttp } from "../../hooks/http.hook";
 
 //import './Reset.css';
@@ -14,7 +15,7 @@ import './App.css';
 function App() {
 
   const {showModal} = useSelector(state => state);
-  const user = useSelector(state=>state.user);
+  const {updateUserPassFormState} = useSelector(state=>state);
   const userAutorisation = useSelector(state=>state.userAutorisation);
 
   const dispatch = useDispatch();
@@ -36,6 +37,12 @@ function App() {
       .then(res => {
           console.log(res, 'Отправка успешна');
           dispatch(autorisationUser(res.data));
+          console.log(res.data.TempPass);
+          if (res.data.TempPass === 1) {
+            dispatch(updateUserPass(true));
+          } else {
+            dispatch(updateUserPass(false));
+          }
       })
       .catch(error => console.log(error));
     } 
@@ -49,7 +56,12 @@ function App() {
 
   const Profile = () => {
     if (userAutorisation) {
-      return <UserAuthorisation/>
+      console.log(updateUserPassFormState);
+      if (updateUserPassFormState) {
+        return <UpdatePassword/>
+      } else {
+        return <UserAuthorisation/>
+      }
     }
     return <UserRegAuth/>
   }

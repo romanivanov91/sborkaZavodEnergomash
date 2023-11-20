@@ -4,7 +4,7 @@ import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import BarLoader from "react-spinners/BarLoader";
 import { useDispatch, useSelector } from "react-redux";
-import { autorisationUser, recUserPass } from "../../../actions/index"
+import { autorisationUser, recUserPass, updateUserPass } from "../../../actions/index"
 
 const Autorisation = () => {
 
@@ -25,8 +25,6 @@ const Autorisation = () => {
     }
 
     const {request} = useHttp();
-
-    const userState = useSelector(state => state.user);
 
     const dispatch = useDispatch();
 
@@ -67,7 +65,11 @@ const Autorisation = () => {
                 TempPass: res.TempPass
             }
             dispatch(autorisationUser(user));
-            console.log(userState);
+            if (res.data.TempPass === 1) {
+                dispatch(updateUserPass(true));
+              } else {
+                dispatch(updateUserPass(false));
+              }
             setSpinner(false);
         })
         .catch(error => {

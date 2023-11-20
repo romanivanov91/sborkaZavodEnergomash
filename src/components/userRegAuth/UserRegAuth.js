@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { autorisationUser } from "../../actions/index";
 import Autorisation from './authorisation/Authorisation';
 import Registration from './registration/Registration';
-import PasswordRecovery from './PasswordRecovery/PasswordRecovery'
+import PasswordRecovery from './PasswordRecovery/PasswordRecovery';
 import { CookiesDelete } from '../../function/CookiesDelete';
 
 import './UserRegAuth.css';
@@ -14,6 +14,7 @@ const UserRegAuth = () => {
 
     const user = useSelector(state=>state.user);
     const updateUserFormState = useSelector(state=>state.updateUserFormState);
+    const updateUserPassFormState = useSelector(state=>state.updateUserPassFormState);
     const errorUserPass = useSelector(state => state.errorUserPass);
 
     const dispatch = useDispatch();
