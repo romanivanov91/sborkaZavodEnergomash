@@ -3,7 +3,6 @@ import UserRegAuth from '../userRegAuth/UserRegAuth';
 import Header from '../header/Header';
 import Orders from '../order/Orders';
 import UserAuthorisation from '../userauthorisation/Userauthorisation';
-import UpdatePassword from '../updatePassword/UpdatePassword';
 import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { autorisationUser, updateUserPass } from "../../actions/index";
@@ -36,13 +35,13 @@ function App() {
       request('http://localhost:8000/sborkaZavodEnergomash/api/validate_token.php', 'POST', JSON.stringify(jwt))
       .then(res => {
           console.log(res, 'Отправка успешна');
-          dispatch(autorisationUser(res.data));
           console.log(res.data.TempPass);
           if (res.data.TempPass === 1) {
             dispatch(updateUserPass(true));
           } else {
             dispatch(updateUserPass(false));
           }
+          dispatch(autorisationUser(res.data));
       })
       .catch(error => console.log(error));
     } 
@@ -56,12 +55,7 @@ function App() {
 
   const Profile = () => {
     if (userAutorisation) {
-      console.log(updateUserPassFormState);
-      if (updateUserPassFormState) {
-        return <UpdatePassword/>
-      } else {
         return <UserAuthorisation/>
-      }
     }
     return <UserRegAuth/>
   }

@@ -1,5 +1,23 @@
+.userProfile_body {
+    width: 25vw;
+    height: 80%;
+    margin: 10px auto;
+    background-color: white;
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+    padding: 0px;
+}
+
+.userProfile_body_choiceRegAuth {
+    width: 100%;
+    display: flex;
+    padding: 0px;
+    cursor: grab;
+}
+
 .profile {
-    width: 50%;
+    width: 100%;
     margin: 0px auto;
 }
 
@@ -28,7 +46,7 @@
 }
 
 .update_form {
-    width: 50%;
+    width: 100%;
     margin: 0px auto;
 }
 

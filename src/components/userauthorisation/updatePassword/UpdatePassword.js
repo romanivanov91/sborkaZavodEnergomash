@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
-import { useHttp } from "../../hooks/http.hook";
+import { useHttp } from "../../../hooks/http.hook";
 import BarLoader from "react-spinners/BarLoader";
-import { updateUserPass } from "../../actions/index";
+import { updateUserPass } from "../../../actions/index";
 
 import './UpdatePassword.css';
 
@@ -102,9 +102,6 @@ const UpdatePassword = () => {
     }
 
     return (
-
-        <div className="userRegAuth_body">
-            <div className="userRegAuth_body_choiceRegAuth">
                 <Formik
                     initialValues = {{
                      password: '',
@@ -145,9 +142,6 @@ const UpdatePassword = () => {
                             {succesRegMes()}
                         </Form>
                 </Formik>
-            </div>
-        </div>
-        
     )
 }
 

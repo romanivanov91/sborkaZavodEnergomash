@@ -64,12 +64,12 @@ const Autorisation = () => {
                 jwt: res.jwt,
                 TempPass: res.TempPass
             }
-            dispatch(autorisationUser(user));
-            if (res.data.TempPass === 1) {
+            if (res.TempPass === 1) {
                 dispatch(updateUserPass(true));
               } else {
                 dispatch(updateUserPass(false));
               }
+            dispatch(autorisationUser(user));
             setSpinner(false);
         })
         .catch(error => {
