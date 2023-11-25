@@ -27,7 +27,7 @@ const UpdatePassword = () => {
     const [errorUpdatePassword, setErrorUpdatePassword] = useState(false);
     const [succesUpdatePasswordMesageState, setSuccesUpdatePasswordMesageState] = useState(false);
 
-    const updateUserPassFormState = useSelector(state => state.updateUserPassFormState);
+    const user = useSelector(state => state.user);
 
     const dispatch = useDispatch();
 
@@ -35,24 +35,24 @@ const UpdatePassword = () => {
 
     const updatePassword = (values) => {
 
-        dispatch(updateUserPass(false));
-
-        // setSpinner(true);
-        // request('http://localhost:8000/sborkaZavodEnergomash/api/update_user.php', 'POST', JSON.stringify(values, null, 2))
-        // .then(res => {
-        //     console.log(res, 'Отправка успешна');
-        //     setSpinner(false);
-        //     setSuccesUpdatePasswordMesageState(true);
-        //     setTimeout(() => {
-        //         setSuccesUpdatePasswordMesageState(false)
-        //     }, 10000);
-        // })
-        // .catch(error => {
-        //     console.log(error);
-        //     setSpinner(false);
-        //     setSuccesUpdatePasswordMesageState(false)
-        //     setErrorUpdatePassword(true);
-        // });
+        const object = {...user, password: values.password};
+        setSpinner(true);
+        request('http://localhost:8000/sborkaZavodEnergomash/api/update_user.php', 'POST', JSON.stringify(object, null, 2))
+        .then(res => {
+            console.log(res, 'Отправка успешна');
+            setSpinner(false);
+            setSuccesUpdatePasswordMesageState(true);
+            setTimeout(() => {
+                dispatch(updateUserPass(false));
+                setSuccesUpdatePasswordMesageState(false);
+            }, 10000);
+        })
+        .catch(error => {
+            console.log(error);
+            setSpinner(false);
+            setSuccesUpdatePasswordMesageState(false)
+            setErrorUpdatePassword(true);
+        });
     }
 
     const errorMessage = () => { 
