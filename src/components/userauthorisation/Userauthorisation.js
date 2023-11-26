@@ -21,9 +21,6 @@ const UserAuthorisation = () => {
         dispatch(autorisationUser({}));
     }
 
-
-    console.log(user);
-
     const ViewUserProfile = () => {
         if (updateUserPassFormState) {
             return <UpdatePassword/>

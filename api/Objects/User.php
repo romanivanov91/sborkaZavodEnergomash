@@ -14,7 +14,7 @@ class User
     public $position;
     public $email;
     public $password;
-    public $TempPass;
+    public $tempPass;
 
     // Конструктор класса User
     public function __construct($db)
@@ -35,7 +35,7 @@ class User
                     position = :position,
                     email = :email,
                     password = :password,
-                    TempPass = b'0'";
+                    tempPass = b'0'";
 
         // Подготовка запроса
         $stmt = $this->conn->prepare($query);
@@ -47,7 +47,7 @@ class User
         $this->position = htmlspecialchars(strip_tags($this->position));
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->password = htmlspecialchars(strip_tags($this->password));
-        $this->TempPass = htmlspecialchars(strip_tags($this->TempPass));
+        $this->tempPass = htmlspecialchars(strip_tags($this->tempPass));
 
         // Привязываем значения
         $stmt->bindParam(":firstname", $this->firstname);
@@ -55,7 +55,7 @@ class User
         $stmt->bindParam(":patronymic", $this->patronymic);
         $stmt->bindParam(":position", $this->position);
         $stmt->bindParam(":email", $this->email);
-        $stmt->bindParam(":TempPass", $this->TempPass);
+        $stmt->bindParam(":tempPass", $this->tempPass);
 
         // Для защиты пароля
         // Хешируем пароль перед сохранением в базу данных
@@ -75,7 +75,7 @@ class User
 function emailExists() {
  
     // Запрос, чтобы проверить, существует ли электронная почта
-    $query = "SELECT id, firstname, lastname, patronymic, position, password, TempPass
+    $query = "SELECT id, firstname, lastname, patronymic, position, password, tempPass
             FROM " . $this->table_name . "
             WHERE email = ?
             LIMIT 0,1";
@@ -109,7 +109,7 @@ function emailExists() {
         $this->patronymic = $row["patronymic"];
         $this->position = $row["position"];
         $this->password = $row["password"];
-        $this->TempPass = $row["TempPass"];
+        $this->tempPass = $row["tempPass"];
  
         // Вернём "true", потому что в базе данных существует электронная почта
         return true;
@@ -133,7 +133,7 @@ public function update($tempPass) {
             lastname = :lastname,
             patronymic = :patronymic,
             position = :position,
-            TempPass = b'1'
+            tempPass = b'1'
             {$password_set}
         WHERE id = :id";
     } else {
@@ -143,7 +143,7 @@ public function update($tempPass) {
             lastname = :lastname,
             patronymic = :patronymic,
             position = :position,
-            TempPass = b'0'
+            tempPass = b'0'
             {$password_set}
         WHERE id = :id";
     }
@@ -157,6 +157,7 @@ public function update($tempPass) {
     $this->lastname=htmlspecialchars(strip_tags($this->lastname));
     $this->patronymic=htmlspecialchars(strip_tags($this->patronymic));
     $this->position=htmlspecialchars(strip_tags($this->position));
+    //$this->tempPass=htmlspecialchars(strip_tags($this->tempPass));
     //$this->email=htmlspecialchars(strip_tags($this->email));
  
     // Привязываем значения с HTML формы
@@ -164,6 +165,7 @@ public function update($tempPass) {
     $stmt->bindParam(":lastname", $this->lastname);
     $stmt->bindParam(":patronymic", $this->patronymic);
     $stmt->bindParam(":position", $this->position);
+    //$stmt->bindParam(":tempPass", $this->tempPass);
     //$stmt->bindParam(":email", $this->email);
  
     // Метод password_hash () для защиты пароля пользователя в базе данных
@@ -180,7 +182,7 @@ public function update($tempPass) {
     if($stmt->execute()) {
         return true;
     }
- 
+
     return false;
 }
 }

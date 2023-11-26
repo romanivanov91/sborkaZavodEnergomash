@@ -36,7 +36,7 @@ function App() {
       .then(res => {
           console.log(res, 'Отправка успешна');
           console.log(res.data.TempPass);
-          if (res.data.TempPass === 1) {
+          if (res.data.tempPass === 1) {
             dispatch(updateUserPass(true));
           } else {
             dispatch(updateUserPass(false));

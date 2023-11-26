@@ -54,22 +54,12 @@ const Autorisation = () => {
             if (values.toggle) {
                 document.cookie = `jwt=${res.jwt}`;
             }
-            const user = {
-                id: res.id,
-                lastname: res.lastname,
-                firstname: res.firstname,
-                patronymic: res.patronymic,
-                position: res.position,
-                email: res.email,
-                jwt: res.jwt,
-                TempPass: res.TempPass
-            }
-            if (res.TempPass === 1) {
+            if (res.tempPass === 1) {
                 dispatch(updateUserPass(true));
               } else {
                 dispatch(updateUserPass(false));
               }
-            dispatch(autorisationUser(user));
+            dispatch(autorisationUser(res));
             setSpinner(false);
         })
         .catch(error => {

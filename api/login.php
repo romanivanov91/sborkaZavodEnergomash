@@ -49,7 +49,7 @@ if ($email_exists && password_verify($data->password, $user->password)) {
            "patronymic" => $user->patronymic,
            "position" => $user->position,
            "email" => $user->email,
-           "TempPass" => $user->TempPass
+           "tempPass" => $user->tempPass
        )
     );
  
@@ -68,7 +68,7 @@ if ($email_exists && password_verify($data->password, $user->password)) {
             "patronymic" => $user->patronymic,
             "position" => $user->position,
             "email" => $user->email,
-            "TempPass" => $user->TempPass
+            "tempPass" => $user->tempPass
         )
     );
 }

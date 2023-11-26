@@ -36,8 +36,10 @@ $user = new User($db);
  
 // Получаем данные
 $data = json_decode(file_get_contents("php://input"));
+
+
  
-// Устанавливаем значения
+// // Устанавливаем значения
 $user->email = $data->email;
 $email_exists = $user->emailExists();
 
@@ -79,11 +81,7 @@ if ($email_exists) {
  
     // Создание jwt
     //$jwt = JWT::encode($token, $key, 'HS256');
-    echo json_encode(
-        array(
-            "Ваш новый пароль" => $new_pass
-        )
-    );
+    echo json_encode(array("Ваш новый пароль" => $new_pass));
 }
  
 // Если электронная почта не существует,

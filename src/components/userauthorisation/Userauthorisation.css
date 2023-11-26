@@ -1,5 +1,5 @@
 .userProfile_body {
-    width: 25vw;
+    width: 50vw;
     height: 80%;
     margin: 10px auto;
     background-color: white;
@@ -7,13 +7,6 @@
     padding: 10px;
     box-sizing: border-box;
     padding: 0px;
-}
-
-.userProfile_body_choiceRegAuth {
-    width: 100%;
-    display: flex;
-    padding: 0px;
-    cursor: grab;
 }
 
 .profile {
