@@ -94,43 +94,43 @@ const Registration = () => {
 
     return (
         <Formik
-        initialValues = {{
-            lastname: '',
-            firstname: '',
-            patronymic: '',
-            position: '',
-            email: '',
-            password: '',
-            repeatPassword: ''
-        }}
-        validationSchema = {Yup.object({
-            lastname: Yup.string()
-                    .min(2, 'Минимум 2 символа!')
-                    .required('Обязательное поле!'),
-            firstname: Yup.string()
-                    .min(2, 'Минимум 2 символа!')
-                    .required('Обязательное поле!'),
-            patronymic: Yup.string()
-                    .min(2, 'Минимум 2 символа!')
-                    .required('Обязательное поле!'),
-            position: Yup.string()
-                    .min(2, 'Минимум 2 символа!')
-                    .required('Обязательное поле!'),
-            email: Yup.string()
-                    .email('Неправильный email адрес!')
-                    .required('Обязательное поле!'),
-            password: Yup.string('Введите пароль!')
-                    .required('Введите пароль')
-                    .min(7, 'Минимум 7 символов')
-                    .max(255, 'Превышение максимального колличества символов 255'),
-            repeatPassword: Yup.string()
-                    .required('Введите пароль повторно!')
-                    .oneOf([Yup.ref('password')], 'Пароли не совпадают!')
-        })}
-        onSubmit = {(values, {resetForm} ) => {
-            addUser(values);
-            resetForm();
-        }}
+            initialValues = {{
+                lastname: '',
+                firstname: '',
+                patronymic: '',
+                position: '',
+                email: '',
+                password: '',
+                repeatPassword: ''
+            }}
+            validationSchema = {Yup.object({
+                lastname: Yup.string()
+                        .min(2, 'Минимум 2 символа!')
+                        .required('Обязательное поле!'),
+                firstname: Yup.string()
+                        .min(2, 'Минимум 2 символа!')
+                        .required('Обязательное поле!'),
+                patronymic: Yup.string()
+                        .min(2, 'Минимум 2 символа!')
+                        .required('Обязательное поле!'),
+                position: Yup.string()
+                        .min(2, 'Минимум 2 символа!')
+                        .required('Обязательное поле!'),
+                email: Yup.string()
+                        .email('Неправильный email адрес!')
+                        .required('Обязательное поле!'),
+                password: Yup.string('Введите пароль!')
+                        .required('Введите пароль')
+                        .min(7, 'Минимум 7 символов')
+                        .max(255, 'Превышение максимального колличества символов 255'),
+                repeatPassword: Yup.string()
+                        .required('Введите пароль повторно!')
+                        .oneOf([Yup.ref('password')], 'Пароли не совпадают!')
+            })}
+            onSubmit = {(values, {resetForm} ) => {
+                addUser(values);
+                resetForm();
+            }}
         >
             <Form className='reg_auth_form'>
 

@@ -67,7 +67,9 @@ if ($jwt) {
                     "lastname" => $user->lastname,
                     "patronymic" => $user->patronymic,
                     "position" => $user->position,
-                    "email" => $user->email
+                    "email" => $user->email,
+                    "tempPass" => $user->tempPass,
+                    "jwt" => $jwt
                 )
             );
             

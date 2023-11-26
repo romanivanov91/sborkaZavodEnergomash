@@ -1,113 +1,195 @@
 import { useHttp } from "../../../hooks/http.hook";
 import { useState } from "react";
+import { Formik, Form, useField } from "formik";
+import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUser, autorisationUser } from "../../../actions/index";
+import BarLoader from "react-spinners/BarLoader";
+
+const MyTextInput = ({label, ...props}) => {
+    const [field, meta] = useField(props);
+    return (
+        <>
+            <label htmlFor='{props.name}'>{label}</label>
+            <input {...props} {...field}/>
+            {meta.touched && meta.error ? (
+                <div className='error'>{meta.error}</div>
+            ) : null}
+        </>
+    )
+}
 
 const UpdateUserForm = (user) => {
 
-    const [lastName, setLastName] = useState(user.lastname);
-    const [firstName, setFirstName] = useState(user.firstname);
-    const [patronymic, setPatronymic] = useState(user.patronymic);
-    const [position, setPosition] = useState(user.position);
-    const [email, setEmail] = useState(user.email);
-    const [password, setPassword] = useState('');
+    const [spinner, setSpinner] = useState(false);
+    const [errorUpdate, setErrorUpdate] = useState(false);
+    const [succesUpdateMesageState, setSuccesUpdateMesageState] = useState(false);
 
     const {request} = useHttp();
 
     const dispatch = useDispatch();
 
-    console.log(user.email);
-
-    const updateUserForm = (e) => {
-        console.log("Форма сработала");
-        e.preventDefault();
-
-        const objectUser = {
-            lastname: lastName,
-            firstname: firstName,
-            patronymic: patronymic,
-            position: position,
-            email: email,
-            password: password,
+    const updateUserForm = (values) => {
+        setSpinner(false);
+        const object = {
+            ...values,
             id: user.id,
-            jwt: user.jwt
-        };
-
-        console.log(objectUser);
-
-        request('http://localhost:8000/sborkaZavodEnergomash/api/update_user.php', 'POST', JSON.stringify(objectUser))
+            jwt: user.jwt,
+            email: user.email
+        }
+        console.log(object);
+        request('http://localhost:8000/sborkaZavodEnergomash/api/update_user.php', 'POST', JSON.stringify(object, null, 2))
         .then(res => {
             console.log(res, 'Отправка успешна');
-            document.cookie = `jwt=${res.jwt}`;
+            setSpinner(false);
+            //document.cookie = `jwt=${res.jwt}`;
             dispatch(autorisationUser(res.data));
-
+            setSuccesUpdateMesageState(true);
+            setTimeout(() => {
+                setSuccesUpdateMesageState(false)
+            }, 10000);
         })
         .then(dispatch(updateUser()))
-        .catch(error => console.log(error));
+        .catch(error => {
+            console.log(error);
+            setSpinner(false);
+            setSuccesUpdateMesageState(false)
+            setErrorUpdate(true);
+        });
+    }
+
+    const errorMessage = () => { 
+        return (
+            <div className="errorMessage">
+                <div>
+                    <p>Произошла ошибка! Данные не изменены</p>
+                </div>
+            </div>
+        )
+    }
+
+    const succesUpdateMes = () => {
+        if (succesUpdateMesageState) {
+        return (
+            <div className="succesMes">
+                <div>
+                    <p>Изменения испешно внесены</p>
+                </div>
+            </div>
+            )
+        }
+    }
+
+    const submitBtn = () => {
+        if (spinner) {
+            return (
+                <div className='form_update_spinner'>
+                    <BarLoader
+                        color="#36d7b7"
+                        cssOverride={{}}
+                        speedMultiplier={1}
+                    />
+        </div>
+                )
+        } else {
+            return (
+                <div className="submitBtn">
+                    <input 
+                    className='form_submit' 
+                    type="submit" 
+                    value='Внести изменения'/>
+                    {errorUpdate ? errorMessage(): null}
+                </div>
+                )
+        }
     }
 
     return (
-        <form 
-            className='update_form'
-            onSubmit={updateUserForm}>
-            <div className="form_input">
-                <p>Имя: </p>
-                <input 
-                    type="text" 
-                    placeholder="Введите имя"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}/> 
-            </div>
-            <div className="form_input">
-                <p>Фамилия: </p>
-                <input 
-                    type="text" 
-                    placeholder="Введите фамилию"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+        <Formik
+            initialValues={{
+                lastname: user.lastname,
+                firstname: user.firstname,
+                patronymic: user.patronymic,
+                position: user.position,
+                password: ""
+            }}
+            validationSchema = {Yup.object({
+                lastname: Yup.string()
+                        .min(2, 'Минимум 2 символа!')
+                        .required('Обязательное поле!'),
+                firstname: Yup.string()
+                        .min(2, 'Минимум 2 символа!')
+                        .required('Обязательное поле!'),
+                patronymic: Yup.string()
+                        .min(2, 'Минимум 2 символа!')
+                        .required('Обязательное поле!'),
+                position: Yup.string()
+                        .min(2, 'Минимум 2 символа!')
+                        .required('Обязательное поле!'),
+                password: Yup.string('Введите пароль!')
+                        .required('Введите пароль')
+                        .min(7, 'Минимум 7 символов')
+                        .max(255, 'Превышение максимального колличества символов 255')
+            })}
+            onSubmit = {(values) => updateUserForm(values)}
+        >
+            <Form className='update_form'>
+                <div className="form_input">
+                    <MyTextInput
+                        label='Имя'
+                        placeholder="Введите имя"
+                        id="lastname"
+                        name="lastname"
+                        type="text"
                     /> 
-            </div>
-            <div className="form_input">
-                <p>Отчество: </p>
-                <input 
-                    type="text" 
-                    placeholder="Введите отчество"
-                    value={patronymic}
-                    onChange={(e) => setPatronymic(e.target.value)}/> 
-            </div>
-            <div className="form_input">
-                <p>Ваша должность: </p>
-                <input 
-                type="text" 
-                placeholder="Введите должность"
-                value={position}
-                onChange={(e) => setPosition(e.target.value)}/> 
-            </div>
-            <div className="form_input">
-                <p>Адрес электронной почты: </p>
-                <input 
-                    type="email" 
-                    placeholder="Введите email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}/> 
-            </div>
-            <div className="form_input"> 
-                <p>Пароль: </p>
-                <input 
-                    type="password" 
-                    placeholder="Введите новый пароль"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}/>
-            </div>
-            <div className="form_update_btn">
-                <input className='form_update_input' type="submit" value='Внести изменения'/>
-                <input 
-                    className='form_update_input' 
-                    type="button" 
-                    value='Отмена'
-                    onClick={() => dispatch(updateUser())}/>
-            </div>
-        </form>
+                </div>
+                <div className="form_input">
+                    <MyTextInput
+                        label='Фамилия'
+                        placeholder="Введите фамилию"
+                        id="firstname"
+                        name="firstname"
+                        type="text"
+                    /> 
+                </div>
+                <div className="form_input">
+                    <MyTextInput
+                        label='Отчество'
+                        placeholder="Введите отчество"
+                        id="patronymic"
+                        name="patronymic"
+                        type="text"
+                    /> 
+                </div>
+                <div className="form_input">
+                    <MyTextInput
+                        label='Ваша должность'
+                        placeholder="Выберете должность"
+                        id="position"
+                        name="position"
+                        type="text"
+                    /> 
+                </div>
+                <div className="form_input">
+                    <MyTextInput
+                        label='Пароль'
+                        placeholder="Введите пароль"
+                        id="password"
+                        name="password"
+                        type="password"
+                    />  
+                </div>
+                <div className="form_update_btn">
+                    {submitBtn()}
+                    {succesUpdateMes()}
+                    <input 
+                        className='form_update_input' 
+                        type="button" 
+                        value='Отмена'
+                        onClick={() => dispatch(updateUser())}/>
+                </div>
+            </Form>
+        </Formik>
         )
 };
 
