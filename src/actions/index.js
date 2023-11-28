@@ -88,6 +88,12 @@ export const updateUserPass = (bool) => {
     }
 }
 
+export const saveUser = () => {
+    return {
+        type: 'SAVE_USER',
+    }
+}
+
 // export const filtersFetching = () => {
 //     return {
 //         type: 'FILTERS_FETCHING'

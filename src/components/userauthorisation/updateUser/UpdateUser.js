@@ -25,6 +25,8 @@ const UpdateUserForm = (user) => {
     const [errorUpdate, setErrorUpdate] = useState(false);
     const [succesUpdateMesageState, setSuccesUpdateMesageState] = useState(false);
 
+    const { saveMee } = useSelector(state => state);
+
     const {request} = useHttp();
 
     const dispatch = useDispatch();
@@ -42,14 +44,15 @@ const UpdateUserForm = (user) => {
         .then(res => {
             console.log(res, 'Отправка успешна');
             setSpinner(false);
-            //document.cookie = `jwt=${res.jwt}`;
+            if (saveMee) {
+                document.cookie = `jwt=${res.jwt}`;
+            }
             dispatch(autorisationUser(res.data));
             setSuccesUpdateMesageState(true);
             setTimeout(() => {
-                setSuccesUpdateMesageState(false)
+                setSuccesUpdateMesageState(false);
             }, 10000);
         })
-        .then(dispatch(updateUser()))
         .catch(error => {
             console.log(error);
             setSpinner(false);
@@ -188,6 +191,7 @@ const UpdateUserForm = (user) => {
                         value='Отмена'
                         onClick={() => dispatch(updateUser())}/>
                 </div>
+                {succesUpdateMes()}
             </Form>
         </Formik>
         )

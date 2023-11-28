@@ -20,7 +20,8 @@ const initialState = {
     },
     updateUserFormState: false,
     errorUserPass: false,
-    updateUserPassFormState: false
+    updateUserPassFormState: false,
+    saveMee: false
 }
 
 const reducer = (state = initialState, action) => {

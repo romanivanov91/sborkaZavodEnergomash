@@ -4,7 +4,7 @@ import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import BarLoader from "react-spinners/BarLoader";
 import { useDispatch, useSelector } from "react-redux";
-import { autorisationUser, recUserPass, updateUserPass } from "../../../actions/index"
+import { autorisationUser, recUserPass, updateUserPass, saveUser } from "../../../actions/index"
 
 const Autorisation = () => {
 
@@ -52,6 +52,7 @@ const Autorisation = () => {
         })
         .then(res => {
             if (values.toggle) {
+                dispatch(saveUser(true));
                 document.cookie = `jwt=${res.jwt}`;
             }
             if (res.tempPass === 1) {
