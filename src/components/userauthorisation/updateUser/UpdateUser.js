@@ -32,7 +32,7 @@ const UpdateUserForm = (user) => {
     const dispatch = useDispatch();
 
     const updateUserForm = (values) => {
-        setSpinner(false);
+        setSpinner(true);
         const object = {
             ...values,
             id: user.id,
@@ -49,14 +49,12 @@ const UpdateUserForm = (user) => {
             }
             dispatch(autorisationUser(res.data));
             setSuccesUpdateMesageState(true);
-            setTimeout(() => {
-                setSuccesUpdateMesageState(false);
-            }, 10000);
+            console.log(succesUpdateMesageState);
         })
         .catch(error => {
             console.log(error);
             setSpinner(false);
-            setSuccesUpdateMesageState(false)
+            setSuccesUpdateMesageState(true);
             setErrorUpdate(true);
         });
     }
@@ -98,9 +96,9 @@ const UpdateUserForm = (user) => {
             return (
                 <div className="submitBtn">
                     <input 
-                    className='form_submit' 
-                    type="submit" 
-                    value='Внести изменения'/>
+                        className='form_submit' 
+                        type="submit" 
+                        value='Внести изменения'/>
                     {errorUpdate ? errorMessage(): null}
                 </div>
                 )
@@ -182,16 +180,15 @@ const UpdateUserForm = (user) => {
                         type="password"
                     />  
                 </div>
+                {succesUpdateMes()} 
                 <div className="form_update_btn">
                     {submitBtn()}
-                    {succesUpdateMes()}
                     <input 
-                        className='form_update_input' 
+                        className='submitBtn' 
                         type="button" 
                         value='Отмена'
                         onClick={() => dispatch(updateUser())}/>
                 </div>
-                {succesUpdateMes()}
             </Form>
         </Formik>
         )
