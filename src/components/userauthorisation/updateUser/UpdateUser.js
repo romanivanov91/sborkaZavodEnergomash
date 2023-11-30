@@ -48,13 +48,15 @@ const UpdateUserForm = (user) => {
                 document.cookie = `jwt=${res.jwt}`;
             }
             dispatch(autorisationUser(res.data));
+        })
+        .then(() => {
             setSuccesUpdateMesageState(true);
-            console.log(succesUpdateMesageState);
+            console.log(succesUpdateMesageState)
         })
         .catch(error => {
             console.log(error);
             setSpinner(false);
-            setSuccesUpdateMesageState(true);
+            setSuccesUpdateMesageState(false);
             setErrorUpdate(true);
         });
     }
