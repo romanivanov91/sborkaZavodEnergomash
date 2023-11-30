@@ -51,7 +51,7 @@ const UpdateUserForm = (user) => {
         })
         .then(() => {
             setSuccesUpdateMesageState(true);
-            console.log(succesUpdateMesageState)
+            console.log(succesUpdateMesageState);
         })
         .catch(error => {
             console.log(error);
