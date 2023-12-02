@@ -24,6 +24,9 @@ function App() {
   const jwtCookie = document.cookie.match(/jwt=(.+?)(;|$)/);
 
   useEffect(() => {
+    request('http://localhost:8000/sborkaZavodEnergomash/api/create_db.php', 'GET')
+    .then(res => console.log(res))
+    .catch(error => console.log(error))
     if (document.cookie.match(/jwt=(.+?)(;|$)/)) {
 
       const jwt = {

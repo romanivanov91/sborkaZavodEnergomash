@@ -46,12 +46,10 @@ const UpdateUserForm = (user) => {
             setSpinner(false);
             if (saveMee) {
                 document.cookie = `jwt=${res.jwt}`;
-            }
-            dispatch(autorisationUser(res.data));
-        })
-        .then(() => {
+            };
             setSuccesUpdateMesageState(true);
             console.log(succesUpdateMesageState);
+            dispatch(autorisationUser(res.data));
         })
         .catch(error => {
             console.log(error);
