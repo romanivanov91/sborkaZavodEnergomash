@@ -86,11 +86,11 @@ const PasswordRecovery = () => {
             return (
                 <div className="submitBtn">
                     <input 
-                    className='form_submit' 
-                    type="submit" 
-                    value='Запросить новый пароль'/>
+                        className='form_submit' 
+                        type="submit" 
+                        value='Запросить новый пароль'/>
                     {errorUser ? errorMessage(): null}
-                    {succesRegMesageState ? succesRegMes(): null}
+
                 </div>
                 )
         }
@@ -113,7 +113,6 @@ const PasswordRecovery = () => {
             <Form className='reg_auth_form'>
                 <div className="form_input">
                     <MyTextInput
-                        className='form_input'
                         label='Ваша почта'
                         id="email"
                         name="email"
@@ -121,6 +120,7 @@ const PasswordRecovery = () => {
                     />
                 </div>
                 {submitBtn()}
+                {succesRegMesageState ? succesRegMes(): null}
                 <p
                     className="regAutBtn"
                     onClick={() => dispatch(recUserPass(false))}>

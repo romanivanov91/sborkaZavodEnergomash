@@ -33,6 +33,7 @@ const Registration = () => {
             console.log(res, 'Отправка успешна');
             setSpinner(false);
             setSuccesRegMesageState(true);
+            setErrorReg(false);
             setTimeout(() => {
                 setSuccesRegMesageState(false)
             }, 10000);
@@ -83,9 +84,9 @@ const Registration = () => {
             return (
                 <div className="submitBtn">
                     <input 
-                    className='form_submit' 
-                    type="submit" 
-                    value='Зарегистрироваться'/>
+                        className='form_submit' 
+                        type="submit" 
+                        value='Зарегистрироваться'/>
                     {errorReg ? errorMessage(): null}
                 </div>
                 )

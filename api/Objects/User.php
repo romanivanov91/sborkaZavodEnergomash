@@ -47,7 +47,7 @@ class User
         $this->position = htmlspecialchars(strip_tags($this->position));
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->password = htmlspecialchars(strip_tags($this->password));
-        $this->tempPass = htmlspecialchars(strip_tags($this->tempPass));
+        //$this->tempPass = htmlspecialchars(strip_tags($this->tempPass));
 
         // Привязываем значения
         $stmt->bindParam(":firstname", $this->firstname);
@@ -55,7 +55,7 @@ class User
         $stmt->bindParam(":patronymic", $this->patronymic);
         $stmt->bindParam(":position", $this->position);
         $stmt->bindParam(":email", $this->email);
-        $stmt->bindParam(":tempPass", $this->tempPass);
+        //$stmt->bindParam(":tempPass", $this->tempPass);
 
         // Для защиты пароля
         // Хешируем пароль перед сохранением в базу данных

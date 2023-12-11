@@ -6,8 +6,6 @@ import { useHttp } from "../../../hooks/http.hook";
 import BarLoader from "react-spinners/BarLoader";
 import { updateUserPass } from "../../../actions/index";
 
-import './UpdatePassword.css';
-
 const MyTextInput = ({label, ...props}) => {
     const [field, meta] = useField(props);
     return (

@@ -95,9 +95,9 @@ const Autorisation = () => {
             return (
                 <div className="submitBtn">
                     <input 
-                    className='form_submit' 
-                    type="submit" 
-                    value='Войти'/>
+                        className='form_submit' 
+                        type="submit" 
+                        value='Войти'/>
                     {errorAuth ? errorMessage(): null}
                 </div>
                 )
