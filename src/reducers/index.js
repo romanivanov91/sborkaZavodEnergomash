@@ -141,6 +141,11 @@ const reducer = (state = initialState, action) => {
                     ...state,
                     updateUserPassFormState: action.payload
                 }
+        case 'SAVE_USER':
+                return {
+                    ...state,
+                    saveMee: action.payload
+                }
         // case 'FILTERS_FETCHING':
         //     return {
         //         ...state,

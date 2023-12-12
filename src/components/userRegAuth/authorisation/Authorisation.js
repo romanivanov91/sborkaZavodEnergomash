@@ -47,7 +47,6 @@ const Autorisation = () => {
         setSpinner(true);
         request('http://localhost:8000/sborkaZavodEnergomash/api/login.php', 'POST', JSON.stringify(values, null, 2))
         .then(res => {
-            console.log(res, 'Отправка успешна');
             return res;
         })
         .then(res => {

@@ -50,7 +50,7 @@ if ($jwt) {
         $user->patronymic = $data->patronymic;
         $user->position = $data->position;
         $user->email = $data->email;
-        $user->password = $data->password;
+        //$user->password = $data->password;
         $user->id = $decoded->data->id;
 
         // Создание пользователя

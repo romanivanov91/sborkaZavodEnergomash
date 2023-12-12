@@ -44,6 +44,7 @@ const UpdateUserForm = (user) => {
         .then(res => {
             console.log(res, 'Отправка успешна');
             setSpinner(false);
+            console.log(saveMee);
             if (saveMee) {
                 document.cookie = `jwt=${res.jwt}`;
             };
@@ -111,8 +112,7 @@ const UpdateUserForm = (user) => {
                 lastname: user.lastname,
                 firstname: user.firstname,
                 patronymic: user.patronymic,
-                position: user.position,
-                password: ""
+                position: user.position
             }}
             validationSchema = {Yup.object({
                 lastname: Yup.string()
@@ -126,11 +126,7 @@ const UpdateUserForm = (user) => {
                         .required('Обязательное поле!'),
                 position: Yup.string()
                         .min(2, 'Минимум 2 символа!')
-                        .required('Обязательное поле!'),
-                password: Yup.string('Введите пароль!')
-                        .required('Введите пароль')
-                        .min(7, 'Минимум 7 символов')
-                        .max(255, 'Превышение максимального колличества символов 255')
+                        .required('Обязательное поле!')
             })}
             onSubmit = {(values) => updateUserForm(values)}
         >
@@ -170,15 +166,6 @@ const UpdateUserForm = (user) => {
                         name="position"
                         type="text"
                     /> 
-                </div>
-                <div className="form_input">
-                    <MyTextInput
-                        label='Пароль'
-                        placeholder="Введите пароль"
-                        id="password"
-                        name="password"
-                        type="password"
-                    />  
                 </div>
                 {succesUpdateMes()} 
                 <div className="form_update_btn">

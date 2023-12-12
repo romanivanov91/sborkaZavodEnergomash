@@ -5,7 +5,7 @@ import Orders from '../order/Orders';
 import UserAuthorisation from '../userauthorisation/Userauthorisation';
 import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { autorisationUser, updateUserPass } from "../../actions/index";
+import { autorisationUser, updateUserPass, saveUser } from "../../actions/index";
 import { useHttp } from "../../hooks/http.hook";
 
 //import './Reset.css';
@@ -33,18 +33,23 @@ function App() {
         jwt: jwtCookie[1]
       };
 
+      dispatch(saveUser(true));
+
       console.log(jwtCookie[1]);
 
       request('http://localhost:8000/sborkaZavodEnergomash/api/validate_token.php', 'POST', JSON.stringify(jwt))
       .then(res => {
-          console.log(res, 'Отправка успешна');
-          console.log(res.data.TempPass);
           if (res.data.tempPass === 1) {
             dispatch(updateUserPass(true));
           } else {
             dispatch(updateUserPass(false));
           }
-          dispatch(autorisationUser(res.data));
+          const user = {
+            ...res.data,
+            jwt: jwtCookie[1]
+          }
+          console.log(user);
+          dispatch(autorisationUser(user));
       })
       .catch(error => console.log(error));
     } 

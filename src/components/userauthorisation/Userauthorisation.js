@@ -11,7 +11,6 @@ const UserAuthorisation = () => {
     const user = useSelector(state=>state.user);
     const updateUserFormState = useSelector(state=>state.updateUserFormState);
     const {updateUserPassFormState} = useSelector(state=>state);
-    console.log(user);
 
     const dispatch = useDispatch();
 

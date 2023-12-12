@@ -88,9 +88,10 @@ export const updateUserPass = (bool) => {
     }
 }
 
-export const saveUser = () => {
+export const saveUser = (bool) => {
     return {
         type: 'SAVE_USER',
+        payload: bool
     }
 }
 
