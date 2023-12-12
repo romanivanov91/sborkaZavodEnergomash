@@ -24,6 +24,7 @@ const UpdateUserForm = (user) => {
     const [spinner, setSpinner] = useState(false);
     const [errorUpdate, setErrorUpdate] = useState(false);
     const [succesUpdateMesageState, setSuccesUpdateMesageState] = useState(false);
+    const [disabled, setDisabled] = useState('')
 
     const { saveMee } = useSelector(state => state);
 
@@ -33,6 +34,7 @@ const UpdateUserForm = (user) => {
 
     const updateUserForm = (values) => {
         setSpinner(true);
+        setDisabled('disabled');
         const object = {
             ...values,
             id: user.id,
@@ -171,7 +173,8 @@ const UpdateUserForm = (user) => {
                 <div className="form_update_btn">
                     {submitBtn()}
                     <input 
-                        className='submitBtn' 
+                        className='submitBtn'
+                        disabled={disabled} 
                         type="button" 
                         value='Отмена'
                         onClick={() => dispatch(updateUser())}/>

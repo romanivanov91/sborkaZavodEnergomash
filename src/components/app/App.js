@@ -35,8 +35,6 @@ function App() {
 
       dispatch(saveUser(true));
 
-      console.log(jwtCookie[1]);
-
       request('http://localhost:8000/sborkaZavodEnergomash/api/validate_token.php', 'POST', JSON.stringify(jwt))
       .then(res => {
           if (res.data.tempPass === 1) {
@@ -48,7 +46,6 @@ function App() {
             ...res.data,
             jwt: jwtCookie[1]
           }
-          console.log(user);
           dispatch(autorisationUser(user));
       })
       .catch(error => console.log(error));
