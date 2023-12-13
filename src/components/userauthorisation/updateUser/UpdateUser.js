@@ -24,7 +24,8 @@ const UpdateUserForm = (user) => {
     const [spinner, setSpinner] = useState(false);
     const [errorUpdate, setErrorUpdate] = useState(false);
     const [succesUpdateMesageState, setSuccesUpdateMesageState] = useState(false);
-    const [disabled, setDisabled] = useState('')
+    const [disabled, setDisabled] = useState('');
+    const [btnDis, setBtnDis] = useState('')
 
     const { saveMee } = useSelector(state => state);
 
@@ -32,9 +33,12 @@ const UpdateUserForm = (user) => {
 
     const dispatch = useDispatch();
 
+    const submitBtnClass = "submitBtn " + btnDis;
+
     const updateUserForm = (values) => {
         setSpinner(true);
         setDisabled('disabled');
+        setBtnDis('btnBlock');
         const object = {
             ...values,
             id: user.id,
@@ -46,12 +50,12 @@ const UpdateUserForm = (user) => {
         .then(res => {
             console.log(res, 'Отправка успешна');
             setSpinner(false);
-            console.log(saveMee);
+            setDisabled('');
+            setBtnDis('');
             if (saveMee) {
                 document.cookie = `jwt=${res.jwt}`;
             };
             setSuccesUpdateMesageState(true);
-            console.log(succesUpdateMesageState);
             dispatch(autorisationUser(res.data));
         })
         .catch(error => {
@@ -169,16 +173,16 @@ const UpdateUserForm = (user) => {
                         type="text"
                     /> 
                 </div>
-                {succesUpdateMes()} 
                 <div className="form_update_btn">
                     {submitBtn()}
                     <input 
-                        className='submitBtn'
+                        className={submitBtnClass}
                         disabled={disabled} 
                         type="button" 
                         value='Отмена'
                         onClick={() => dispatch(updateUser())}/>
                 </div>
+                {succesUpdateMes()} 
             </Form>
         </Formik>
         )
