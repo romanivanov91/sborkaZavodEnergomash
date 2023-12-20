@@ -57,6 +57,7 @@ const UpdateUserForm = (user) => {
             };
             setSuccesUpdateMesageState(true);
             dispatch(autorisationUser(res.data));
+            dispatch(updateUser());
         })
         .catch(error => {
             console.log(error);

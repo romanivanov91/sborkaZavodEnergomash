@@ -1,33 +1,17 @@
 import {useHttp} from '../../../hooks/http.hook';
 import { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Formik, Form, useField } from 'formik';
-import * as Yup from 'yup';
 import { ordersFetched, showModal, activeOrder, activeProduct } from '../../../actions';
 
 import './OrderList.css';
 
-const MyTextInput = ({label, ...props}) => {
-    const [field, meta] = useField(props);
-    return (
-        <>
-            <input {...props} {...field}/>
-            {meta.touched && meta.error ? (
-                <div className='error'>{meta.error}</div>
-            ) : null}
-        </>
-    )
-}
-
 const OrderList = () => {
 
-    const [idOrder, setIdOrder] = useState('');
+    const idOrder = useState('');
 
     const {orders} = useSelector(state=>state);
     const dispatch = useDispatch();
     const {request} = useHttp();
-
-    console.log(idOrder);
 
     useEffect(() => {
         request("http://127.0.0.1/sborkaZavodEnergomash/api/readOrder.php")
@@ -39,49 +23,6 @@ const OrderList = () => {
          });
         // eslint-disable-next-line
     }, []);
-
-    const editProd = (product) => {
-        return (
-            <Formik
-            initialValues = {{
-                name: product['name'],
-                quantity: product['quantity'],
-                ingener: product['ingener'],
-                supplier: product['supplier'],
-                installationOfCabinets: product['installationOfCabinets'],
-                brigade: product['brigade'],
-                shipment: product['shipment']
-            }}
-            validationSchema = {Yup.object({
-                name: Yup.string()
-                        .required('Обязательное поле!'),
-                quantity: Yup.string()
-                        .required('Обязательное поле!')
-            })}
-            onSubmit = {(values) => {
-                addUser(values);
-                resetForm();
-            }}
-            >
-                <div className="table_orders_heading_prod_string" key = {i}>
-                <div>{product['name']}</div>
-                <div>{product['quantity']}</div>
-                <div>{product['ingener']}</div>
-                <div>{product['supplier']}</div>
-                <div>{product['installationOfCabinets']}</div>
-                <div>{product['brigade']}</div>
-                <div>{product['shipment']}</div>
-                <div>
-                    <input 
-                        type="button" 
-                        value={'Сохранить'}
-                        onClick={() => {setIdOrder(product['ID'])}}
-                        />
-                </div>
-            </div>
-            </Formik>
-            )
-    }
 
     const renderOrders = (orders) => {
         return orders.map((item, i) => {
@@ -104,7 +45,7 @@ const OrderList = () => {
                                         <input 
                                             type="button" 
                                             value={'Редактировать'}
-                                            onClick={() => {setIdOrder(el['ID'])}}
+                                            onClick={() => {dispatch(showModal()); dispatch(activeOrder(item['id'], item['№'])); dispatch(activeProduct(el))}}
                                             />
                                     </div>
                                 </div>
