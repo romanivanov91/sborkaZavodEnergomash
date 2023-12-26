@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import { ordersFetched, showModal, activeOrder, activeProduct } from '../../../actions';
+import BarLoader from "react-spinners/BarLoader";
 
 import './OrderList.css';
 
@@ -19,6 +20,8 @@ const MyTextInput = ({label, ...props}) => {
     )
 }
 
+
+
 const OrderList = () => {
 
     const [idOrder, setIdOrder] = useState('');
@@ -26,6 +29,10 @@ const OrderList = () => {
     const {orders} = useSelector(state=>state);
     const dispatch = useDispatch();
     const {request} = useHttp();
+
+    const [spinner, setSpinner] = useState(false);
+    const [errorReg, setErrorReg] = useState(false);
+    const [succesRegMesageState, setSuccesRegMesageState] = useState(false);
 
     console.log(idOrder);
 
@@ -39,6 +46,26 @@ const OrderList = () => {
          });
         // eslint-disable-next-line
     }, []);
+
+    const editProdApi = (values) => {
+        setSpinner(true);
+        request('http://localhost:8000/sborkaZavodEnergomash/api/create_edit_prod.php', 'POST', JSON.stringify(values, null, 2))
+        .then(res => {
+            console.log(res, 'Отправка успешна');
+            setSpinner(false);
+            setSuccesRegMesageState(true);
+            setErrorReg(false);
+            setTimeout(() => {
+                setSuccesRegMesageState(false)
+            }, 10000);
+        })
+        .catch(error => {
+            console.log(error);
+            setSpinner(false);
+            setSuccesRegMesageState(false)
+            setErrorReg(true);
+        });
+    }
 
     const editProd = (product) => {
         return (
@@ -59,8 +86,7 @@ const OrderList = () => {
                         .required('Обязательное поле!')
             })}
             onSubmit = {(values) => {
-                addUser(values);
-                resetForm();
+                editProdApi(values);
             }}
             >
                 <div className="table_orders_heading_prod_string" key = {i}>
