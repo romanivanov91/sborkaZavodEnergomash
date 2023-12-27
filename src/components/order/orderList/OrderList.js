@@ -32,9 +32,9 @@ const OrderList = () => {
 
     const [spinner, setSpinner] = useState(false);
     const [errorReg, setErrorReg] = useState(false);
-    const [succesRegMesageState, setSuccesRegMesageState] = useState(false);
 
     console.log(idOrder);
+    console.log(orders);
 
     useEffect(() => {
         request("http://127.0.0.1/sborkaZavodEnergomash/api/readOrder.php")
@@ -53,21 +53,17 @@ const OrderList = () => {
         .then(res => {
             console.log(res, 'Отправка успешна');
             setSpinner(false);
-            setSuccesRegMesageState(true);
             setErrorReg(false);
-            setTimeout(() => {
-                setSuccesRegMesageState(false)
-            }, 10000);
+            dispatch(ordersFetched(res));
         })
         .catch(error => {
             console.log(error);
             setSpinner(false);
-            setSuccesRegMesageState(false)
             setErrorReg(true);
         });
     }
 
-    const editProd = (product) => {
+    const editProd = (product, i) => {
         return (
             <Formik
             initialValues = {{
@@ -89,22 +85,63 @@ const OrderList = () => {
                 editProdApi(values);
             }}
             >
-                <div className="table_orders_heading_prod_string" key = {i}>
-                <div>{product['name']}</div>
-                <div>{product['quantity']}</div>
-                <div>{product['ingener']}</div>
-                <div>{product['supplier']}</div>
-                <div>{product['installationOfCabinets']}</div>
-                <div>{product['brigade']}</div>
-                <div>{product['shipment']}</div>
-                <div>
-                    <input 
-                        type="button" 
-                        value={'Сохранить'}
-                        onClick={() => {setIdOrder(product['ID'])}}
+                <Form className="table_orders_heading_prod_string" key = {i}>
+                    <div>
+                        <MyTextInput
+                            id="name"
+                            name="name"
+                            type="text"
                         />
-                </div>
-            </div>
+                    </div>
+                    <div>
+                        <MyTextInput
+                            id="quantity"
+                            name="quantity"
+                            type="text"
+                        />
+                    </div>
+                    <div>
+                        <MyTextInput
+                            id="ingener"
+                            name="ingener"
+                            type="text"
+                        />
+                    </div>
+                    <div>
+                        <MyTextInput
+                            id="supplier"
+                            name="supplier"
+                            type="text"
+                        />
+                    </div>
+                    <div>
+                        <MyTextInput
+                            id="installationOfCabinets"
+                            name="installationOfCabinets"
+                            type="text"
+                        />
+                    </div>
+                    <div>
+                        <MyTextInput
+                            id="brigade"
+                            name="brigade"
+                            type="text"
+                        />
+                    </div>
+                    <div>
+                        <MyTextInput
+                            id="shipment"
+                            name="shipment"
+                            type="text"
+                        />
+                    </div>
+                    <div>
+                        <input 
+                            type="submit" 
+                            value={'Сохранить'}
+                            />
+                    </div>
+                </Form>
             </Formik>
             )
     }
@@ -117,24 +154,29 @@ const OrderList = () => {
                     <div className="table_orders_string_cell">{item['customer']}</div>
                     <div className="table_orders_string_cell">{
                         item['products'].map((el, i) => {
-                            return (
-                                <div className="table_orders_heading_prod_string" key = {i}>
-                                    <div>{el['name']}</div>
-                                    <div>{el['quantity']}</div>
-                                    <div>{el['ingener']}</div>
-                                    <div>{el['supplier']}</div>
-                                    <div>{el['installationOfCabinets']}</div>
-                                    <div>{el['brigade']}</div>
-                                    <div>{el['shipment']}</div>
-                                    <div>
-                                        <input 
-                                            type="button" 
-                                            value={'Редактировать'}
-                                            onClick={() => {setIdOrder(el['ID'])}}
-                                            />
+                            if (el.ID === idOrder) {
+                                return editProd(el, i)
+                            } else {
+                                return (
+                                    <div className="table_orders_heading_prod_string" key = {i}>
+                                        <div>{el['name']}</div>
+                                        <div>{el['quantity']}</div>
+                                        <div>{el['ingener']}</div>
+                                        <div>{el['supplier']}</div>
+                                        <div>{el['installationOfCabinets']}</div>
+                                        <div>{el['brigade']}</div>
+                                        <div>{el['shipment']}</div>
+                                        <div>
+                                            <input 
+                                                type="button" 
+                                                value={'Редактировать'}
+                                                onClick={() => {setIdOrder(el['ID'])}}
+                                                />
+                                        </div>
                                     </div>
-                                </div>
-                                )
+                                    )
+                            }
+                            
                         })
                     }
                         <div>
