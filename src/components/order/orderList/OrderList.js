@@ -25,6 +25,7 @@ const MyTextInput = ({label, ...props}) => {
 const OrderList = () => {
 
     const [idOrder, setIdOrder] = useState('');
+    const [addProd, setAddProd] = useState(false);
 
     const {orders} = useSelector(state=>state);
     const dispatch = useDispatch();
@@ -63,17 +64,17 @@ const OrderList = () => {
         });
     }
 
-    const editProd = (product, i) => {
+    const addEditProd = (i = null, product = null) => {
         return (
             <Formik
             initialValues = {{
-                name: product['name'],
-                quantity: product['quantity'],
-                ingener: product['ingener'],
-                supplier: product['supplier'],
-                installationOfCabinets: product['installationOfCabinets'],
-                brigade: product['brigade'],
-                shipment: product['shipment']
+                name: product ? product['name'] : '',
+                quantity: product ? product['quantity'] : '',
+                ingener: product ? product['ingener'] : '',
+                supplier: product ? product['supplier'] : '',
+                installationOfCabinets: product ? product['installationOfCabinets'] : '',
+                brigade: product ? product['brigade'] : '',
+                shipment: product ? product['shipment'] : ''
             }}
             validationSchema = {Yup.object({
                 name: Yup.string()
@@ -146,16 +147,22 @@ const OrderList = () => {
             )
     }
 
+    const addProdForm = () => {
+        if (addProd) {
+            addEditProd();
+        }
+    }
+
     const renderOrders = (orders) => {
         return orders.map((item, i) => {
             return (
                 <div className="table_orders_string" key = {i}>
                     <div className="table_orders_string_cell">{item['№']}</div>
                     <div className="table_orders_string_cell">{item['customer']}</div>
-                    <div className="table_orders_string_cell">{
-                        item['products'].map((el, i) => {
+                    <div className="table_orders_string_cell">
+                        {item['products'].map((el, i) => {
                             if (el.ID === idOrder) {
-                                return editProd(el, i)
+                                return addEditProd(i, el)
                             } else {
                                 return (
                                     <div className="table_orders_heading_prod_string" key = {i}>
@@ -178,12 +185,14 @@ const OrderList = () => {
                             }
                             
                         })
-                    }
+                        }
+                        {addProdForm()}
                         <div>
                             <input 
                                 type="submit" 
                                 value={'Добавить'}
-                                onClick={() => {dispatch(showModal()); dispatch(activeOrder(item['id'], item['№']));}}
+                                // onClick={() => {dispatch(showModal()); dispatch(activeOrder(item['id'], item['№']));}}
+                                onClick={() => {dispatch(activeOrder(item['id'], item['№'])); setAddProd(true)}}
                             />
                         </div>
                     </div>
