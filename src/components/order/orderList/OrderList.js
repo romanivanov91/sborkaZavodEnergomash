@@ -11,12 +11,14 @@ import './OrderList.css';
 const MyTextInput = ({label, ...props}) => {
     const [field, meta] = useField(props);
     return (
-        <>
+        <div className='inputProd'>
             <input {...props} {...field}/>
-            {meta.touched && meta.error ? (
-                <div className='error'>{meta.error}</div>
-            ) : null}
-        </>
+            <div className='errorMsgAddEditProdPar'>
+                {meta.touched && meta.error ? (
+                    <div className='errorMsgAddEditProd'>{meta.error}</div>
+                ) : null}
+            </div>
+        </div>
     )
 }
 
@@ -24,15 +26,15 @@ const MyTextInput = ({label, ...props}) => {
 
 const OrderList = () => {
 
-    const [idOrder, setIdOrder] = useState('');
-    const [addProd, setAddProd] = useState(false);
-
     const {orders} = useSelector(state=>state);
+    const activeOrderState = useSelector(state=>state.activeOrder)
     const dispatch = useDispatch();
     const {request} = useHttp();
 
     const [spinner, setSpinner] = useState(false);
     const [errorReg, setErrorReg] = useState(false);
+    const [idOrder, setIdOrder] = useState('');
+    const [addProd, setAddProd] = useState(false);
 
     console.log(idOrder);
     console.log(orders);
@@ -64,7 +66,7 @@ const OrderList = () => {
         });
     }
 
-    const addEditProd = (i = null, product = null) => {
+    const addEditProd = (i = 1000, product = null) => {
         return (
             <Formik
             initialValues = {{
@@ -81,9 +83,11 @@ const OrderList = () => {
                         .required('Обязательное поле!'),
                 quantity: Yup.string()
                         .required('Обязательное поле!')
+                        .matches(/^[0-9]+$/, "Введите целочисленное значение")
             })}
             onSubmit = {(values) => {
                 editProdApi(values);
+                setAddProd(false);
             }}
             >
                 <Form className="table_orders_heading_prod_string" key = {i}>
@@ -147,12 +151,6 @@ const OrderList = () => {
             )
     }
 
-    const addProdForm = () => {
-        if (addProd) {
-            addEditProd();
-        }
-    }
-
     const renderOrders = (orders) => {
         return orders.map((item, i) => {
             return (
@@ -177,7 +175,7 @@ const OrderList = () => {
                                             <input 
                                                 type="button" 
                                                 value={'Редактировать'}
-                                                onClick={() => {setIdOrder(el['ID'])}}
+                                                onClick={() => {setIdOrder(el['ID']); setAddProd(false)}}
                                                 />
                                         </div>
                                     </div>
@@ -186,7 +184,7 @@ const OrderList = () => {
                             
                         })
                         }
-                        {addProdForm()}
+                        {addProd && item['№'] === activeOrderState['№'] ? addEditProd() : null}
                         <div>
                             <input 
                                 type="submit" 
