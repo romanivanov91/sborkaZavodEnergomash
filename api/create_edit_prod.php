@@ -18,13 +18,13 @@ $data = json_decode(file_get_contents("php://input"));
 // $array = $sth->fetch(PDO::FETCH_ASSOC);
 // print_r($array);
 
-$productAvailability = $db->prepare('SELECT * FROM `product2020` WHERE 1'); // запрос на выборку заказов
-$resultOrder2020->execute();
-$resultOrder2020Array = $resultOrder2020->fetchAll(PDO::FETCH_ASSOC);
+$productAvailability = $db->prepare('SELECT * FROM `product` WHERE 1'); // запрос на выборку заказов
+$resultOrder->execute();
+$resultOrderArray = $resultOrder->fetchAll(PDO::FETCH_ASSOC);
 
 //echo json_encode($resultProduct2020Array);
 
-if (!empty($resultOrder2020Array)){
+if (!empty($resultOrderArray)){
     // $arrOrder2020 = array();
     // $arrProduct2020 = array();
     // foreach($resultOrder2020 as $row){
@@ -33,17 +33,17 @@ if (!empty($resultOrder2020Array)){
     // foreach ($resultProduct2020 as $row) {
     //     array_push($arrProduct2020, $row);
     // };
-    foreach ($resultOrder2020Array as $key=>$row) {
+    foreach ($resultOrderArray as $key=>$row) {
         $products = array();
-        foreach ($resultProduct2020Array as $i => $val) {
+        foreach ($resultProductArray as $i => $val) {
             if ($row['ID'] == $val['ID_Order']) {
                 $products[] = $val;
             }
         }
         $row += ['products' => $products];
-        $resultOrder2020Array[$key] = $row;
+        $resultOrderArray[$key] = $row;
     };
-    echo json_encode($resultOrder2020Array);
+    echo json_encode($resultOrderArray);
 } else {
     echo json_encode ("0 results order 2020");
 };
