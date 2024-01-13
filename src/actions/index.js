@@ -1,19 +1,19 @@
 export const ordersYearsFetching = () => {
     return {
-        type: 'ORDERS_FETCHING'
+        type: 'ORDERS_YEARS_FETCHING'
     }
 }
 
 export const ordersYearsFetched = (orders) => {
     return {
-        type: 'ORDERS_FETCHED',
+        type: 'ORDERS_YEARS_FETCHED',
         payload: orders
     }
 }
 
-export const ordersFetchingError = () => {
+export const ordersYearsFetchingError = () => {
     return {
-        type: 'ORDERS_FETCHING_ERROR'
+        type: 'ORDERS_YEARS_FETCHING_ERROR'
     }
 }
 

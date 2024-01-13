@@ -1,15 +1,23 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {useHttp} from '../../../hooks/http.hook';
+import { ordersYearsFetching, ordersYearsFetched, ordersYearsFetchingError } from '../../../actions';
 
 import './HeaderOrder.css';
 
 const HeaderOrder = () => {
 
+    const dispatch = useDispatch();
     const {request} = useHttp();
 
     useEffect (()=> {
-        
+        request("http://127.0.0.1/sborkaZavodEnergomash/api/readYearsOrder.php")
+        .then((data) => {
+            console.log(data);
+            dispatch(ordersYearsFetched(data));
+        }).catch((error) => {
+            console.log(error); // вывести ошибку
+         });
     }, [])
 
     const {filters} = useSelector(state=>state);

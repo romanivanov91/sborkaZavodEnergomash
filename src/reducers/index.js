@@ -26,6 +26,21 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'ORDERS_YEARS_FETCHING':
+            return {
+                ...state,
+                filtersLoadingStatus: 'loading'
+            }
+        case 'ORDERS_YEARS_FETCHED':
+            return {
+                ...state,
+                filters : action.payload
+            }
+        case 'ORDERS_YEARS_FETCHING_ERROR':
+            return {
+                ...state,
+                filtersLoadingStatus: 'error'
+            }
         case 'ORDERS_FETCHING':
             return {
                 ...state,
