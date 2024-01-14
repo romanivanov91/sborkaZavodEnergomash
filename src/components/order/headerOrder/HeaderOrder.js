@@ -1,37 +1,50 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {useHttp} from '../../../hooks/http.hook';
-import { ordersYearsFetching, ordersYearsFetched, ordersYearsFetchingError } from '../../../actions';
+import { ordersYearsFetched, activeYear } from '../../../actions';
 
 import './HeaderOrder.css';
 
 const HeaderOrder = () => {
 
+    const [errorMsg, setErrorMsg] = useState(false);
+
+    const filters = useSelector(state=>state.filters);
+    const activeYearOrder = useSelector(state=>state.activeYear);
+
     const dispatch = useDispatch();
     const {request} = useHttp();
+
+    const date = new Date();
 
     useEffect (()=> {
         request("http://127.0.0.1/sborkaZavodEnergomash/api/readYearsOrder.php")
         .then((data) => {
             console.log(data);
+            setErrorMsg(false);
             dispatch(ordersYearsFetched(data));
+            console.log(activeYearOrder);
         }).catch((error) => {
             console.log(error); // вывести ошибку
+            setErrorMsg(true);
          });
     }, [])
-
-    const {filters} = useSelector(state=>state);
-    //const dispatch = useDispatch();
 
 
     const yearsli = (years) => {
         return years.map((item, i) => {
-            return <li key = {i}>{item}</li>
+            return <li 
+                    key = {i}
+                    onClick = {() => dispatch(activeYear(item))}
+                    className = { item == activeYearOrder ? 'activeYearOrder' : null}
+                    >
+                        {item}
+                    </li>
             }
         )
     }
 
-    const renderyearsli = yearsli(filters)
+    const renderyearsli = errorMsg ? <p>Данные по годам не загружены!</p> : yearsli(filters)
 
     return (
         <div className='headerOrder'>

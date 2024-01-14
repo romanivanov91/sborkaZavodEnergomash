@@ -1,8 +1,3 @@
-export const ordersYearsFetching = () => {
-    return {
-        type: 'ORDERS_YEARS_FETCHING'
-    }
-}
 
 export const ordersYearsFetched = (orders) => {
     return {
@@ -11,9 +6,10 @@ export const ordersYearsFetched = (orders) => {
     }
 }
 
-export const ordersYearsFetchingError = () => {
+export const activeYear = (year) => {
     return {
-        type: 'ORDERS_YEARS_FETCHING_ERROR'
+        type: 'ACTIVE_YEAR',
+        payload: year
     }
 }
 

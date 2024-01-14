@@ -12,3 +12,12 @@
     justify-content: space-around;
     list-style-type: none;
 }
+
+.headerOrder li {
+    cursor: pointer;
+    width: 100%;
+}
+
+.activeYearOrder {
+    border: 2px solid #000;
+}

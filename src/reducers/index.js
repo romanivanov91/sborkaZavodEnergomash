@@ -1,11 +1,13 @@
 import { activeOrder, showModal } from "../actions";
 
+const date = new Date();
+
 const initialState = {
     orders: [
     ],
     ordersLoadingStatus: 'idle',
-    filters: [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023],
-    filtersLoadingStatus: 'idle',
+    filters: [],
+    activeYear: date.getFullYear(),
     filteredOrders: [],
     activeFilterName: 'all',
     showModal: false,
@@ -26,20 +28,16 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'ORDERS_YEARS_FETCHING':
-            return {
-                ...state,
-                filtersLoadingStatus: 'loading'
-            }
         case 'ORDERS_YEARS_FETCHED':
             return {
                 ...state,
                 filters : action.payload
             }
-        case 'ORDERS_YEARS_FETCHING_ERROR':
+        case 'ACTIVE_YEAR':
+            console.log(action.payload);
             return {
                 ...state,
-                filtersLoadingStatus: 'error'
+                activeYear: action.payload
             }
         case 'ORDERS_FETCHING':
             return {

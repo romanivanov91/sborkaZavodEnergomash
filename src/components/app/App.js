@@ -13,8 +13,8 @@ import './App.css';
 
 function App() {
 
-  const {showModal} = useSelector(state => state);
-  const {updateUserPassFormState} = useSelector(state=>state);
+  const showModal = useSelector(state => state.showModal);
+  const updateUserPassFormState = useSelector(state=>state.updateUserPassFormState);
   const userAutorisation = useSelector(state=>state.userAutorisation);
 
   const dispatch = useDispatch();

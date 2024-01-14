@@ -26,8 +26,9 @@ const MyTextInput = ({label, ...props}) => {
 
 const OrderList = () => {
 
-    const {orders} = useSelector(state=>state);
-    const activeOrderState = useSelector(state=>state.activeOrder)
+    const orders = useSelector(state=>state.orders);
+    const activeOrderState = useSelector(state=>state.activeOrder);
+    const activeYear = useSelector(state=>state.activeYear);
     const dispatch = useDispatch();
     const {request} = useHttp();
 
@@ -153,52 +154,54 @@ const OrderList = () => {
 
     const renderOrders = (orders) => {
         return orders.map((item, i) => {
-            return (
-                <div className="table_orders_string" key = {i}>
-                    <div className="table_orders_string_cell">{item['№']}</div>
-                    <div className="table_orders_string_cell">{item['customer']}</div>
-                    <div className="table_orders_string_cell">
-                        {item['products'].map((el, i) => {
-                            if (el.ID === idOrder) {
-                                return addEditProd(i, el)
-                            } else {
-                                return (
-                                    <div className="table_orders_heading_prod_string" key = {i}>
-                                        <div>{el['name']}</div>
-                                        <div>{el['quantity']}</div>
-                                        <div>{el['ingener']}</div>
-                                        <div>{el['supplier']}</div>
-                                        <div>{el['installationOfCabinets']}</div>
-                                        <div>{el['brigade']}</div>
-                                        <div>{el['shipment']}</div>
-                                        <div>
-                                            <input 
-                                                type="button" 
-                                                value={'Редактировать'}
-                                                onClick={() => {setIdOrder(el['ID']); setAddProd(false)}}
-                                                />
+            if (item.YEAR == activeYear) {
+                return (
+                    <div className="table_orders_string" key = {i}>
+                        <div className="table_orders_string_cell">{item['№']}</div>
+                        <div className="table_orders_string_cell">{item['customer']}</div>
+                        <div className="table_orders_string_cell">
+                            {item['products'].map((el, i) => {
+                                if (el.ID === idOrder) {
+                                    return addEditProd(i, el)
+                                } else {
+                                    return (
+                                        <div className="table_orders_heading_prod_string" key = {i}>
+                                            <div>{el['name']}</div>
+                                            <div>{el['quantity']}</div>
+                                            <div>{el['ingener']}</div>
+                                            <div>{el['supplier']}</div>
+                                            <div>{el['installationOfCabinets']}</div>
+                                            <div>{el['brigade']}</div>
+                                            <div>{el['shipment']}</div>
+                                            <div>
+                                                <input 
+                                                    type="button" 
+                                                    value={'Редактировать'}
+                                                    onClick={() => {setIdOrder(el['ID']); setAddProd(false)}}
+                                                    />
+                                            </div>
                                         </div>
-                                    </div>
-                                    )
+                                        )
+                                }
+                                
+                            })
                             }
-                            
-                        })
-                        }
-                        {addProd && item['№'] === activeOrderState['№'] ? addEditProd() : null}
-                        <div>
-                            <input 
-                                type="submit" 
-                                value={'Добавить'}
-                                // onClick={() => {dispatch(showModal()); dispatch(activeOrder(item['id'], item['№']));}}
-                                onClick={() => {dispatch(activeOrder(item['id'], item['№'])); setAddProd(true)}}
-                            />
+                            {addProd && item['№'] === activeOrderState['№'] ? addEditProd() : null}
+                            <div>
+                                <input 
+                                    type="submit" 
+                                    value={'Добавить'}
+                                    // onClick={() => {dispatch(showModal()); dispatch(activeOrder(item['id'], item['№']));}}
+                                    onClick={() => {dispatch(activeOrder(item['id'], item['№'])); setAddProd(true)}}
+                                />
+                            </div>
                         </div>
+                        <div className="table_orders_string_cell">{item['launchDate']}</div>
+                        <div className="table_orders_string_cell">{item['dateOfShipment']}</div>
+                        <div className="table_orders_string_cell">{item['responsibleManager']}</div>
                     </div>
-                    <div className="table_orders_string_cell">{item['launchDate']}</div>
-                    <div className="table_orders_string_cell">{item['dateOfShipment']}</div>
-                    <div className="table_orders_string_cell">{item['responsibleManager']}</div>
-                </div>
-            )
+                )
+            }
         })
     };
 
