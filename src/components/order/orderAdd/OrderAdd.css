@@ -22,5 +22,15 @@
 .orderAdd_form_order div {
     margin: 10px;
 }
-
+.btnOrderAdd {
+    width: 200px;
+    height: 30px;
+    font-size: 16px;
+    color: white;
+    background-color: #0693e3;
+    border-radius: 5px;
+    border: 0px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
 

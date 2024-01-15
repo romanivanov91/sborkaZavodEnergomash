@@ -142,7 +142,7 @@ const Autorisation = () => {
                 <div>
                 <MyTextInput
                     label='Запомнить меня'
-                    id="password"
+                    id="toggle"
                     name="toggle"
                     type="checkbox" 
                     />
