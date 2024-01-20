@@ -33,23 +33,23 @@ const OrderList = () => {
     const {request} = useHttp();
 
     const [spinner, setSpinner] = useState(false);
+    const [spinnerStringOrders, setSpinnerStringOrders] = useState(false);
     const [errorReg, setErrorReg] = useState(false);
     const [idOrder, setIdOrder] = useState('');
     const [addProd, setAddProd] = useState(false);
 
-    console.log(idOrder);
-    console.log(orders);
-
     useEffect(() => {
-        request("http://127.0.0.1/sborkaZavodEnergomash/api/readOrder.php")
+        setSpinnerStringOrders(true);
+        request('http://127.0.0.1/sborkaZavodEnergomash/api/readOrder.php','POST', JSON.stringify({year:activeYear}, null, 2) )
         .then((data) => {
             console.log(data);
+            setSpinnerStringOrders(false);
             dispatch(ordersFetched(data));
         }).catch((error) => {
             console.log(error); // вывести ошибку
          });
         // eslint-disable-next-line
-    }, []);
+    }, [activeYear]);
 
     const editProdApi = (values) => {
         setSpinner(true);
@@ -205,6 +205,30 @@ const OrderList = () => {
         })
     };
 
+    const tableOrdersString = () => {
+        if (spinnerStringOrders) {
+            return (
+                <div className="table_orders_string_spinner">
+                    <BarLoader
+                        color="#36d7b7"
+                        cssOverride={{}}
+                        speedMultiplier={1}
+                    />
+                </div>
+                )
+        } else {
+            if (orders === '0 results order 2020') {
+                return (
+                    <div>
+                        <p>Заказы за текущий год отсутствуют</p>
+                    </div>
+                    )
+            } else {
+                return renderOrders(orders)
+            }
+        }
+    }
+
     return (
         <div className="orderList">
             <div className="table_orders_heading">
@@ -227,7 +251,7 @@ const OrderList = () => {
                 <div className="table_orders_heading_cell">Дата отгрузки</div>
                 <div className="table_orders_heading_cell">Менеджер</div>
             </div>
-                {renderOrders(orders)}
+            {tableOrdersString()}
         </div>
         )
 }

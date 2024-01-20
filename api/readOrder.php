@@ -10,15 +10,19 @@ include_once "./Config/Database.php";
 $database = new Database();
 $db = $database->getConnection();
 
+// Получаем данные
+$data = json_decode(file_get_contents("php://input"));
+
+
 // $sth = $db->prepare("SELECT * FROM `category` WHERE `id` = :id");
 // $sth->execute(array('id' => '21'));
 // $array = $sth->fetch(PDO::FETCH_ASSOC);
 // print_r($array);
 
-$resultOrder = $db->prepare('SELECT * FROM `sborka` WHERE 1'); // запрос на выборку заказов
+$resultOrder = $db->prepare('SELECT * FROM `sborka` WHERE YEAR='.$data->year); // запрос на выборку заказов по году
 $resultOrder->execute();
 $resultOrderArray = $resultOrder->fetchAll(PDO::FETCH_ASSOC);
-$resultProduct = $db->prepare('SELECT * FROM `product` WHERE 1'); // запрос на выборку изделий
+$resultProduct = $db->prepare('SELECT p.* from product as p JOIN sborka as s on p.ID_Order=s.ID where s.YEAR =' .$data->year); // запрос на выборку изделий по году
 $resultProduct->execute();
 $resultProductArray = $resultProduct->fetchAll(PDO::FETCH_ASSOC);
 

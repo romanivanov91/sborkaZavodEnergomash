@@ -109,3 +109,10 @@
     margin-left: -15px;
 }
 
+.table_orders_string_spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 19px;
+}
+
