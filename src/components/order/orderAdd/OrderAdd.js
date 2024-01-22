@@ -12,6 +12,7 @@ const MyTextInput = ({label, ...props}) => {
     const [field, meta] = useField(props);
     return (
         <div className='inputProd'>
+            <label htmlFor='{props.name}'>{label}</label>
             <input {...props} {...field}/>
             <div className='errorMsgAddEditProdPar'>
                 {meta.touched && meta.error ? (
@@ -73,6 +74,7 @@ const OrderAdd = () => {
                         <div>
                             <MyTextInput
                                 id="year"
+                                label='Год'
                                 name="year"
                                 type="text"
                             />
@@ -80,6 +82,7 @@ const OrderAdd = () => {
                         <div>
                             <MyTextInput
                                 id="customer"
+                                label='Заказчик'
                                 name="customer"
                                 type="text"
                             />
@@ -87,6 +90,7 @@ const OrderAdd = () => {
                         <div>
                             <MyTextInput
                                 id="launchDate"
+                                label='Дата запуска'
                                 name="launchDate"
                                 type="date"
                             />
@@ -94,6 +98,7 @@ const OrderAdd = () => {
                         <div>
                             <MyTextInput
                                 id="dateOfShipment"
+                                label='Дата отгрузки'
                                 name="dateOfShipment"
                                 type="date"
                             />
@@ -101,6 +106,7 @@ const OrderAdd = () => {
                         <div>
                             <MyTextInput
                                 id="responsibleManager"
+                                label='Ответственный менеджер'
                                 name="responsibleManager"
                                 type="text"
                             />
