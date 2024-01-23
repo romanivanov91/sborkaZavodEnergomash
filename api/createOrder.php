@@ -19,9 +19,15 @@ if (!$mysqli)
 // Получаем данные
 $data = json_decode(file_get_contents("php://input"));
 
-$maxNumOrderYear = $mysqli->query('SELECT max(№) FROM sborka where YEAR = .$data->year'); // запрос самого последнего номера заказа
+$maxNumOrderYearSQL = $mysqli->query('SELECT max(№) FROM sborka where YEAR='.$data->year); // запрос самого последнего номера заказа
 
-echo json_encode($maxNumOrderYear);
+$maxNumOrderYearArray = array();
+
+foreach($maxNumOrderYearSQL as $row){
+             array_push($maxNumOrderYearArray, $row);
+        }
+
+echo json_encode($maxNumOrderYearArray);
 
 
 // $zaprosSQL = `
