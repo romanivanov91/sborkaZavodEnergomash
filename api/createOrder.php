@@ -21,23 +21,11 @@ $data = json_decode(file_get_contents("php://input"));
 
 $maxNumOrderYearSQL = $mysqli->query('SELECT max(№) as № FROM sborka where YEAR='.$data->year); // запрос самого последнего номера заказа
 
-$entry = $maxNumOrderYearSQL->fetch_object();
+$maxNumOrderYear = $maxNumOrderYearSQL->fetch_object();
 
 //$maxNumOrderYearArray = array();
 
-// foreach($maxNumOrderYearSQL as $row){
-//              array_push($maxNumOrderYearArray, $row);
-//         }
-
-echo json_encode($entry['№']);
-
-
-// $zaprosSQL = `
-//     INSERT INTO sborka2020 ()
-//     VALUES ()
-// `;
-
-// $createOrder = $mysqli->query('INSERT INTO `sborka2020` VALUES ('); // создание записи заказа 
+$createOrder = $mysqli->query('INSERT INTO `sborka`(YEAR, №, customer, launchDate, dateOfShipment, responsibleManager) VALUES ($data->year, $maxNumOrderYear->№, $data->customer, $data->launchDate, $data->dateOfShipment, $data->responsibleManager)'); // создание записи заказа 
 
 
 // if ($resultOrder2020->num_rows > 0){
