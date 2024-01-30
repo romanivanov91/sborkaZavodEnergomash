@@ -29,10 +29,27 @@ $arr = array($data->year, ($maxNumOrderYear->№ + 1), $data->customer, $data->l
 
 //$maxNumOrderYearArray = array();
 
-$addOrderSql = "INSERT INTO sborka(YEAR, №, customer, launchDate, dateOfShipment, responsibleManager) VALUES('" . $data->year . "', '" . $maxNumOrderYear->№ + 1 . "', '" . $data->customer . "', '" . $data->launchDate . "', '" . $data->dateOfShipment . "', '" . $data->responsibleManager . "')";
+$addOrderSql = "INSERT INTO sborka(YEAR, №, customer, launchDate, dateOfShipment, responsibleManager) VALUES('" . $data->year . "', '" . $maxNumOrderYear->№ + 1 . "', '" . $data->customer . "', '" . $data->launchDate . "', '" . $data->dateOfShipment . "', '" . $data->responsibleManager . "')"; 
 
-$createOrder = $mysqli->query($addOrderSql); // создание записи заказа 
-
+// Создание пользователя
+if ($createOrder = $mysqli->query($addOrderSql) // создание записи заказа
+) {
+    // Устанавливаем код ответа
+    http_response_code(200);
+ 
+    // Покажем сообщение о том, что пользователь был создан
+    echo json_encode(array("message" => "Заказ добавлен"));
+}
+ 
+// Сообщение, если не удаётся создать пользователя
+else {
+ 
+    // Устанавливаем код ответа
+    http_response_code(400);
+ 
+    // Покажем сообщение о том, что создать пользователя не удалось
+    echo json_encode(array("message" => "Ошибка добавления заказа"));
+}
 
 // if ($resultOrder2020->num_rows > 0){
 //     $arrOrder2020 = array();

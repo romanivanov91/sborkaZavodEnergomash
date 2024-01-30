@@ -4,7 +4,7 @@ import {useHttp} from '../../../hooks/http.hook';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
-import { orderFormAdd } from '../../../actions';
+import { ordersFetched } from '../../../actions';
 
 import './OrderAdd.css';
 
@@ -35,7 +35,6 @@ const OrderAdd = () => {
         request('http://localhost:8000/sborkaZavodEnergomash/api/createOrder.php', 'POST', JSON.stringify(values, null, 2))
         .then(res => {
             console.log(res, 'Отправка успешна');
-            
         })
         //.then(dispatch(orderFormAdd(objectOrder)))
         .catch(error => console.log(error));
