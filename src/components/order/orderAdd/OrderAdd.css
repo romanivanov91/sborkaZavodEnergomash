@@ -22,6 +22,9 @@
 .orderAdd_form_order div {
     margin: 10px;
 }
+.orderAdd_form_order input {
+    text-align: center;
+}
 .btnOrderAdd {
     width: 200px;
     height: 30px;

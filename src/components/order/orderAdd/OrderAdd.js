@@ -4,7 +4,7 @@ import {useHttp} from '../../../hooks/http.hook';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
-import { ordersFetched } from '../../../actions';
+import { ordersFetched, ordersYearsFetched } from '../../../actions';
 
 import './OrderAdd.css';
 
@@ -25,19 +25,39 @@ const MyTextInput = ({label, ...props}) => {
 
 const OrderAdd = () => {
 
-    const orders = useSelector(state=>state.orders);
+    //const orders = useSelector(state=>state.orders);
+    //const activeYear = useSelector(state=>state.activeYear);
     const dispatch = useDispatch();
     const {request} = useHttp();
-
-
+    const date = new Date();
 
     const addOrder = (values) => {
         request('http://localhost:8000/sborkaZavodEnergomash/api/createOrder.php', 'POST', JSON.stringify(values, null, 2))
         .then(res => {
             console.log(res, 'Отправка успешна');
+            updateOrders();
+            updateYears();
         })
-        //.then(dispatch(orderFormAdd(objectOrder)))
         .catch(error => console.log(error));
+    }
+
+    const updateOrders = () => {
+        request('http://127.0.0.1/sborkaZavodEnergomash/api/readOrder.php','POST', JSON.stringify({year: date.getFullYear()}, null, 2) )
+        .then((data) => {
+            console.log(data);
+            dispatch(ordersFetched(data));
+        }).catch((error) => {
+            console.log(error); // вывести ошибку
+         });
+    }
+
+    const updateYears = () => {
+        request("http://127.0.0.1/sborkaZavodEnergomash/api/readYearsOrder.php")
+        .then((data) => {
+            dispatch(ordersYearsFetched(data));
+        }).catch((error) => {
+            console.log(error); // вывести ошибку
+         });
     }
 
     return(
@@ -45,7 +65,7 @@ const OrderAdd = () => {
             <h1>Добавить заказ</h1>
             <Formik
             initialValues = {{
-                year: '',
+                year: date.getFullYear(),
                 customer: '',
                 launchDate: '',
                 dateOfShipment: '',
@@ -76,6 +96,7 @@ const OrderAdd = () => {
                                 label='Год'
                                 name="year"
                                 type="text"
+                                disabled
                             />
                         </div>
                         <div>
