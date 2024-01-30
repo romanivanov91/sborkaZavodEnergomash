@@ -23,9 +23,15 @@ $maxNumOrderYearSQL = $mysqli->query('SELECT max(№) as № FROM sborka where Y
 
 $maxNumOrderYear = $maxNumOrderYearSQL->fetch_object();
 
+$arr = array($data->year, ($maxNumOrderYear->№ + 1), $data->customer, $data->launchDate, $data->dateOfShipment, $data->responsibleManager);
+
+//echo json_encode($arr);
+
 //$maxNumOrderYearArray = array();
 
-$createOrder = $mysqli->query('INSERT INTO `sborka`(YEAR, №, customer, launchDate, dateOfShipment, responsibleManager) VALUES ($data->year, $maxNumOrderYear->№, $data->customer, $data->launchDate, $data->dateOfShipment, $data->responsibleManager)'); // создание записи заказа 
+$addOrderSql = "INSERT INTO sborka(YEAR, №, customer, launchDate, dateOfShipment, responsibleManager) VALUES('" . $data->year . "', '" . $maxNumOrderYear->№ + 1 . "', '" . $data->customer . "', '" . $data->launchDate . "', '" . $data->dateOfShipment . "', '" . $data->responsibleManager . "')";
+
+$createOrder = $mysqli->query($addOrderSql); // создание записи заказа 
 
 
 // if ($resultOrder2020->num_rows > 0){
