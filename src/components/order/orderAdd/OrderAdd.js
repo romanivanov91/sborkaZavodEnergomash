@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {useHttp} from '../../../hooks/http.hook';
 import { useDispatch, useSelector } from 'react-redux';
-import { Formik, Form, useField } from 'formik';
+import { Formik, Form, useField, Field } from 'formik';
 import * as Yup from 'yup';
-import { ordersFetched, ordersYearsFetched } from '../../../actions';
+import { ordersFetched, ordersYearsFetched, activeYear } from '../../../actions';
+import BarLoader from "react-spinners/BarLoader";
 
 import './OrderAdd.css';
 
@@ -30,15 +31,25 @@ const OrderAdd = () => {
     const dispatch = useDispatch();
     const {request} = useHttp();
     const date = new Date();
+    
+    const [errorMsg, setErrorMsg] = useState(false);
+    const [spinner, setSpinner] = useState(false)
 
     const addOrder = (values) => {
+        setSpinner(true);
         request('http://localhost:8000/sborkaZavodEnergomash/api/createOrder.php', 'POST', JSON.stringify(values, null, 2))
         .then(res => {
             console.log(res, 'Отправка успешна');
             updateOrders();
             updateYears();
+            setErrorMsg(false);
+            setSpinner(false);
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+            console.log(error);
+            setErrorMsg(true);
+            setSpinner(false);
+        });
     }
 
     const updateOrders = () => {
@@ -55,9 +66,44 @@ const OrderAdd = () => {
         request("http://127.0.0.1/sborkaZavodEnergomash/api/readYearsOrder.php")
         .then((data) => {
             dispatch(ordersYearsFetched(data));
+            dispatch(activeYear(date.getFullYear()));
         }).catch((error) => {
             console.log(error); // вывести ошибку
          });
+    }
+
+    const submitBtn = () => {
+        if (spinner) {
+            return (
+                <div className='form_reg_auth_spinner'>
+                    <BarLoader
+                        color="#36d7b7"
+                        cssOverride={{}}
+                        speedMultiplier={1}
+                    />
+        </div>
+                )
+        } else {
+            return (
+                <div className="submitBtn">
+                    <input 
+                        className='form_submit' 
+                        type="submit" 
+                        value='Добавить'/>
+                    {errorMsg ? errorMessage(): null}
+                </div>
+                )
+        }
+    }
+
+    const errorMessage = () => {
+        return (
+                <div className="errorMessage">
+                    <div>
+                        <p>Произошла ошибка! Заказ не добавлен!</p>
+                    </div>
+                </div>
+            );
     }
 
     return(
@@ -128,16 +174,22 @@ const OrderAdd = () => {
                                 id="responsibleManager"
                                 label='Ответственный менеджер'
                                 name="responsibleManager"
-                                type="text"
+                                as="select"
                             />
+                        
+                            {/* <Field 
+                                as="select" 
+                                name="responsibleManager"
+                                label='Ответственный менеджер'
+                                id="responsibleManager">
+                                <option value="red">Red</option>
+                                <option value="green">Green</option>
+                                <option value="blue">Blue</option>
+                            </Field> */}
                         </div>
                     </div>
                     <div>
-                            <input 
-                                type="submit" 
-                                value='Добавить'
-                                className='btnOrderAdd'
-                                />
+                            {submitBtn()}
                     </div>
                 </Form>
             </Formik>

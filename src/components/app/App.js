@@ -16,12 +16,15 @@ function App() {
   const showModal = useSelector(state => state.showModal);
   const updateUserPassFormState = useSelector(state=>state.updateUserPassFormState);
   const userAutorisation = useSelector(state=>state.userAutorisation);
+  const user = useSelector(state => state.user);
 
   const dispatch = useDispatch();
 
   const {request} = useHttp();
 
   const jwtCookie = document.cookie.match(/jwt=(.+?)(;|$)/);
+
+  console.log(user);
 
   useEffect(() => {
     request('http://localhost:8000/sborkaZavodEnergomash/api/create_db.php', 'GET')
