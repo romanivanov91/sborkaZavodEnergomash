@@ -34,6 +34,7 @@ const OrderAdd = () => {
     
     const [errorMsg, setErrorMsg] = useState(false);
     const [spinner, setSpinner] = useState(false)
+    const [user, setUser] = useState([]);
 
     const addOrder = (values) => {
         setSpinner(true);
@@ -71,6 +72,27 @@ const OrderAdd = () => {
             console.log(error); // вывести ошибку
          });
     }
+
+    const userRequest = () => {
+        request("http://127.0.0.1/sborkaZavodEnergomash/api/readUser.php")
+        .then((data) => {
+            setUser(data)
+        }).catch((error) => {
+            console.log(error); // вывести ошибку
+         });
+    }
+
+
+    const userState = () => {
+        const selectUsers = user.map((el)=>{
+            return (
+                <option value="el.ID">{el.FIO}</option>
+                )
+        })
+        return selectUsers;
+    }
+
+    console.log(user);
 
     const submitBtn = () => {
         if (spinner) {
@@ -170,22 +192,23 @@ const OrderAdd = () => {
                             />
                         </div>
                         <div>
-                            <MyTextInput
+                            {/* <MyTextInput
                                 id="responsibleManager"
                                 label='Ответственный менеджер'
                                 name="responsibleManager"
                                 as="select"
-                            />
-                        
-                            {/* <Field 
-                                as="select" 
-                                name="responsibleManager"
-                                label='Ответственный менеджер'
-                                id="responsibleManager">
-                                <option value="red">Red</option>
-                                <option value="green">Green</option>
-                                <option value="blue">Blue</option>
-                            </Field> */}
+                            /> */}
+                            <div className='inputProd'>
+                                <label htmlFor='responsibleManager'>Ответственный менеджер</label>
+                                <Field 
+                                    as="select" 
+                                    name="responsibleManager"
+                                    label='Ответственный менеджер'
+                                    id="responsibleManager"
+                                    onClick = {() => userRequest()}>
+                                        {userState()}
+                                </Field>
+                            </div>  
                         </div>
                     </div>
                     <div>
