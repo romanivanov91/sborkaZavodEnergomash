@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {useHttp} from '../../../hooks/http.hook';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,11 +30,17 @@ const OrderAdd = () => {
     //const activeYear = useSelector(state=>state.activeYear);
     const dispatch = useDispatch();
     const {request} = useHttp();
+
     const date = new Date();
     
     const [errorMsg, setErrorMsg] = useState(false);
     const [spinner, setSpinner] = useState(false)
-    const [user, setUser] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [searchUsers, setSearchUsers] = useState('');
+
+    useEffect(() => {
+        usersRequest(searchUsers);
+    }, [searchUsers])
 
     const addOrder = (values) => {
         setSpinner(true);
@@ -73,26 +79,27 @@ const OrderAdd = () => {
          });
     }
 
-    const userRequest = () => {
-        request("http://127.0.0.1/sborkaZavodEnergomash/api/readUser.php")
+    const usersRequest = (searchUsers) => {
+        request("http://127.0.0.1/sborkaZavodEnergomash/api/readUser.php", 'POST', JSON.stringify({searchUsers: searchUsers}, null, 2))
         .then((data) => {
-            setUser(data)
+            setUsers(data)
         }).catch((error) => {
             console.log(error); // вывести ошибку
          });
     }
 
-
-    const userState = () => {
-        const selectUsers = user.map((el)=>{
-            return (
-                <option value="el.ID">{el.FIO}</option>
-                )
-        })
-        return selectUsers;
+    const usersFilter = () => {
+        if (Array.isArray(users)) {
+            const selectUsers = users.map((el, i)=>{
+                return (
+                    <li value={el.ID} key = {i}>{el.fullName}</li>
+                    )
+            })
+            return selectUsers;
+        }
     }
 
-    console.log(user);
+    console.log(users);
 
     const submitBtn = () => {
         if (spinner) {
@@ -200,14 +207,29 @@ const OrderAdd = () => {
                             /> */}
                             <div className='inputProd'>
                                 <label htmlFor='responsibleManager'>Ответственный менеджер</label>
-                                <Field 
+                                {/* <Field
+                                    className="inputPro_select"
                                     as="select" 
                                     name="responsibleManager"
                                     label='Ответственный менеджер'
                                     id="responsibleManager"
-                                    onClick = {() => userRequest()}>
-                                        {userState()}
-                                </Field>
+                                    onClick = {() => usersRequest()}>
+                                        {usersState()}
+                                </Field> */}
+                                <input
+                                    id="responsibleManager"
+                                    name="responsibleManager"
+                                    type="text"
+                                    placeholder="Введите ФИО"
+                                    autocomplete="off"
+                                    onChange={(e) => setSearchUsers(e.target.value)}
+                                />
+                                <ul>
+                                    {usersFilter()};
+                                    {/* {users.map(item => (
+                                        return <li>{item}</li>
+                                    ))} */}
+                                </ul>
                             </div>  
                         </div>
                     </div>

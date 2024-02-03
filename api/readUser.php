@@ -19,7 +19,11 @@ $data = json_decode(file_get_contents("php://input"));
 // $array = $sth->fetch(PDO::FETCH_ASSOC);
 // print_r($array);
 
-$resultUsers = $db->prepare("SELECT ID, CONCAT(firstname, ' ', lastname, ' ', patronymic) AS 'FIO' FROM `users` WHERE 1"); // запрос на выборку пользователей
+$requestSQL = "SELECT ID, CONCAT(firstname, ' ', lastname, ' ', patronymic) AS 'fullName' FROM `users` WHERE firstname LIKE '%".$data->searchUsers ."%' or lastname LIKE '%".$data->searchUsers ."%' or patronymic LIKE '%".$data->searchUsers ."%'";  
+
+//echo json_encode ($requestSQL);
+
+$resultUsers = $db->prepare($requestSQL); // запрос на выборку пользователей
 $resultUsers->execute();
 $resultUsersArray = $resultUsers->fetchAll(PDO::FETCH_ASSOC);
 
