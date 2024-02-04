@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {useHttp} from '../../../hooks/http.hook';
 import { useDispatch, useSelector } from 'react-redux';
-import { Formik, Form, useField, Field } from 'formik';
+import { Formik, Form, useField, Field, useFormikContext } from 'formik';
 import * as Yup from 'yup';
 import { ordersFetched, ordersYearsFetched, activeYear } from '../../../actions';
 import BarLoader from "react-spinners/BarLoader";
@@ -38,6 +38,8 @@ const OrderAdd = () => {
     const [users, setUsers] = useState([]);
     const [searchUsers, setSearchUsers] = useState('');
     const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState({id: user.id, fullName: user.firstname + ' ' + user.lastname + ' ' + user.patronymic + ' (' + user.id + ')'});
+
+    console.log(activeUserFormAddOrder);
 
     useEffect(() => {
         usersRequest(searchUsers);
@@ -92,7 +94,6 @@ const OrderAdd = () => {
 
     const usersFilter = () => {
         if (Array.isArray(users)) {
-            console.log(users);
             const selectUsers = users.map((el, i)=>{
                 return (
                     <li value={el.id} key = {i} onClick={() => setActiveUserFormAddOrder(el)}>{el.fullName} ({el.id})</li>
@@ -142,30 +143,31 @@ const OrderAdd = () => {
         <div className = 'orderAdd'>
             <h1>Добавить заказ</h1>
             <Formik
-            initialValues = {{
-                year: date.getFullYear(),
-                customer: '',
-                launchDate: '',
-                dateOfShipment: '',
-                responsibleManager: activeUserFormAddOrder.fullName,
-                userId: activeUserFormAddOrder.id
-            }}
-            validationSchema = {Yup.object({
-                year: Yup.string()
-                        .required('Обязательное поле!'),
-                customer: Yup.string()
-                        .required('Обязательное поле!'),
-                launchDate: Yup.string()
-                        .required('Обязательное поле!'),
-                dateOfShipment: Yup.string()
-                        .required('Обязательное поле!'),
-                responsibleManager: Yup.string()
-                        .required('Обязательное поле!'),
-            })}
-            onSubmit = {(values, {resetForm}) => {
-                addOrder(values);
-                resetForm();
-            }}
+                initialValues = {{
+                    year: date.getFullYear(),
+                    customer: '',
+                    launchDate: '',
+                    dateOfShipment: '',
+                    responsibleManager: ''
+                }}
+                validationSchema = {Yup.object({
+                    year: Yup.string()
+                            .required('Обязательное поле!'),
+                    customer: Yup.string()
+                            .required('Обязательное поле!'),
+                    launchDate: Yup.string()
+                            .required('Обязательное поле!'),
+                    dateOfShipment: Yup.string()
+                            .required('Обязательное поле!'),
+                    responsibleManager: Yup.string()
+                            .required('Обязательное поле!'),
+                })}
+                onSubmit = {(values, {resetForm}) => {
+                    console.log(values);
+                    addOrder(values);
+                    resetForm();
+                }}
+                enableReinitialize={true}
             >
                 <Form className="orderAdd_form">
                     <div className='orderAdd_form_order'>
@@ -205,12 +207,17 @@ const OrderAdd = () => {
                         <div>
                             <div className='inputProd'>
                                 <label htmlFor='responsibleManager'>Ответственный менеджер</label>
-                                <Field
+                                <input
                                     id="responsibleManager"
                                     name="responsibleManager"
                                     type="text"
                                     autoComplete="off"
-                                    onChange={(e) => setSearchUsers(e.target.value)}
+                                    onInput={(e) => {
+                                        if (e.target.value.lenght > 5) {
+                                            setSearchUsers(e.target.value)
+                                        }
+                                    }}
+                                    value={activeUserFormAddOrder.fullName}
                                 />
                             </div>
                             <div className='selectFullName'>
