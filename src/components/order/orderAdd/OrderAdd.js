@@ -26,7 +26,7 @@ const MyTextInput = ({label, ...props}) => {
 
 const OrderAdd = () => {
 
-    //const orders = useSelector(state=>state.orders);
+    const user = useSelector(state=>state.user);
     //const activeYear = useSelector(state=>state.activeYear);
     const dispatch = useDispatch();
     const {request} = useHttp();
@@ -37,6 +37,7 @@ const OrderAdd = () => {
     const [spinner, setSpinner] = useState(false)
     const [users, setUsers] = useState([]);
     const [searchUsers, setSearchUsers] = useState('');
+    const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState(user);
 
     useEffect(() => {
         usersRequest(searchUsers);
@@ -99,7 +100,7 @@ const OrderAdd = () => {
         }
     }
 
-    console.log(users);
+    console.log(searchUsers);
 
     const submitBtn = () => {
         if (spinner) {
@@ -135,6 +136,8 @@ const OrderAdd = () => {
             );
     }
 
+    console.log();
+
     return(
         <div className = 'orderAdd'>
             <h1>Добавить заказ</h1>
@@ -144,7 +147,8 @@ const OrderAdd = () => {
                 customer: '',
                 launchDate: '',
                 dateOfShipment: '',
-                responsibleManager: ''
+                responsibleManager: activeUserFormAddOrder.firstname + ' ' + activeUserFormAddOrder.lastname + ' ' + activeUserFormAddOrder.patronymic + ' (' + activeUserFormAddOrder.id + ')',
+                userId: activeUserFormAddOrder.id
             }}
             validationSchema = {Yup.object({
                 year: Yup.string()
@@ -199,36 +203,18 @@ const OrderAdd = () => {
                             />
                         </div>
                         <div>
-                            {/* <MyTextInput
+                            <MyTextInput
                                 id="responsibleManager"
                                 label='Ответственный менеджер'
                                 name="responsibleManager"
-                                as="select"
-                            /> */}
-                            <div className='inputProd'>
-                                <label htmlFor='responsibleManager'>Ответственный менеджер</label>
-                                {/* <Field
-                                    className="inputPro_select"
-                                    as="select" 
-                                    name="responsibleManager"
-                                    label='Ответственный менеджер'
-                                    id="responsibleManager"
-                                    onClick = {() => usersRequest()}>
-                                        {usersState()}
-                                </Field> */}
-                                <input
-                                    id="responsibleManager"
-                                    name="responsibleManager"
-                                    type="text"
-                                    placeholder="Введите ФИО"
-                                    autocomplete="off"
-                                    onChange={(e) => setSearchUsers(e.target.value)}
-                                />
+                                type="text"
+                                placeholder="Введите ФИО"
+                                autoComplete="off"
+                                onClick={(value)=>setSearchUsers(value.target.value)}
+                            />
+                            <div className='selectFullName'>
                                 <ul>
                                     {usersFilter()};
-                                    {/* {users.map(item => (
-                                        return <li>{item}</li>
-                                    ))} */}
                                 </ul>
                             </div>  
                         </div>
