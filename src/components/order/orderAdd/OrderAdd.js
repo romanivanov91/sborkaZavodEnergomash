@@ -37,13 +37,14 @@ const OrderAdd = () => {
     const [spinner, setSpinner] = useState(false)
     const [users, setUsers] = useState([]);
     const [searchUsers, setSearchUsers] = useState('');
-    const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState(user);
+    const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState({id: user.id, fullName: user.firstname + ' ' + user.lastname + ' ' + user.patronymic + ' (' + user.id + ')'});
 
     useEffect(() => {
         usersRequest(searchUsers);
     }, [searchUsers])
 
     const addOrder = (values) => {
+        console.log(values);
         setSpinner(true);
         request('http://localhost:8000/sborkaZavodEnergomash/api/createOrder.php', 'POST', JSON.stringify(values, null, 2))
         .then(res => {
@@ -91,16 +92,15 @@ const OrderAdd = () => {
 
     const usersFilter = () => {
         if (Array.isArray(users)) {
+            console.log(users);
             const selectUsers = users.map((el, i)=>{
                 return (
-                    <li value={el.ID} key = {i}>{el.fullName}</li>
+                    <li value={el.id} key = {i} onClick={() => setActiveUserFormAddOrder(el)}>{el.fullName} ({el.id})</li>
                     )
             })
             return selectUsers;
         }
     }
-
-    console.log(searchUsers);
 
     const submitBtn = () => {
         if (spinner) {
@@ -136,7 +136,7 @@ const OrderAdd = () => {
             );
     }
 
-    console.log();
+    
 
     return(
         <div className = 'orderAdd'>
@@ -147,7 +147,7 @@ const OrderAdd = () => {
                 customer: '',
                 launchDate: '',
                 dateOfShipment: '',
-                responsibleManager: activeUserFormAddOrder.firstname + ' ' + activeUserFormAddOrder.lastname + ' ' + activeUserFormAddOrder.patronymic + ' (' + activeUserFormAddOrder.id + ')',
+                responsibleManager: activeUserFormAddOrder.fullName,
                 userId: activeUserFormAddOrder.id
             }}
             validationSchema = {Yup.object({
@@ -203,15 +203,16 @@ const OrderAdd = () => {
                             />
                         </div>
                         <div>
-                            <MyTextInput
-                                id="responsibleManager"
-                                label='Ответственный менеджер'
-                                name="responsibleManager"
-                                type="text"
-                                placeholder="Введите ФИО"
-                                autoComplete="off"
-                                onClick={(value)=>setSearchUsers(value.target.value)}
-                            />
+                            <div className='inputProd'>
+                                <label htmlFor='responsibleManager'>Ответственный менеджер</label>
+                                <Field
+                                    id="responsibleManager"
+                                    name="responsibleManager"
+                                    type="text"
+                                    autoComplete="off"
+                                    onChange={(e) => setSearchUsers(e.target.value)}
+                                />
+                            </div>
                             <div className='selectFullName'>
                                 <ul>
                                     {usersFilter()};
