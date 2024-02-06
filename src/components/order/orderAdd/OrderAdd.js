@@ -148,7 +148,7 @@ const OrderAdd = () => {
                     customer: '',
                     launchDate: '',
                     dateOfShipment: '',
-                    responsibleManager: ''
+                    responsibleManager: activeUserFormAddOrder.fullName
                 }}
                 validationSchema = {Yup.object({
                     year: Yup.string()
@@ -169,68 +169,66 @@ const OrderAdd = () => {
                 }}
                 enableReinitialize={true}
             >
-                <Form className="orderAdd_form">
-                    <div className='orderAdd_form_order'>
-                        <div>
-                            <MyTextInput
-                                id="year"
-                                label='Год'
-                                name="year"
-                                type="text"
-                                disabled
-                            />
-                        </div>
-                        <div>
-                            <MyTextInput
-                                id="customer"
-                                label='Заказчик'
-                                name="customer"
-                                type="text"
-                            />
-                        </div>
-                        <div>
-                            <MyTextInput
-                                id="launchDate"
-                                label='Дата запуска'
-                                name="launchDate"
-                                type="date"
-                            />
-                        </div>
-                        <div>
-                            <MyTextInput
-                                id="dateOfShipment"
-                                label='Дата отгрузки'
-                                name="dateOfShipment"
-                                type="date"
-                            />
-                        </div>
-                        <div>
-                            <div className='inputProd'>
-                                <label htmlFor='responsibleManager'>Ответственный менеджер</label>
-                                <input
-                                    id="responsibleManager"
-                                    name="responsibleManager"
+                {props => (
+                    <Form className="orderAdd_form">
+                        <div className='orderAdd_form_order'>
+                            <div>
+                                <MyTextInput
+                                    id="year"
+                                    label='Год'
+                                    name="year"
                                     type="text"
-                                    autoComplete="off"
-                                    onInput={(e) => {
-                                        if (e.target.value.lenght > 5) {
-                                            setSearchUsers(e.target.value)
-                                        }
-                                    }}
-                                    value={activeUserFormAddOrder.fullName}
+                                    disabled
                                 />
                             </div>
-                            <div className='selectFullName'>
-                                <ul>
-                                    {usersFilter()};
-                                </ul>
-                            </div>  
+                            <div>
+                                <MyTextInput
+                                    id="customer"
+                                    label='Заказчик'
+                                    name="customer"
+                                    type="text"
+                                />
+                            </div>
+                            <div>
+                                <MyTextInput
+                                    id="launchDate"
+                                    label='Дата запуска'
+                                    name="launchDate"
+                                    type="date"
+                                />
+                            </div>
+                            <div>
+                                <MyTextInput
+                                    id="dateOfShipment"
+                                    label='Дата отгрузки'
+                                    name="dateOfShipment"
+                                    type="date"
+                                />
+                            </div>
+                            <div>
+                                <div className='inputProd'>
+                                    <label htmlFor='responsibleManager'>Ответственный менеджер</label>
+                                    <input
+                                        id="responsibleManager"
+                                        name="responsibleManager"
+                                        type="text"
+                                        autoComplete="off"
+                                        value={props.values.responsibleManager}
+                                        onChange={(e)=>setSearchUsers(e.target.value)}
+                                    />
+                                </div>
+                                <div className='selectFullName'>
+                                    <ul>
+                                        {usersFilter()};
+                                    </ul>
+                                </div>  
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                            {submitBtn()}
-                    </div>
-                </Form>
+                        <div>
+                                {submitBtn()}
+                        </div>
+                    </Form>
+                    )}
             </Formik>
         </div>
     )
