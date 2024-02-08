@@ -137,7 +137,9 @@ const OrderAdd = () => {
             );
     }
 
-    
+    const inputValue = () => {
+        
+    }
 
     return(
         <div className = 'orderAdd'>
@@ -148,7 +150,7 @@ const OrderAdd = () => {
                     customer: '',
                     launchDate: '',
                     dateOfShipment: '',
-                    responsibleManager: activeUserFormAddOrder.fullName
+                    responsibleManager: ''
                 }}
                 validationSchema = {Yup.object({
                     year: Yup.string()
@@ -213,7 +215,7 @@ const OrderAdd = () => {
                                         name="responsibleManager"
                                         type="text"
                                         autoComplete="off"
-                                        value={props.values.responsibleManager}
+                                        value={activeUserFormAddOrder.fullName}
                                         onChange={(e)=>setSearchUsers(e.target.value)}
                                     />
                                 </div>
