@@ -137,8 +137,14 @@ const OrderAdd = () => {
             );
     }
 
-    const inputValue = () => {
-        
+    const inputValue = (value, activeUserFormAddOrder) => {
+        setSearchUsers(value);
+        const fullName = activeUserFormAddOrder.fullName
+        if (fullName.includes(value)) {
+            return fullName;
+        } else {
+            return value;
+        }
     }
 
     return(
@@ -150,7 +156,8 @@ const OrderAdd = () => {
                     customer: '',
                     launchDate: '',
                     dateOfShipment: '',
-                    responsibleManager: ''
+                    responsibleManager: activeUserFormAddOrder.id,
+                    fullName: activeUserFormAddOrder.fullName
                 }}
                 validationSchema = {Yup.object({
                     year: Yup.string()
@@ -161,7 +168,7 @@ const OrderAdd = () => {
                             .required('Обязательное поле!'),
                     dateOfShipment: Yup.string()
                             .required('Обязательное поле!'),
-                    responsibleManager: Yup.string()
+                    fullName: Yup.string()
                             .required('Обязательное поле!'),
                 })}
                 onSubmit = {(values, {resetForm}) => {
@@ -211,12 +218,12 @@ const OrderAdd = () => {
                                 <div className='inputProd'>
                                     <label htmlFor='responsibleManager'>Ответственный менеджер</label>
                                     <input
-                                        id="responsibleManager"
-                                        name="responsibleManager"
+                                        id="fullName"
+                                        name="fullName"
                                         type="text"
                                         autoComplete="off"
                                         value={activeUserFormAddOrder.fullName}
-                                        onChange={(e)=>setSearchUsers(e.target.value)}
+                                        onChange={(e)=>inputValue(e.target.value, activeUserFormAddOrder)}
                                     />
                                 </div>
                                 <div className='selectFullName'>
