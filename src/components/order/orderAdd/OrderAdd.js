@@ -38,7 +38,7 @@ const OrderAdd = () => {
     const [users, setUsers] = useState([]);
     const [searchUsers, setSearchUsers] = useState('');
     //const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState({id: user.id, fullName: user.firstname + ' ' + user.lastname + ' ' + user.patronymic + ' (' + user.id + ')'});
-    const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState({id: 'user.id', fullName: ''});
+    const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState('');
     const [enteringName, setEnteringName] = useState(false);
 
     useEffect(() => {
@@ -69,7 +69,7 @@ const OrderAdd = () => {
     }
 
     const updateOrders = () => {
-        request('http://127.0.0.1/sborkaZavodEnergomash/api/readOrder.php','POST', JSON.stringify({year: date.getFullYear()}, null, 2) )
+        request('http://localhost:8000/sborkaZavodEnergomash/api/readOrder.php','POST', JSON.stringify({year: date.getFullYear()}, null, 2) )
         .then((data) => {
             console.log(data);
             dispatch(ordersFetched(data));
@@ -79,7 +79,7 @@ const OrderAdd = () => {
     }
 
     const updateYears = () => {
-        request("http://127.0.0.1/sborkaZavodEnergomash/api/readYearsOrder.php")
+        request("http://localhost:8000/sborkaZavodEnergomash/api/readYearsOrder.php")
         .then((data) => {
             dispatch(ordersYearsFetched(data));
             dispatch(activeYear(date.getFullYear()));
@@ -89,7 +89,7 @@ const OrderAdd = () => {
     }
 
     const usersRequest = (searchUsers) => {
-        request("http://127.0.0.1/sborkaZavodEnergomash/api/readUser.php", 'POST', JSON.stringify({searchUsers: searchUsers}, null, 2))
+        request("http://localhost:8000/sborkaZavodEnergomash/api/readUser.php", 'POST', JSON.stringify({searchUsers: searchUsers}, null, 2))
         .then((data) => {
             setUsers(data)
         }).catch((error) => {
@@ -100,6 +100,7 @@ const OrderAdd = () => {
     const usersFilter = () => {
         if (Array.isArray(users)) {
             const selectUsers = users.map((el, i)=>{
+                console.log(el);
                 return (
                     <li value={el.id} key = {i} onClick={() => setActiveUserFormAddOrder(el)}>{el.fullName} ({el.id})</li>
                     )
@@ -160,8 +161,7 @@ const OrderAdd = () => {
                     year: date.getFullYear(),
                     customer: '',
                     launchDate: '',
-                    dateOfShipment: '',
-                    fullName: ''
+                    dateOfShipment: ''
                 }}
                 validationSchema = {Yup.object({
                     year: Yup.string()
@@ -171,9 +171,7 @@ const OrderAdd = () => {
                     launchDate: Yup.string()
                             .required('Обязательное поле!'),
                     dateOfShipment: Yup.string()
-                            .required('Обязательное поле!'),
-                    fullName: Yup.string()
-                            .required('Обязательное поле!'),
+                            .required('Обязательное поле!')
                 })}
                 onSubmit = {(values, {resetForm}) => {
                     console.log(values);
@@ -226,10 +224,9 @@ const OrderAdd = () => {
                                         name="fullName"
                                         type="text"
                                         autoComplete="off"
-                                        value={enteringName ? props.values.fullName: props.values.fullName = activeUserFormAddOrder.fullName}
-                                        //onChange={(e)=>inputValue(e.target.value, activeUserFormAddOrder)}
+                                        value={enteringName ? searchUsers : activeUserFormAddOrder.fullName}
                                         onChange={(e) => {
-                                            props.handleChange(e);
+                                            //props.handleChange(e);
                                             setSearchUsers(e.target.value);
                                             setEnteringName(true);
                                         }}

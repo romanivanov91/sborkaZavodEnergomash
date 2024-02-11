@@ -45,7 +45,7 @@ if (!empty($resultOrderArray)){
     };
     echo json_encode($resultOrderArray);
 } else {
-    echo json_encode ("0 results order 2020");
+    echo json_encode ("0 results order");
 };
 
 

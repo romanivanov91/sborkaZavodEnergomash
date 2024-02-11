@@ -19,7 +19,9 @@ $data = json_decode(file_get_contents("php://input"));
 // $array = $sth->fetch(PDO::FETCH_ASSOC);
 // print_r($array);
 
-$resultOrder = $db->prepare('SELECT * FROM `sborka` WHERE YEAR='.$data->year); // запрос на выборку заказов по году
+$requestSQL = "SELECT s.ID, s.YEAR, s.№, s.customer, s.launchDate, s.dateOfShipment, CONCAT(u.firstname, ' ', u.lastname, ' ', u.patronymic) AS responsibleManager FROM `sborka` as s JOIN `users` as u on s.responsiblemanager = u.id WHERE s.YEAR=".$data->year;
+
+$resultOrder = $db->prepare($requestSQL); // запрос на выборку заказов по году
 $resultOrder->execute();
 $resultOrderArray = $resultOrder->fetchAll(PDO::FETCH_ASSOC);
 $resultProduct = $db->prepare('SELECT p.* from product as p JOIN sborka as s on p.ID_Order=s.ID where s.YEAR =' .$data->year); // запрос на выборку изделий по году

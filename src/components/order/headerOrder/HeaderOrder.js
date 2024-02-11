@@ -18,7 +18,7 @@ const HeaderOrder = () => {
     const date = new Date();
 
     useEffect (()=> {
-        request("http://127.0.0.1/sborkaZavodEnergomash/api/readYearsOrder.php")
+        request("http://localhost:8000/sborkaZavodEnergomash/api/readYearsOrder.php")
         .then((data) => {
             console.log(data);
             setErrorMsg(false);

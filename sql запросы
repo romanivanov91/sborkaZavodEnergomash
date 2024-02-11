@@ -1,2 +1,6 @@
 //Данная команда будет возвращать отчетные года созданные в базе данных
 SELECT REPLACE( TABLE_NAME, 'sborka', '') FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'sborkazavodenergomash' AND TABLE_NAME LIKE '%sborka%';
+
+//Добавление ключа в таблицу сборка с ссылка на таблицу users по id
+ALTER TABLE `sborka`
+  ADD CONSTRAINT `FK_responsibleManager_UserID` FOREIGN KEY (`responsibleManager`) REFERENCES `users` (`id`);

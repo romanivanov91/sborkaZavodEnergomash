@@ -40,7 +40,7 @@ const OrderList = () => {
 
     useEffect(() => {
         setSpinnerStringOrders(true);
-        request('http://127.0.0.1/sborkaZavodEnergomash/api/readOrder.php','POST', JSON.stringify({year:activeYear}, null, 2) )
+        request('http://localhost:8000/sborkaZavodEnergomash/api/readOrder.php','POST', JSON.stringify({year:activeYear}, null, 2) )
         .then((data) => {
             console.log(data);
             setSpinnerStringOrders(false);
