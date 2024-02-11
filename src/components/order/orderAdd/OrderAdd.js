@@ -37,18 +37,23 @@ const OrderAdd = () => {
     const [spinner, setSpinner] = useState(false)
     const [users, setUsers] = useState([]);
     const [searchUsers, setSearchUsers] = useState('');
-    const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState({id: user.id, fullName: user.firstname + ' ' + user.lastname + ' ' + user.patronymic + ' (' + user.id + ')'});
-
-    console.log(activeUserFormAddOrder);
+    //const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState({id: user.id, fullName: user.firstname + ' ' + user.lastname + ' ' + user.patronymic + ' (' + user.id + ')'});
+    const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState({id: 'user.id', fullName: ''});
+    const [enteringName, setEnteringName] = useState(false);
 
     useEffect(() => {
         usersRequest(searchUsers);
     }, [searchUsers])
 
+    useEffect(() => {
+        setEnteringName(false)
+    }, [activeUserFormAddOrder])
+
     const addOrder = (values) => {
         console.log(values);
         setSpinner(true);
-        request('http://localhost:8000/sborkaZavodEnergomash/api/createOrder.php', 'POST', JSON.stringify(values, null, 2))
+        const data = {...values, responsibleManager: activeUserFormAddOrder.id}
+        request('http://localhost:8000/sborkaZavodEnergomash/api/createOrder.php', 'POST', JSON.stringify(data, null, 2))
         .then(res => {
             console.log(res, 'Отправка успешна');
             updateOrders();
@@ -156,8 +161,7 @@ const OrderAdd = () => {
                     customer: '',
                     launchDate: '',
                     dateOfShipment: '',
-                    responsibleManager: activeUserFormAddOrder.id,
-                    fullName: activeUserFormAddOrder.fullName
+                    fullName: ''
                 }}
                 validationSchema = {Yup.object({
                     year: Yup.string()
@@ -222,13 +226,18 @@ const OrderAdd = () => {
                                         name="fullName"
                                         type="text"
                                         autoComplete="off"
-                                        value={activeUserFormAddOrder.fullName}
-                                        onChange={(e)=>inputValue(e.target.value, activeUserFormAddOrder)}
+                                        value={enteringName ? props.values.fullName: props.values.fullName = activeUserFormAddOrder.fullName}
+                                        //onChange={(e)=>inputValue(e.target.value, activeUserFormAddOrder)}
+                                        onChange={(e) => {
+                                            props.handleChange(e);
+                                            setSearchUsers(e.target.value);
+                                            setEnteringName(true);
+                                        }}
                                     />
                                 </div>
                                 <div className='selectFullName'>
                                     <ul>
-                                        {usersFilter()};
+                                        {searchUsers !=='' ? usersFilter() : null}
                                     </ul>
                                 </div>  
                             </div>
