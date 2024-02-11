@@ -37,8 +37,8 @@ const OrderAdd = () => {
     const [spinner, setSpinner] = useState(false)
     const [users, setUsers] = useState([]);
     const [searchUsers, setSearchUsers] = useState('');
-    //const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState({id: user.id, fullName: user.firstname + ' ' + user.lastname + ' ' + user.patronymic + ' (' + user.id + ')'});
-    const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState('');
+    const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState({id: user.id, fullName: user.firstname + ' ' + user.lastname + ' ' + user.patronymic + ' (' + user.id + ')'});
+    //const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState('');
     const [enteringName, setEnteringName] = useState(false);
 
     useEffect(() => {
