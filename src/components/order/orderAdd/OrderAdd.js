@@ -232,7 +232,7 @@ const OrderAdd = () => {
                                         }}
                                     />
                                 </div>
-                                <div className='selectFullName'>
+                                <div className='choiceOptions'>
                                     <ul>
                                         {searchUsers !=='' ? usersFilter() : null}
                                     </ul>

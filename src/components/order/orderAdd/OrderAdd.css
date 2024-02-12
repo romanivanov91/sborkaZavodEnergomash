@@ -36,4 +36,19 @@
     margin-bottom: 30px;
     margin-top: 30px;
 }
+.choiceOptions {
+    width: 100%;
+    position: relative;
+}
+.choiceOptions ul {
+    list-style-type: none;
+    overflow: auto;
+    position: absolute;
+    background-color: azure;
+    box-sizing: border-box;
+    height: 50px;
+}
+.choiceOptions li :focus {
+    background-color: blueviolet;
+}
 
