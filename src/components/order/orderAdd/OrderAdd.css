@@ -24,6 +24,10 @@
 }
 .orderAdd_form_order input {
     text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
 }
 .btnOrderAdd {
     width: 200px;
@@ -39,16 +43,27 @@
 .choiceOptions {
     width: 100%;
     position: relative;
+    box-sizing: border-box;
+    margin: 0px auto;
+    padding: 0px;
 }
 .choiceOptions ul {
     list-style-type: none;
     overflow: auto;
     position: absolute;
     background-color: azure;
-    box-sizing: border-box;
-    height: 50px;
+    height: 70px;
+    margin: 0px auto;
+    padding: 0px;
+    cursor: grab;
+    font-size: 12px;
 }
-.choiceOptions li :focus {
-    background-color: blueviolet;
+
+.choiceOptions ul::-webkit-scrollbar {
+    width: 0;
+  }
+
+.choiceOptions li:hover {
+    background-color: rgb(127, 123, 131);
 }
 
