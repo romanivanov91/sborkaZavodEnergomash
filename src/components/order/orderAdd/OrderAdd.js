@@ -183,7 +183,7 @@ const OrderAdd = () => {
                 {props => (
                     <Form className="orderAdd_form">
                         <div className='orderAdd_form_order'>
-                            <div>
+                            <div tabindex="0">
                                 <MyTextInput
                                     id="year"
                                     label='Год'
@@ -192,7 +192,7 @@ const OrderAdd = () => {
                                     disabled
                                 />
                             </div>
-                            <div>
+                            <div tabindex="0">
                                 <MyTextInput
                                     id="customer"
                                     label='Заказчик'
@@ -200,7 +200,7 @@ const OrderAdd = () => {
                                     type="text"
                                 />
                             </div>
-                            <div>
+                            <div tabindex="0">
                                 <MyTextInput
                                     id="launchDate"
                                     label='Дата запуска'
@@ -208,7 +208,7 @@ const OrderAdd = () => {
                                     type="date"
                                 />
                             </div>
-                            <div>
+                            <div tabindex="0">
                                 <MyTextInput
                                     id="dateOfShipment"
                                     label='Дата отгрузки'
@@ -216,9 +216,9 @@ const OrderAdd = () => {
                                     type="date"
                                 />
                             </div>
-                            <div>
+                            <div tabindex="0">
                                 <div className='inputProd'>
-                                    <label htmlFor='responsibleManager'>Ответственный менеджер</label>
+                                    <label htmlFor='responsibleManager'>Менеджер</label>
                                     <input
                                         id="fullName"
                                         name="fullName"
