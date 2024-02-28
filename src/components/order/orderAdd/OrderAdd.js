@@ -231,11 +231,11 @@ const OrderAdd = () => {
                                             setEnteringName(true);
                                         }}
                                     />
-                                     <div className='choiceOptions'>
+                                    <div className='choiceOptions'>
                                         <ul>
                                             {searchUsers !=='' ? usersFilter() : null}
                                         </ul>
-                                </div> 
+                                    </div> 
                                 </div> 
                             </div>
                         </div>

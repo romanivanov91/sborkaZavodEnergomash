@@ -23,9 +23,10 @@
     margin: 10px;
 }
 
-.orderAdd_form_order div:focus {
+.orderAdd_form_order div:hover {
     background-color: white;
     border-radius: 10px;
+    /* border: 10px double black; */
 }
 
 .orderAdd_form_order input {
