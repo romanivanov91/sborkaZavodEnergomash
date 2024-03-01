@@ -21,21 +21,30 @@
 }
 .orderAdd_form_order div {
     margin: 10px;
+    position: relative;
 }
+
+/* .orderAdd_form_order p {
+    font-size: 12px;
+    background-color: white;
+    height: 25px;
+} */
 
 .orderAdd_form_order div:hover {
     background-color: white;
     border-radius: 10px;
-    /* border: 10px double black; */
 }
 
-.orderAdd_form_order input {
+
+.orderAdd_form_order input, .orderAdd_form_order p {
     text-align: center;
     width: 100%;
+    height: 25px;
     box-sizing: border-box;
     padding: 0px;
     margin: 0px;
-    height: 25px;
+    font-size: 12px;
+    background-color: white;
 }
 .btnOrderAdd {
     width: 200px;
@@ -52,15 +61,19 @@
     box-sizing: border-box;
     margin: 0px auto;
     padding: 0px;
+    width: 100%;
+    position: absolute;
 }
 .choiceOptions ul {
+    box-sizing: border-box;
     list-style-type: none;
     overflow: auto;
-    height: 70px;
+    /* height: 70px; */
     margin: 0px auto;
     padding: 0px;
     cursor: grab;
     font-size: 12px;
+    width: 100%;
 }
 
 .choiceOptions ul::-webkit-scrollbar {

@@ -40,6 +40,7 @@ const OrderAdd = () => {
     const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState({id: user.id, fullName: user.firstname + ' ' + user.lastname + ' ' + user.patronymic + ' (' + user.id + ')'});
     //const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState('');
     const [enteringName, setEnteringName] = useState(false);
+    const [focusSearchUser, setFocusSearchUser] = useState(false);
 
     useEffect(() => {
         usersRequest(searchUsers);
@@ -143,18 +144,46 @@ const OrderAdd = () => {
             );
     }
 
-    const inputValue = (value, activeUserFormAddOrder) => {
-        setSearchUsers(value);
-        const fullName = activeUserFormAddOrder.fullName
-        if (fullName.includes(value)) {
-            return fullName;
-        } else {
-            return value;
+    const searUserInput = () => {
+        if (focusSearchUser) {
+            return (
+                <>
+                    <input
+                        id="fullName"
+                        name="fullName"
+                        type="text"
+                        autoComplete="off"
+                        //value={enteringName ? searchUsers : activeUserFormAddOrder.fullName}
+                        onChange={(e) => {
+                            //props.handleChange(e);
+                            setSearchUsers(e.target.value);
+                            setEnteringName(true);
+                        }}
+                    />
+                    <div className='choiceOptions'>
+                        <ul>
+                            {searchUsers !=='' ? usersFilter() : null}
+                        </ul>
+                    </div> 
+                </>
+            )
+        }
+    }
+
+    const clickOutsideUser= (e) => {
+        if (!e.target.classList.contains('manager') && !e.target.parentElement.classList.contains('manager')) {
+            setFocusSearchUser(false);
+            console.log(e.target.parentElement.classList);
+            //|| e.parentElement.className.contains('manager')
+            // || e.target.parentElement.classList.contains('manager')
         }
     }
 
     return(
-        <div className = 'orderAdd'>
+        <div 
+            className = 'orderAdd'
+            onClick={(e)=>clickOutsideUser(e)}    
+        >
             <h1>Добавить заказ</h1>
             <Formik
                 initialValues = {{
@@ -216,26 +245,14 @@ const OrderAdd = () => {
                                     type="date"
                                 />
                             </div>
-                            <div tabindex="0">
-                                <div className='inputProd'>
+                            <div 
+                                tabindex="0"
+                                onClick={()=>setFocusSearchUser(true)}
+                            >
+                                <div className='inputProd manager'>
                                     <label htmlFor='responsibleManager'>Менеджер</label>
-                                    <input
-                                        id="fullName"
-                                        name="fullName"
-                                        type="text"
-                                        autoComplete="off"
-                                        value={enteringName ? searchUsers : activeUserFormAddOrder.fullName}
-                                        onChange={(e) => {
-                                            //props.handleChange(e);
-                                            setSearchUsers(e.target.value);
-                                            setEnteringName(true);
-                                        }}
-                                    />
-                                    <div className='choiceOptions'>
-                                        <ul>
-                                            {searchUsers !=='' ? usersFilter() : null}
-                                        </ul>
-                                    </div> 
+                                    <p>{activeUserFormAddOrder.fullName}</p>
+                                    {searUserInput()}
                                 </div> 
                             </div>
                         </div>
