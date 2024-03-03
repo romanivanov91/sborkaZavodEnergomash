@@ -19,7 +19,9 @@ $data = json_decode(file_get_contents("php://input"));
 // $array = $sth->fetch(PDO::FETCH_ASSOC);
 // print_r($array);
 
-$requestSQL = "SELECT id, CONCAT(firstname, ' ', lastname, ' ', patronymic) AS 'fullName' FROM `users` WHERE firstname LIKE '%".$data->searchUsers ."%' or lastname LIKE '%".$data->searchUsers ."%' or patronymic LIKE '%".$data->searchUsers ."%'";  
+// $requestSQL = "SELECT id, CONCAT(firstname, ' ', lastname, ' ', patronymic) AS 'fullName' FROM `users` WHERE firstname LIKE '%".$data->searchUsers ."%' or lastname LIKE '%".$data->searchUsers ."%' or patronymic LIKE '%".$data->searchUsers ."%'";  
+
+$requestSQL = "SELECT id, CONCAT(firstname, ' ', LEFT(lastname, 1), '. ', LEFT(patronymic, 1), '.') AS 'fullName' FROM `users` WHERE firstname LIKE '%".$data->searchUsers ."%' or lastname LIKE '%".$data->searchUsers ."%' or patronymic LIKE '%".$data->searchUsers ."%'"; 
 
 //echo json_encode ($requestSQL);
 

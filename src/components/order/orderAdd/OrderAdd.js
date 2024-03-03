@@ -15,9 +15,9 @@ const MyTextInput = ({label, ...props}) => {
         <div className='inputProd'>
             <label htmlFor='{props.name}'>{label}</label>
             <input {...props} {...field}/>
-            <div className='errorMsgAddEditProdPar'>
+            <div className='errorMsgAddEditOrderPar'>
                 {meta.touched && meta.error ? (
-                    <div className='errorMsgAddEditProd'>{meta.error}</div>
+                    <div className='errorMsgAddEditOrder'>{meta.error}</div>
                 ) : null}
             </div>
         </div>
@@ -37,18 +37,12 @@ const OrderAdd = () => {
     const [spinner, setSpinner] = useState(false)
     const [users, setUsers] = useState([]);
     const [searchUsers, setSearchUsers] = useState('');
-    const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState({id: user.id, fullName: user.firstname + ' ' + user.lastname + ' ' + user.patronymic + ' (' + user.id + ')'});
-    //const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState('');
-    const [enteringName, setEnteringName] = useState(false);
+    const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState({id: user.id, fullName: user.firstname + ' ' + user.lastname.charAt() + '. ' + user.patronymic.charAt() + '.'});
     const [focusSearchUser, setFocusSearchUser] = useState(false);
 
     useEffect(() => {
         usersRequest(searchUsers);
     }, [searchUsers])
-
-    useEffect(() => {
-        setEnteringName(false)
-    }, [activeUserFormAddOrder])
 
     const addOrder = (values) => {
         console.log(values);
@@ -92,7 +86,8 @@ const OrderAdd = () => {
     const usersRequest = (searchUsers) => {
         request("http://localhost:8000/sborkaZavodEnergomash/api/readUser.php", 'POST', JSON.stringify({searchUsers: searchUsers}, null, 2))
         .then((data) => {
-            setUsers(data)
+            console.log(data);
+            setUsers(data);
         }).catch((error) => {
             console.log(error); // вывести ошибку
          });
@@ -113,7 +108,7 @@ const OrderAdd = () => {
     const submitBtn = () => {
         if (spinner) {
             return (
-                <div className='form_reg_auth_spinner'>
+                <div className='form_add_order_spinner'>
                     <BarLoader
                         color="#36d7b7"
                         cssOverride={{}}
@@ -123,9 +118,9 @@ const OrderAdd = () => {
                 )
         } else {
             return (
-                <div className="submitBtn">
+                <div className="submitBtnOrderAddForm">
                     <input 
-                        className='form_submit' 
+                        className='form_submit_add_order' 
                         type="submit" 
                         value='Добавить'/>
                     {errorMsg ? errorMessage(): null}
@@ -153,11 +148,9 @@ const OrderAdd = () => {
                         name="fullName"
                         type="text"
                         autoComplete="off"
-                        //value={enteringName ? searchUsers : activeUserFormAddOrder.fullName}
                         onChange={(e) => {
                             //props.handleChange(e);
                             setSearchUsers(e.target.value);
-                            setEnteringName(true);
                         }}
                     />
                     <div className='choiceOptions'>
@@ -174,8 +167,6 @@ const OrderAdd = () => {
         if (!e.target.classList.contains('manager') && !e.target.parentElement.classList.contains('manager')) {
             setFocusSearchUser(false);
             console.log(e.target.parentElement.classList);
-            //|| e.parentElement.className.contains('manager')
-            // || e.target.parentElement.classList.contains('manager')
         }
     }
 
@@ -212,7 +203,7 @@ const OrderAdd = () => {
                 {props => (
                     <Form className="orderAdd_form">
                         <div className='orderAdd_form_order'>
-                            <div tabindex="0">
+                            <div tabIndex="0">
                                 <MyTextInput
                                     id="year"
                                     label='Год'
@@ -221,7 +212,7 @@ const OrderAdd = () => {
                                     disabled
                                 />
                             </div>
-                            <div tabindex="0">
+                            <div tabIndex="0">
                                 <MyTextInput
                                     id="customer"
                                     label='Заказчик'
@@ -229,7 +220,7 @@ const OrderAdd = () => {
                                     type="text"
                                 />
                             </div>
-                            <div tabindex="0">
+                            <div tabIndex="0">
                                 <MyTextInput
                                     id="launchDate"
                                     label='Дата запуска'
@@ -237,7 +228,7 @@ const OrderAdd = () => {
                                     type="date"
                                 />
                             </div>
-                            <div tabindex="0">
+                            <div tabIndex="0">
                                 <MyTextInput
                                     id="dateOfShipment"
                                     label='Дата отгрузки'
@@ -246,7 +237,7 @@ const OrderAdd = () => {
                                 />
                             </div>
                             <div 
-                                tabindex="0"
+                                tabIndex="0"
                                 onClick={()=>setFocusSearchUser(true)}
                             >
                                 <div className='inputProd manager'>
