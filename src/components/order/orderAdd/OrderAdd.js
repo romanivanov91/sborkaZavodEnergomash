@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {useHttp} from '../../../hooks/http.hook';
 import { useDispatch, useSelector } from 'react-redux';
@@ -38,6 +38,7 @@ const OrderAdd = () => {
     const [users, setUsers] = useState([]);
     const [searchUsers, setSearchUsers] = useState('');
     const [activeUserFormAddOrder, setActiveUserFormAddOrder] = useState({id: user.id, fullName: user.firstname + ' ' + user.lastname.charAt() + '. ' + user.patronymic.charAt() + '.'});
+    const [activeUserStyle, setActiveUserStyle] = useState('manager_fio');
     const [focusSearchUser, setFocusSearchUser] = useState(false);
 
     useEffect(() => {
@@ -147,10 +148,11 @@ const OrderAdd = () => {
                         id="fullName"
                         name="fullName"
                         type="text"
-                        autoComplete="off"
+                        autoComplete="new-text"
                         onChange={(e) => {
-                            //props.handleChange(e);
-                            setSearchUsers(e.target.value);
+                            if (e.target.value.length > 1) {
+                                setSearchUsers(e.target.value);
+                            }
                         }}
                     />
                     <div className='choiceOptions'>
@@ -166,7 +168,8 @@ const OrderAdd = () => {
     const clickOutsideUser= (e) => {
         if (!e.target.classList.contains('manager') && !e.target.parentElement.classList.contains('manager')) {
             setFocusSearchUser(false);
-            console.log(e.target.parentElement.classList);
+            setSearchUsers('');
+            setActiveUserStyle('manager_fio')
         }
     }
 
@@ -238,11 +241,11 @@ const OrderAdd = () => {
                             </div>
                             <div 
                                 tabIndex="0"
-                                onClick={()=>setFocusSearchUser(true)}
+                                onClick={()=>{setFocusSearchUser(true);setActiveUserStyle('manager_fio manager_fio_focus')}}
                             >
                                 <div className='inputProd manager'>
                                     <label htmlFor='responsibleManager'>Менеджер</label>
-                                    <p>{activeUserFormAddOrder.fullName}</p>
+                                    <p className={activeUserStyle}>{activeUserFormAddOrder.fullName}</p>
                                     {searUserInput()}
                                 </div> 
                             </div>
