@@ -149,6 +149,7 @@ const OrderAdd = () => {
                         name="fullName"
                         type="text"
                         autoComplete="new-text"
+                        placeholder="начните вводить имя"
                         onChange={(e) => {
                             if (e.target.value.length > 1) {
                                 setSearchUsers(e.target.value);
@@ -261,3 +262,42 @@ const OrderAdd = () => {
 };
 
 export default OrderAdd;
+
+//Надо попробовать, в качестве оптимизации, вынести инпут с поиском в отделные компонент, чтобы можно было использовать в другом месте
+// const inputSearchOptions = (label, activeStyle, activeValue, focusSearch) => {
+//     const searInput = () => {
+//         if (focusSearch) {
+//             return (
+//                 <>
+//                     <input
+//                         id="fullName"
+//                         name="fullName"
+//                         type="text"
+//                         autoComplete="new-text"
+//                         placeholder="начните вводить имя"
+//                         onChange={(e) => {
+//                             if (e.target.value.length > 1) {
+//                                 setSearchUsers(e.target.value);
+//                             }
+//                         }}
+//                     />
+//                     <div className='choiceOptions'>
+//                         <ul>
+//                             {searchUsers !=='' ? usersFilter() : null}
+//                         </ul>
+//                     </div> 
+//                 </>
+//             )
+//         }
+//     }
+
+//     return (
+//         <>
+//             <div className='inputProd manager'>
+//                 <label htmlFor='responsibleManager'>{label}</label>
+//                 <p className={activeStyle}>{activeValue.fullName}</p>
+//                 {searInput()}
+//             </div> 
+//         </>
+//     )
+// } 
