@@ -264,40 +264,107 @@ const OrderAdd = () => {
 export default OrderAdd;
 
 //Надо попробовать, в качестве оптимизации, вынести инпут с поиском в отделные компонент, чтобы можно было использовать в другом месте
-// const inputSearchOptions = (label, activeStyle, activeValue, focusSearch) => {
-//     const searInput = () => {
-//         if (focusSearch) {
-//             return (
-//                 <>
-//                     <input
-//                         id="fullName"
-//                         name="fullName"
-//                         type="text"
-//                         autoComplete="new-text"
-//                         placeholder="начните вводить имя"
-//                         onChange={(e) => {
-//                             if (e.target.value.length > 1) {
-//                                 setSearchUsers(e.target.value);
-//                             }
-//                         }}
-//                     />
-//                     <div className='choiceOptions'>
-//                         <ul>
-//                             {searchUsers !=='' ? usersFilter() : null}
-//                         </ul>
-//                     </div> 
-//                 </>
-//             )
-//         }
-//     }
+//defaultValue - значение инпута по умолчанию
+//label - заголовок инпута
+const inputSearchOptions = (label, defaultValue = '') => {
 
-//     return (
-//         <>
-//             <div className='inputProd manager'>
-//                 <label htmlFor='responsibleManager'>{label}</label>
-//                 <p className={activeStyle}>{activeValue.fullName}</p>
-//                 {searInput()}
-//             </div> 
-//         </>
-//     )
-// } 
+    const [activeValue, setActiveValue] = useState(defaultValue);
+
+    const dispatch = useDispatch();
+    const {request} = useHttp();
+
+    const date = new Date();
+    
+    const [errorMsg, setErrorMsg] = useState(false);
+    const [spinner, setSpinner] = useState(false)
+    const [users, setUsers] = useState([]);
+    const [searchUsers, setSearchUsers] = useState('');
+    const [activeUserStyle, setActiveUserStyle] = useState('manager_fio');
+    const [focusSearchUser, setFocusSearchUser] = useState(false);
+
+    useEffect(() => {
+        usersRequest(searchUsers);
+    }, [searchUsers])
+
+
+    const usersRequest = (searchUsers) => {
+        request("http://localhost:8000/sborkaZavodEnergomash/api/readUser.php", 'POST', JSON.stringify({searchUsers: searchUsers}, null, 2))
+        .then((data) => {
+            console.log(data);
+            setUsers(data);
+        }).catch((error) => {
+            console.log(error); // вывести ошибку
+         });
+    }
+
+    const usersFilter = () => {
+        if (Array.isArray(users)) {
+            const selectUsers = users.map((el, i)=>{
+                console.log(el);
+                return (
+                    <li value={el.id} key = {i} onClick={() => setActiveValue(el)}>{el.fullName} ({el.id})</li>
+                    )
+            })
+            return selectUsers;
+        }
+    }
+
+
+    const errorMessage = () => {
+        return (
+                <div className="errorMessage">
+                    <div>
+                        <p>Произошла ошибка! Заказ не добавлен!</p>
+                    </div>
+                </div>
+            );
+    }
+
+    const searUserInput = () => {
+        if (focusSearchUser) {
+            return (
+                <>
+                    <input
+                        id="fullName"
+                        name="fullName"
+                        type="text"
+                        autoComplete="new-text"
+                        placeholder="начните вводить имя"
+                        onChange={(e) => {
+                            if (e.target.value.length > 1) {
+                                setSearchUsers(e.target.value);
+                            }
+                        }}
+                    />
+                    <div className='choiceOptions'>
+                        <ul>
+                            {searchUsers !=='' ? usersFilter() : null}
+                        </ul>
+                    </div> 
+                </>
+            )
+        }
+    }
+
+    const clickOutsideUser= (e) => {
+        if (!e.target.classList.contains('full_name') && !e.target.parentElement.classList.contains('full_name')) {
+            setFocusSearchUser(false);
+            setSearchUsers('');
+            setActiveUserStyle('full_name')
+        }
+    }
+
+    return(
+        <div 
+            tabIndex="0"
+            onClick={()=>{setFocusSearchUser(true);setActiveUserStyle('full_name full_name_focus')}}
+        >
+                <div className='inputProd manager'>
+                    <label htmlFor='responsibleManager'>{label}</label>
+                    <p className={activeUserStyle}>{activeValue.fullName}</p>
+                    {searUserInput()}
+                </div> 
+        </div>
+                       
+    )
+} 

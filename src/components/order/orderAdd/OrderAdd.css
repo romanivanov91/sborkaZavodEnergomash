@@ -88,6 +88,22 @@
 .manager_fio_focus {
     border-radius: 5px 5px 0px 0px;
 }
+.full_name {
+    text-align: center;
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+    font-size: 12px;
+    background-color: white;
+    border-radius: 5px;
+    white-space:nowrap;
+}
+.full_name_focus {
+    border-radius: 5px 5px 0px 0px;
+}
 .manager input {
     border-radius: 0px;
     outline: none;
