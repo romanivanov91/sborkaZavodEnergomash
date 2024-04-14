@@ -4,6 +4,7 @@ import HeaderOrder from '../order/headerOrder/HeaderOrder';
 import OrderAdd from '../order/orderAdd/OrderAdd';
 import SearchPanel from '../order/searchPanel/SearchPanel';
 import OrderList from '../order/orderList/OrderList';
+import СounterpartyAdd from './counterpartyAdd/CounterpartyAdd';
 
 const Orders = () => {
 
@@ -15,6 +16,7 @@ const Orders = () => {
                 <>
                 <HeaderOrder />
                 <OrderAdd />
+                <СounterpartyAdd />
                 <SearchPanel />
                 <OrderList /> 
                 </> 

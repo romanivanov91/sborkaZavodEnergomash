@@ -174,6 +174,8 @@ const OrderAdd = () => {
         }
     }
 
+    const classNameManager = 'manager'
+
     return(
         <div 
             className = 'orderAdd'
@@ -262,46 +264,3 @@ const OrderAdd = () => {
 };
 
 export default OrderAdd;
-
-
-// const inputSearch = () => {
-
-//     const searUserInput = () => {
-//         if (focusSearchUser) {
-//             return (
-//                 <>
-//                     <input
-//                         id="fullName"
-//                         name="fullName"
-//                         type="text"
-//                         autoComplete="new-text"
-//                         placeholder="начните вводить имя"
-//                         onChange={(e) => {
-//                             if (e.target.value.length > 1) {
-//                                 setSearchUsers(e.target.value);
-//                             }
-//                         }}
-//                     />
-//                     <div className='choiceOptions'>
-//                         <ul>
-//                             {searchUsers !=='' ? usersFilter() : null}
-//                         </ul>
-//                     </div> 
-//                 </>
-//             )
-//         }
-//     }
-
-//     return (
-//         <div 
-//             tabIndex="0"
-//             onClick={()=>{setFocusSearchUser(true);setActiveUserStyle('manager_fio manager_fio_focus')}}
-//         >
-//                 <div className='inputProd manager'>
-//                     <label htmlFor='responsibleManager'>Менеджер</label>
-//                     <p className={activeUserStyle}>{activeUserFormAddOrder.fullName}</p>
-//                     {searUserInput()}
-//                 </div> 
-//         </div>
-//     )
-// }
