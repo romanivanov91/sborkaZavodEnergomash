@@ -7,6 +7,7 @@ import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { autorisationUser, updateUserPass, saveUser } from "../../actions/index";
 import { useHttp } from "../../hooks/http.hook";
+import Button from '../button/Button';
 
 //import './Reset.css';
 import './App.css';

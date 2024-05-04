@@ -16,7 +16,7 @@ const Orders = () => {
                 <>
                 <HeaderOrder />
                 <OrderAdd />
-                <СounterpartyAdd />
+                {/* <СounterpartyAdd /> */}
                 <SearchPanel />
                 <OrderList /> 
                 </> 
